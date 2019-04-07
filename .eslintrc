@@ -1,0 +1,7 @@
+{
+    "extends": "fbjs/strict",
+    "rules": {
+        "max-len": [1, 120, 4],
+        "indent": ["error", "tab"]
+    }
+}
