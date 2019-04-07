@@ -4,6 +4,7 @@ import { bindActionCreators } from "redux";
 //import M from "materialize-css";
 //Components
 import Header from "../components/header";
+import BigPart from "../components/bigPart";
 
 //import { getAllProjects } from "../actions/index";
 
@@ -43,8 +44,9 @@ class App extends Component {
 
 	render () {
 		return (
-			<div className="container">
+			<div className="container-fluid">
 				<Header />
+				<BigPart />
 			</div>
 		);
 	}

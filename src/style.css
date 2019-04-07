@@ -1,10 +1,44 @@
-/* Big Part */
+/* Header */
+.headerImage {
+  max-height: 10vh;
+}
 
-.bigPart {
-  border: 2px solid black;
-  border-radius: 5px;
+/* Big Part */
+.partsRow {
+  justify-content: center;
+}
+
+.partContainer {
   padding: 20px !important;
-  text-align: center;
-  background-color: gray;
   height: 70vh;
 }
+
+.partLeft {
+  border-radius: 10px;
+  text-align: center;
+  padding: 30px;
+  background-color: white;
+  background: url("./img/burger.png");
+  background-size: cover;
+  height: 100%;
+  box-shadow: 10px 10px 5px grey;
+
+}
+
+.partLRight {
+  border-radius: 10px;
+  text-align: center;
+  padding: 30px;
+  background-color: white;
+  background: url("./img/foodtruck.png");
+  background-size: cover;
+  height: 100%;
+  box-shadow: 10px 10px 5px grey;
+}
+
+.partText {
+  color: #000000;
+  font-size: 4vh;
+  font-family: 'Oxygen', sans-serif;
+}
+
