@@ -2,7 +2,10 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 //import M from "materialize-css";
-import { getAllProjects } from "../actions/index";
+//Components
+import Header from "../components/header";
+
+//import { getAllProjects } from "../actions/index";
 
 require("../style.css");
 
@@ -10,42 +13,58 @@ class App extends Component {
 	constructor () {
 		super();
 		this.state = {
-			width: window.innerWidth //Largeur de la fenetre
+			width:
+				window.innerWidth //Largeur de la fenetre
 		};
-		this.updateDimensions = this.updateDimensions.bind(this);
+		this.updateDimensions = this.updateDimensions.bind(
+			this
+		);
 	}
 
 	componentDidMount () {
-		window.addEventListener("resize", this.updateDimensions); //Largeur fenetre
+		window.addEventListener(
+			"resize",
+			this
+				.updateDimensions
+		); //Largeur fenetre
 	}
 
-	componentWillMount () {
-	}
-
+	componentWillMount () {}
 
 	//Update width
 	updateDimensions () {
-		this.setState({
-			width: window.innerWidth
-		});
+		this.setState(
+			{
+				width:
+					window.innerWidth
+			}
+		);
 	}
 
 	render () {
 		return (
-			<React.Fragment>
-			</React.Fragment>
+			<div className="container">
+				<Header />
+			</div>
 		);
 	}
 
 	componentWillUnmount () {
-		window.removeEventListener("resize", this.updateDimensions);
+		window.removeEventListener(
+			"resize",
+			this
+				.updateDimensions
+		);
 	}
 }
 
 const mapDispatchToProps = dispatch => ({
-		...bindActionCreators({ getAllProjects }, dispatch)
+		...bindActionCreators(
+			{
+			},
+			dispatch
+		)
 	}),
-
 	mapStateToProps = state => {
 		return {
 			projets: state.projects
