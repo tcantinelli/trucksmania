@@ -3,6 +3,10 @@
   max-height: 10vh;
 }
 
+.buttonCol {
+  margin: 20px;
+}
+
 /* Big Part */
 .partsRow {
   justify-content: center;

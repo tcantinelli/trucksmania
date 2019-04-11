@@ -22,7 +22,7 @@ class BigPart extends Component {
 				<div className="col s12 l6 partContainer">
 					<div className="partLRight">
 						<div className="row partText">
-							<p>Propriétaire d'un food-truck ? Inscrivez vous et augmentez votre visibilté et fidélisez vos clients</p>
+							<p>Propriétaire d'un food-truck ? Inscrivez vous et augmentez votre visibilté, fidélisez vos clients</p>
 						</div>
 					</div>
 				</div>

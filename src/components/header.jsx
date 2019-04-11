@@ -3,8 +3,8 @@ import React, { Component } from "react";
 class Header extends Component {
 	render () {
 		return (
-			<div className="row">
-				<div className="col s10">
+			<div className="row valign-wrapper">
+				<div className="col s11">
 					<img
 						className="responsive-img headerImage"
 						src={"../img/Titre.png"}
@@ -13,8 +13,8 @@ class Header extends Component {
 						}
 					/>
 				</div>
-				<div className="col s2">
-					<a class="waves-effect waves-light btn"><i class="material-icons left">cloud</i>button</a>
+				<div className="col s1 buttonCol">
+					<a class="waves-effect waves-light btn">Connexion</a>
 				</div>
 			</div>
 		);
