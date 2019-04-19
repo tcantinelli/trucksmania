@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-//import M from "materialize-css";
+import M from "materialize-css";
 //Components
 import Header from "../components/header";
 import BigPart from "../components/bigPart";
@@ -30,7 +30,12 @@ class App extends Component {
 		); //Largeur fenetre
 	}
 
-	componentWillMount () {}
+	componentWillMount () { 
+		document.addEventListener("DOMContentLoaded", function () {
+			var elems = document.querySelectorAll(".modal");
+			M.Modal.init(elems, {});
+		});
+	}
 
 	//Update width
 	updateDimensions () {
@@ -47,6 +52,17 @@ class App extends Component {
 			<div className="container-fluid">
 				<Header />
 				<BigPart />
+
+				{/* Modal Structure */}
+				<div id="loginModal" className="modal">
+					<div className="modal-content">
+						<h4>Modal Header</h4>
+						<p>A bunch of text</p>
+					</div>
+					<div className="modal-footer">
+						<a href="#!" className="modal-close waves-effect waves-green btn-flat">Agree</a>
+					</div>
+				</div>
 			</div>
 		);
 	}

@@ -14,7 +14,7 @@ class Header extends Component {
 					/>
 				</div>
 				<div className="col s1 buttonCol">
-					<a class="waves-effect waves-light btn">Connexion</a>
+					<button data-target="loginModal" className="btn modal-trigger">Connexiocn</button>
 				</div>
 			</div>
 		);
