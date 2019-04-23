@@ -9,22 +9,22 @@ import Signin from "../containers/signin";
 require("../style.css");
 
 class App extends Component {
-	componentWillMount () { 
-		document.addEventListener("DOMContentLoaded", function () {
-			var elems = document.querySelectorAll(".modal");
-			M.Modal.init(elems, {});
-		});
-	}
+	    componentWillMount () { 
+	    	document.addEventListener("DOMContentLoaded", function () {
+	    		var elems = document.querySelectorAll(".modal");
+	    		M.Modal.init(elems, {});
+	    	});
+	    }
 
-	render () {
-		return (
-			<div className="container-fluid">
-				<Header />
-				<BigPart />
-				<Signin />				
-			</div>
-		);
-	}
+	  render () {
+	  	return (
+	  		<div className="container-fluid">
+	  			<Header />
+	  			<BigPart />
+	  			<Signin toto={"ruuu"} />			
+	  		</div>
+	  	);
+	  }
 }
 
 export default App;

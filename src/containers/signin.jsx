@@ -19,19 +19,18 @@ class Signin extends Component {
 			<div id="loginModal" className="modal">
 				<div className="modal-content">
 					<form onSubmit={this.props.handleSubmit(this.handleSubmit)}>
-						<div className="row justify-content-md-center">
-							<fieldset className="col-md-4 form-group">
-								<label className="bmd-label-floating">Email</label>
+						<div className="row">
+							<div className="input-field col s6">
 								<Field
 									name={FIELDS.email}
 									component="input"
 									type="text"
 									className="form-control"
 								/>
-							</fieldset>
+							</div>
 						</div>
 						<div className="row justify-content-md-center">
-							<fieldset className="col-md-4 form-group">
+							<fieldset className="input-field col s6">
 								<label className="bmd-label-floating">Password</label>
 								<Field
 									name={FIELDS.password}
