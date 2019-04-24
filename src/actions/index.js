@@ -2,7 +2,7 @@
 import { SET_AUTHENTIFICATION } from "./action-types";
 import Axios from "axios";
 
-const BASE_URL = "http://localhost:3040";
+const BASE_URL = "http://localhost:3060";
 
 export function setAuthentification (isLoggedIn) {
 	return {
@@ -11,7 +11,7 @@ export function setAuthentification (isLoggedIn) {
 	};
 }
 
-export function signinUser ({email, password}, history) {
+export function signinUser ({email, password}) {
 	return function (dispatch) {
 		Axios.post(`${BASE_URL}/signin`, {
 			email,
@@ -20,7 +20,6 @@ export function signinUser ({email, password}, history) {
 			.then((response) => {
 				localStorage.setItem("token", response.data.token);
 				dispatch(setAuthentification(true));
-				history.push("/ressources");
 			}).catch((error) => {
 				console.log(error.response.data.message);
 			});
