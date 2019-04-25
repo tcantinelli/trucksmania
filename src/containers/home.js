@@ -10,7 +10,7 @@ import BigPart from "../components/bigPart";
 
 require("../style.css");
 
-class App extends Component {
+class Home extends Component {
 	constructor (props) {
 		super(props);
 		this.state = { credentials: { email: "", password: "", remember: false } };
@@ -37,7 +37,12 @@ class App extends Component {
 	onSave (event) {
 		event.preventDefault();
 		console.log(this.state.credentials);
-		this.props.signinUser(this.state.credentials);
+		this.props.signinUser(this.state.credentials, this.props.history);
+		if (this.props.isLoggedIn) {
+			console.log("connected");
+		} else {
+			console.log("NOT connected");
+		}
 	}
 
 	render () {
@@ -92,7 +97,13 @@ const mapDispatchToProps = dispatch => ({
 		{signinUser}, dispatch)
 });
 
+const mapStateToProps = state => {
+	return {
+		isLoggedIn: state.authentification.isLoggedIn
+	};
+};
+
 export default connect(
-	null,
+	mapStateToProps,
 	mapDispatchToProps
-)(App);
+)(Home);

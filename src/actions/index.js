@@ -11,15 +11,18 @@ export function setAuthentification (isLoggedIn) {
 	};
 }
 
-export function signinUser ({email, password}) {
+export function signinUser ({email, password, remember}, history) {
 	return function (dispatch) {
 		Axios.post(`${BASE_URL}/signin`, {
 			email,
 			password
 		})
 			.then((response) => {
-				localStorage.setItem("token", response.data.token);
+				if (remember) {
+					localStorage.setItem("token", response.data.token);
+				}
 				dispatch(setAuthentification(true));
+				history.push("/admin");
 			}).catch((error) => {
 				console.log(error.response.data.message);
 			});
