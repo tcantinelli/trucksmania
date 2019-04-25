@@ -13,7 +13,7 @@ require("../style.css");
 class App extends Component {
 	constructor (props) {
 		super(props);
-		this.state = { credentials: { email: "", password: "" } };
+		this.state = { credentials: { email: "", password: "", remember: false } };
 		this.onChange = this.onChange.bind(this);
 		this.onSave = this.onSave.bind(this);
 	}
@@ -25,12 +25,12 @@ class App extends Component {
 		});
 	}
 
-
-
 	onChange (event) {
-		const field = event.target.name;
+		const field = event.target.id;
 		const credentials = this.state.credentials;
-		credentials[field] = event.target.value;
+		field === "remember" 
+			? credentials[field] = event.target.checked
+			: credentials[field] = event.target.value;
 		return this.setState({ credentials: credentials });
 	}
 
@@ -45,29 +45,28 @@ class App extends Component {
 			<div className="container-fluid">
 				<Header />
 				<BigPart />
-				<div id="modal1" class="modal loginModal">
-					<div class="modal-content">
+				<div id="modal1" className="modal loginModal">
+					<div className="modal-content">
 						<form className="col s8">
 							<div className="row rowModal">
 								<div className="input-field col s12">
 									<i className="material-icons prefix">account_circle</i>
-									<input id="email" type="email" name="email" className="validate" onChange={this.onChange} />
-									<label for="email">Email</label>
-									<span className="helper-text" data-error="Email incorrect" data-success="Email validé">Validation</span>
+									<input id="email" type="email" onChange={this.onChange} />
+									<label htmlFor="email">Email</label>
 								</div>
 							</div>
 							<div className="row rowModal">
 								<div className="input-field col s12">
 									<i className="material-icons prefix">https</i>
-									<input id="password" type="password" name="password" className="validate" onChange={this.onChange} />
-									<label for="password">Mot de passe</label>
+									<input id="password" type="password" onChange={this.onChange} />
+									<label htmlFor="password">Mot de passe</label>
 								</div>
 							</div>
 							<div className="row rowModal">
 								<div className="input-field col s6 offset-s3">
 									<p className="center-align">
 										<label>
-											<input type="checkbox" />
+											<input id="remember" type="checkbox" onChange={this.onChange}/>
 											<span>Se souvenir</span>
 										</label>
 									</p>
@@ -75,8 +74,8 @@ class App extends Component {
 							</div>
 							<div className="row rowModal">
 								<div className="input-field col s6 offset-s3 center-align">
-									<button class="btn waves-effect" type="submit" name="action" onClick={this.onSave} >Connexion
-										<i class="material-icons right">send</i>
+									<button className="btn waves-effect" type="submit" name="action" onClick={this.onSave} >Connexion
+										<i className="material-icons right">send</i>
 									</button>
 								</div>
 							</div>
