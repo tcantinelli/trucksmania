@@ -19,6 +19,9 @@ class Home extends Component {
 	}
 
 	componentWillMount () {
+		if (this.props.isLoggedIn) {
+			this.props.history.push("/admin");
+		}
 		document.addEventListener("DOMContentLoaded", function () {
 			var elems = document.querySelectorAll(".modal");
 			M.Modal.init(elems, {});
@@ -36,13 +39,7 @@ class Home extends Component {
 
 	onSave (event) {
 		event.preventDefault();
-		console.log(this.state.credentials);
 		this.props.signinUser(this.state.credentials, this.props.history);
-		if (this.props.isLoggedIn) {
-			console.log("connected");
-		} else {
-			console.log("NOT connected");
-		}
 	}
 
 	render () {
