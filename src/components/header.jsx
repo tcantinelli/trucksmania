@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 class Header extends Component {
-	render () {
+	render() {
 		return (
 			<div className="row valign-wrapper">
 				<div className="col s7 m9 xl10">

@@ -11,24 +11,24 @@ import BigPart from '../components/bigPart';
 require('../style.css');
 
 class Home extends Component {
-	constructor (props) {
+	constructor(props) {
 		super(props);
 		this.state = { credentials: { email: '', password: '', remember: false } };
 		this.onChange = this.onChange.bind(this);
 		this.onSave = this.onSave.bind(this);
 	}
 
-	componentWillMount () {
+	componentWillMount() {
 		if (this.props.isLoggedIn) {
 			this.props.history.push('/admin');
 		}
-		document.addEventListener('DOMContentLoaded', function () {
+		document.addEventListener('DOMContentLoaded', function() {
 			var elems = document.querySelectorAll('.modal');
 			M.Modal.init(elems, {});
 		});
 	}
 
-	onChange (event) {
+	onChange(event) {
 		const field = event.target.id;
 		const credentials = this.state.credentials;
 		field === 'remember' 
@@ -37,12 +37,12 @@ class Home extends Component {
 		return this.setState({ credentials: credentials });
 	}
 
-	onSave (event) {
+	onSave(event) {
 		event.preventDefault();
 		this.props.signinUser(this.state.credentials, this.props.history);
 	}
 
-	render () {
+	render() {
 		return (
 			<div className="container-fluid">
 				<Header />

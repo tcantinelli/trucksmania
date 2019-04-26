@@ -4,6 +4,11 @@
         "max-len": [1, 200, 4],
         "indent": ["error", "tab"],
         "one-var": 0,
-        "quotes": ["error", "single"]
+        "quotes": ["error", "single"],
+        "space-before-function-paren": ["error", {
+            "anonymous": "never",
+            "named": "never",
+            "asyncArrow": "never"
+        }]
     }
 }

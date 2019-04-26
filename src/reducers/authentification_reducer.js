@@ -4,7 +4,7 @@ const initialState = {
 	isLoggedIn: false
 };
 
-export default function AuthentificationReducer (state = initialState, action) {
+export default function AuthentificationReducer(state = initialState, action) {
 	switch (action.type) {
 	case SET_AUTHENTIFICATION:
 		return {

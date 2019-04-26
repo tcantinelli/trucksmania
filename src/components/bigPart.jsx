@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 class BigPart extends Component {
-	render () {
+	render() {
 		return (
 			<div className="row">
 				<div className="col s12 l6 partContainer">

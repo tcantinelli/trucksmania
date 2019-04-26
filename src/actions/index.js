@@ -4,15 +4,15 @@ import Axios from 'axios';
 
 const BASE_URL = 'http://localhost:3060';
 
-export function setAuthentification (isLoggedIn) {
+export function setAuthentification(isLoggedIn) {
 	return {
 		type: SET_AUTHENTIFICATION,
 		payload: isLoggedIn
 	};
 }
 
-export function signinUser ({email, password, remember}, history) {
-	return function (dispatch) {
+export function signinUser({email, password, remember}, history) {
+	return function(dispatch) {
 		Axios.post(`${BASE_URL}/signin`, {
 			email,
 			password
@@ -29,15 +29,15 @@ export function signinUser ({email, password, remember}, history) {
 	};
 }
   
-export function signoutUser () {
-	return function (dispatch) {
+export function signoutUser() {
+	return function(dispatch) {
 		dispatch(setAuthentification(false));
 		localStorage.removeItem('token');
 	};
 }
   
-export function  signupUser ({email, password}, history) {
-	return function (dispatch) {
+export function  signupUser({email, password}, history) {
+	return function(dispatch) {
 		Axios.post(`${BASE_URL}/signup`, {
 			email,
 			password

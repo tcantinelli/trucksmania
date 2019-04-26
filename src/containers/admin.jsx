@@ -1,14 +1,24 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import M from 'materialize-css';
+//Components & Containers
+import SideBar from '../components/sidebar';
 
-require("../style.css");
+require('../style.css');
 
 class Admin extends Component {
-	render () {
+	componentWillMount() {
+		document.addEventListener('DOMContentLoaded', function() {
+			var elems = document.querySelectorAll('.sidenav');
+			M.Sidenav.init(elems, {});
+		});
+	}
+	
+	render() {
 		return (
 			<div className="container-fluid">
-				<h4>Admin</h4>
+				<SideBar />
 			</div>
 		);
 	}
