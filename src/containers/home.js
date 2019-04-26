@@ -1,29 +1,29 @@
 /* eslint-disable no-console */
-import React, { Component } from "react";
-import M from "materialize-css";
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
-import { signinUser } from "../actions";
+import React, { Component } from 'react';
+import M from 'materialize-css';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { signinUser } from '../actions';
 //Components
-import Header from "../components/header";
-import BigPart from "../components/bigPart";
+import Header from '../components/header';
+import BigPart from '../components/bigPart';
 
-require("../style.css");
+require('../style.css');
 
 class Home extends Component {
 	constructor (props) {
 		super(props);
-		this.state = { credentials: { email: "", password: "", remember: false } };
+		this.state = { credentials: { email: '', password: '', remember: false } };
 		this.onChange = this.onChange.bind(this);
 		this.onSave = this.onSave.bind(this);
 	}
 
 	componentWillMount () {
 		if (this.props.isLoggedIn) {
-			this.props.history.push("/admin");
+			this.props.history.push('/admin');
 		}
-		document.addEventListener("DOMContentLoaded", function () {
-			var elems = document.querySelectorAll(".modal");
+		document.addEventListener('DOMContentLoaded', function () {
+			var elems = document.querySelectorAll('.modal');
 			M.Modal.init(elems, {});
 		});
 	}
@@ -31,7 +31,7 @@ class Home extends Component {
 	onChange (event) {
 		const field = event.target.id;
 		const credentials = this.state.credentials;
-		field === "remember" 
+		field === 'remember' 
 			? credentials[field] = event.target.checked
 			: credentials[field] = event.target.value;
 		return this.setState({ credentials: credentials });

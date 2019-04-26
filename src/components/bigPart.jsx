@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 
 class BigPart extends Component {
 	render () {
@@ -11,10 +11,10 @@ class BigPart extends Component {
 						</div>
 						<div className="row partStoresContainer">
 							<div className="col s6 partStores">
-								<img className="responsive-img" src="../img/appleStore.png" alt={"Apple Store"}/>
+								<img className="responsive-img" src="../img/appleStore.png" alt={'Apple Store'}/>
 							</div>
 							<div className="col s6 partStores">
-								<img className="responsive-img" src="../img/googlePlay.png" alt={"Google Play"}/>
+								<img className="responsive-img" src="../img/googlePlay.png" alt={'Google Play'}/>
 							</div>
 						</div>
 					</div>

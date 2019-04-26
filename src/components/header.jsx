@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 
 class Header extends Component {
 	render () {
@@ -8,10 +8,10 @@ class Header extends Component {
 					<img
 						className="responsive-img headerImage"
 						src={
-							"../img/Titre.png"
+							'../img/Titre.png'
 						}
 						alt={
-							"tool.title"
+							'tool.title'
 						}
 					/>
 				</div>
