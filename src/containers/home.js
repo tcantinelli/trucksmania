@@ -8,8 +8,6 @@ import { signinUser } from '../actions';
 import Header from '../components/header';
 import BigPart from '../components/bigPart';
 
-require('../style.css');
-
 class Home extends Component {
 	constructor(props) {
 		super(props);

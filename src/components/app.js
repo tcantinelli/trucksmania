@@ -4,7 +4,7 @@ import Home from '../containers/home';
 import Admin from '../containers/admin';
 import RequireAuthentification from '../helpers/require-authentification';
 
-require('../style.css');
+require('../style/home.css');
 
 export default class App extends Component {
 	render() {

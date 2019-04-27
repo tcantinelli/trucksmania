@@ -31,7 +31,7 @@
   text-align: center;
   padding: 30px;
   background-color: white;
-  background: url("./img/burger.png");
+  background: url("../img/burger.png");
   background-size: cover;
   height: 100%;
   box-shadow: 10px 10px 5px grey;
@@ -43,7 +43,7 @@
   text-align: center;
   padding: 30px;
   background-color: white;
-  background: url("./img/foodtruck.png");
+  background: url("../img/foodtruck.png");
   background-size: cover;
   height: 100%;
   box-shadow: 10px 10px 5px grey;

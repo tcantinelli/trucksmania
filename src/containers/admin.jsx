@@ -4,10 +4,11 @@ import { bindActionCreators } from 'redux';
 import M from 'materialize-css';
 //Components & Containers
 import SideBar from '../components/sidebar';
+import Main from '../containers/main';
 //Redux
 import { getUser } from '../actions';
 
-require('../style.css');
+require('../style/admin.css');
 
 class Admin extends Component {
 	componentWillMount() {
@@ -22,6 +23,7 @@ class Admin extends Component {
 		return (
 			<div className="container-fluid">
 				<SideBar user={this.props.user}/>
+				<Main />
 			</div>
 		);
 	}
