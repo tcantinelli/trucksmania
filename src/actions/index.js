@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { SET_AUTHENTIFICATION } from './action-types';
+import { SET_AUTHENTIFICATION, GET_USER } from './action-types';
 import Axios from 'axios';
 
 const BASE_URL = 'http://localhost:3060';
@@ -22,6 +22,7 @@ export function signinUser({email, password, remember}, history) {
 					localStorage.setItem('token', response.data.token);
 				}
 				dispatch(setAuthentification(true));
+				dispatch(getUser());
 				history.push('/admin');
 			}).catch((error) => {
 				console.log(error.response.data.message);
@@ -46,6 +47,23 @@ export function  signupUser({email, password}, history) {
 				localStorage.setItem('token', response.data.token);
 				dispatch(setAuthentification(true));
 				history.push('/ressources');
+			}).catch((error) => {
+				console.log(error);
+			});
+	};
+}
+
+//GET USER
+export function getUser() {
+	return function(dispatch) {
+		Axios.get(`${BASE_URL}/user`, {
+			headers: { authorization: localStorage.getItem('token')}
+		})
+			.then((response) => {
+				dispatch({
+					type: GET_USER,
+					payload: response.data
+				});
 			}).catch((error) => {
 				console.log(error);
 			});
