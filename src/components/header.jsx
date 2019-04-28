@@ -1,17 +1,17 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 
 class Header extends Component {
-	render () {
+	render() {
 		return (
 			<div className="row valign-wrapper">
 				<div className="col s7 m9 xl10">
 					<img
 						className="responsive-img headerImage"
 						src={
-							"../img/Titre.png"
+							'../img/Titre.png'
 						}
 						alt={
-							"tool.title"
+							'tool.title'
 						}
 					/>
 				</div>

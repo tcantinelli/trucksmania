@@ -1,14 +1,29 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import M from 'materialize-css';
+//Components & Containers
+import SideBar from '../components/sidebar';
+import Main from '../containers/main';
+//Redux
+import { getUser } from '../actions';
 
-require("../style.css");
+require('../style/admin.css');
 
 class Admin extends Component {
-	render () {
+	componentWillMount() {
+		//Initialisation sideBar
+		document.addEventListener('DOMContentLoaded', function() {
+			var elems = document.querySelectorAll('.sidenav');
+			M.Sidenav.init(elems, {});
+		});
+	}
+	
+	render() {
 		return (
 			<div className="container-fluid">
-				<h4>Admin</h4>
+				<SideBar user={this.props.user}/>
+				<Main />
 			</div>
 		);
 	}
@@ -16,14 +31,12 @@ class Admin extends Component {
 
 const mapDispatchToProps = dispatch => ({
 		...bindActionCreators(
-			{
-			},
-			dispatch
+			{getUser}, dispatch
 		)
 	}),
 	mapStateToProps = state => {
 		return {
-			projets: state.projects
+			user: state.user
 		};
 	};
 export default connect(

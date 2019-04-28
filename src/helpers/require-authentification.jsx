@@ -1,22 +1,22 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
-export default function (ChildComponent) {
+export default function(ChildComponent) {
 	class RequireAuthentification extends Component {
-		componentWillMount () {
+		componentWillMount() {
 			if (!this.props.isLoggedIn) {
-				this.props.history.push("/");
+				this.props.history.push('/');
 			}
 		}
 
-		componentWillUpdate (nextProps) {
+		componentWillUpdate(nextProps) {
 			if (!nextProps.isLoggedIn) {
-				this.props.history.push("/");
+				this.props.history.push('/');
 			}
 		}
     
 
-		render () {
+		render() {
 			return this.props.isLoggedIn && <ChildComponent />;
 		}
 	}
