@@ -1,18 +1,36 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { Link } from 'react-router-dom';
 
-class SideCollection extends Component  {
-	render() {
-		return (
-			<li class="collection-item avatar">
-				<img src="images/yuna.jpg" alt="" class="circle"/>
-				<span class="title">Title</span>
-				<p>First Line <br/>
-         Second Line
-				</p>
-				<a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
-			</li>
-		);
-	}
-}
+//Style
+const collectioItemStyle = {
+	//padding: '0px'
+};
+
+const rowStyle = {
+	margin: '0px' 
+};
+
+const SideCollection = ({icon, link, count}) => {
+	return (
+		<li class="collection-item" style={collectioItemStyle}>
+			<div className="row valign-wrapper" style={rowStyle}>
+				<div className="col s2">
+					<i class="small material-icons">{icon}</i>
+				</div>
+				<div className="col s7 valign-wrapper">
+					<Link className="nav-link" to={`/${link.adress}`}>{link.title}</Link>
+				</div>
+				<div className="col s3 valign-wrapper">
+					{count
+						? <span class="new badge blue" data-badge-caption="" style={rowStyle}>{count}</span>
+						: null					
+					}
+				</div>
+			</div>	
+		</li>
+	);
+};
 
 export default SideCollection;
+
+
