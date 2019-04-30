@@ -37,16 +37,14 @@ export function signoutUser() {
 	};
 }
   
-export function  signupUser({email, password}, history) {
+export function signupUser(formValues, history) {
+	console.log(formValues);
 	return function(dispatch) {
-		Axios.post(`${BASE_URL}/signup`, {
-			email,
-			password
-		})
+		Axios.post(`${BASE_URL}/signup`, formValues)
 			.then((response) => {
 				localStorage.setItem('token', response.data.token);
 				dispatch(setAuthentification(true));
-				history.push('/ressources');
+				history.push('/admin');
 			}).catch((error) => {
 				console.log(error);
 			});

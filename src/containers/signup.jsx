@@ -17,16 +17,13 @@ const FIELDS = {
 class Signup extends Component {
 	constructor(props) {
 		super(props);
-		// Don't call this.setState() here!
 		this.state = {
 			activeId: null
 		};
-		//this.handleClick = this.handleClick.bind(this);
 	}
 	handleSubmit = formValues => {
 		formValues.foodtruck.category = this.state.activeId ? this.state.activeId : '5ca7fbfa04f3defa2159d601';
-		// this.props.signupUser(formValues, this.props.history);
-		console.log(formValues);
+		this.props.signupUser(formValues, this.props.history);
 	};
 
 	handleClick(id) {
