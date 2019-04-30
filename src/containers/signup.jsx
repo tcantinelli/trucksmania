@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { reduxForm, Field, FormSection } from 'redux-form';
 import { signupUser } from '../actions';
 import * as validations from '../validations';
-import Truck from '../components/truck';
+import Categorie from '../components/categorie';
 
 require('../style/signup.css');
 
@@ -15,10 +15,22 @@ const FIELDS = {
 };
 
 class Signup extends Component {
+	constructor(props) {
+		super(props);
+		// Don't call this.setState() here!
+		this.state = {
+			activeId: null
+		};
+		//this.handleClick = this.handleClick.bind(this);
+	}
 	handleSubmit = formValues => {
 		// this.props.signupUser(formValues, this.props.history);
 		console.log(formValues);
 	};
+
+	handleClick(id) {
+		this.setState({activeId: id});
+	}
 
 	//Fonction permettant de customiser le champ input, utile avec les validations, en parametres: tous les fields
 	renderInputComponent = field => {
@@ -68,7 +80,25 @@ class Signup extends Component {
 					</div>
 					<div className="col s11 offset-s1">
 						<FormSection name="foodtruck">
-							<Truck />
+							<Field
+								name="name"
+								component={this.renderInputComponent}
+								type="text"
+								label="Nom"
+							/>
+							<div className="col s11 left-align">
+								{this.props.categories.map(categorie => {
+									return (
+										<div
+											className={`col s2 center-align ${categorie._id === this.state.activeId ? 'activeCategorieContainerStyle' : 'inactiveCategorieContainerStyle'}`}
+											onClick={this.handleClick.bind(this, categorie._id)}
+											role="presentation"
+											key={categorie._id}>
+											<Categorie cat={categorie} />
+										</div>
+									);
+								})}
+							</div>
 						</FormSection>
 					</div>
 				</div>

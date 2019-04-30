@@ -3,6 +3,7 @@ import { Field } from 'redux-form';
 import M from 'materialize-css';
 import { connect } from 'react-redux';
 
+
 class Truck extends Component {
 	componentWillMount() {
 		document.addEventListener('DOMContentLoaded', function() {
@@ -34,12 +35,10 @@ class Truck extends Component {
 						label="Nom"
 					/>
 				</div>
-				<div className="input-field col s4 offset-s1">
-					<select className="icons">
-						{this.props.categories.map(categorie => {
-							return <option value="" data-icon={`../img/categories/${categorie.image}`} className="left" key={categorie._id}>{categorie.value}</option>;
-						})}
-					</select>
+				<div className="col s11 left-align">
+					{this.props.categories.map(categorie => {
+						return <Categorie cat={categorie} key={categorie._id} />;
+					})}
 				</div>
 			</div>
 		);
