@@ -21,11 +21,11 @@ class Categorie extends Component {
 /* Style */
 const 
 	categorieTextStyle = {
-		fontSize: '1.2vw',
+		fontSize: '1.3vw',
 		color: '#181717'
 	},
 	categorieImageStyle = {
-		width: '40%'
+		width: '40px'
 	};
 
 export default Categorie;

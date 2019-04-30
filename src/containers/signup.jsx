@@ -24,6 +24,7 @@ class Signup extends Component {
 		//this.handleClick = this.handleClick.bind(this);
 	}
 	handleSubmit = formValues => {
+		formValues.foodtruck.category = this.state.activeId ? this.state.activeId : '5ca7fbfa04f3defa2159d601';
 		// this.props.signupUser(formValues, this.props.history);
 		console.log(formValues);
 	};
@@ -85,8 +86,12 @@ class Signup extends Component {
 								component={this.renderInputComponent}
 								type="text"
 								label="Nom"
+								validate={validations.validateNotEmpty}
 							/>
 							<div className="col s11 offset-s1">
+								<h5 className="left-align catgoriesTitle">Catégorie</h5>
+							</div>
+							<div className="col s11 offset-s1 catgoriesContainer">
 								{this.props.categories.map(categorie => {
 									return (
 										<div
@@ -102,10 +107,10 @@ class Signup extends Component {
 						</FormSection>
 					</div>
 				</div>
-				<div>
-					<div className="row justify-content-md-center">
+				<div className="row inscriptionRow">
+					<div className="col s12 center-align">
 						<button type="submit" className="btn btn-primary btn-raised">
-							Inscription
+							Valider
 						</button>
 					</div>
 				</div>
