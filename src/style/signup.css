@@ -1,0 +1,35 @@
+.error {
+    color: red;
+}
+
+.colContainer {
+    border: 2px solid gray;
+    border-radius: 5px;
+    margin: 10px;
+}
+
+.catgoriesTitle {
+    color: gray
+}
+
+.catgoriesContainer {
+    border-left: 1px solid gray;
+}
+
+.activeCategorieContainerStyle {
+    border: 3px solid green;
+    border-radius: 5px;
+    margin: 5px !important;
+    padding: 5px !important;
+}
+
+.inactiveCategorieContainerStyle {
+    border: 3px solid transparent;
+    border-radius: 5px;
+    margin: 5px !important;
+    padding: 5px !important;
+}
+
+.inscriptionRow {
+    margin: 50px 0px;
+}
