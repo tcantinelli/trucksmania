@@ -7,7 +7,7 @@ import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import App from './components/app';
 import reducers from './reducers';
-import { setAuthentification, getUser  } from './actions';
+import { setAuthentification, getUser, getCategories } from './actions';
 
 const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
 
@@ -23,6 +23,9 @@ if (token) {
 	store.dispatch(getUser());
 	store.dispatch(setAuthentification(true));
 }
+
+//Recup Categories
+store.dispatch(getCategories());
 
 ReactDOM.render(
 	<Provider

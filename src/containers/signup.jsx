@@ -1,28 +1,32 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { reduxForm, Field } from 'redux-form';
+import { reduxForm, Field, FormSection } from 'redux-form';
 import { signupUser } from '../actions';
 import * as validations from '../validations';
+import Truck from '../components/truck';
+
+require('../style/signup.css');
 
 const FIELDS = {
-	pseudo: 'pseudo',
+	email: 'email',
 	password: 'password',
 	secondPassword: 'secondPassword'
 };
 
 class Signup extends Component {
 	handleSubmit = formValues => {
-		this.props.signupUser(formValues, this.props.history);
+		// this.props.signupUser(formValues, this.props.history);
+		console.log(formValues);
 	};
 
 	//Fonction permettant de customiser le champ input, utile avec les validations, en parametres: tous les fields
 	renderInputComponent = field => {
 		return (
 			<div className="row">
-				<div className="col s4">        
+				<div className="input-field col s4 offset-s1">        
+					<input {...field.input} type={field.type} id={field.label} className="form-control"/>
 					<label htmlFor={field.label}>{field.label}</label>
-					<input {...field.input} type={field.type} id={field.label} />
 					{field.meta.touched && field.meta.error && <span className="error">{field.meta.error}</span>}
 				</div>
 			</div>
@@ -33,31 +37,46 @@ class Signup extends Component {
 		return (
 			<form onSubmit={this.props.handleSubmit(this.handleSubmit)}>
 				<div>
-					<h1>Inscription</h1>
+					<h4 className="center-align">Inscription</h4>
 				</div>
-				<Field
-					name={FIELDS.email}
-					component={this.renderInputComponent} //Au lieu de "input"
-					type="text"
-					label="email"
-				/>
-				<Field
-					name={FIELDS.password}
-					component={this.renderInputComponent} //Au lieu de "input"
-					type="password"
-					label="Mot de passe"
-				/>
-				<Field
-					name={FIELDS.secondPassword}
-					component={this.renderInputComponent} //Au lieu de "input"
-					type="password"
-					label="Répetez le mot de passe"
-				/>
+				<div className="row">
+					<div className="col s11 offset-s1">
+						<h5 className="left-align">Le proprio</h5>
+					</div>
+					<div className="col s11 offset-s1">
+						<Field
+							name={FIELDS.email}
+							component={this.renderInputComponent} //Au lieu de "input"
+							type="text"
+							label="email"
+						/>
+						<Field
+							name={FIELDS.password}
+							component={this.renderInputComponent} //Au lieu de "input"
+							type="password"
+							label="Mot de passe"
+						/>
+						<Field
+							name={FIELDS.secondPassword}
+							component={this.renderInputComponent} //Au lieu de "input"
+							type="password"
+							label="Répetez le mot de passe"
+						/>
+					</div>
+					<div className="col s11 offset-s1">
+						<h5 className="left-align">Le food-truck</h5>
+					</div>
+					<div className="col s11 offset-s1">
+						<FormSection name="foodtruck">
+							<Truck />
+						</FormSection>
+					</div>
+				</div>
 				<div>
 					<div className="row justify-content-md-center">
 						<button type="submit" className="btn btn-primary btn-raised">
 							Inscription
-  					</button>
+						</button>
 					</div>
 				</div>
 			</form>
@@ -70,6 +89,12 @@ const mapDispatchToProps = dispatch => ({
 		{signupUser}, dispatch
 	)
 });
+
+const mapStateToProps = state => {
+	return {
+		categories: state.categories
+	};
+};
 
 function validate(formValues) {
 	const errors = {};
@@ -89,6 +114,6 @@ const signupForm = reduxForm({
 })(Signup);
 
 export default connect(
-	null,
+	mapStateToProps,
 	mapDispatchToProps
 )(signupForm);

@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { SET_AUTHENTIFICATION, GET_USER } from './action-types';
+import { SET_AUTHENTIFICATION, GET_USER, GET_CATEGORIES } from './action-types';
 import Axios from 'axios';
 
 const BASE_URL = 'http://localhost:3060';
@@ -62,6 +62,21 @@ export function getUser() {
 			.then((response) => {
 				dispatch({
 					type: GET_USER,
+					payload: response.data
+				});
+			}).catch((error) => {
+				console.log(error);
+			});
+	};
+}
+
+//CATEGORIES
+export function getCategories() {
+	return function(dispatch) {
+		Axios.get(`${BASE_URL}/categories`)
+			.then((response) => {
+				dispatch({
+					type: GET_CATEGORIES,
 					payload: response.data
 				});
 			}).catch((error) => {
