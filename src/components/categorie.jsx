@@ -21,7 +21,7 @@ class Categorie extends Component {
 /* Style */
 const 
 	categorieTextStyle = {
-		fontSize: '1.7vw',
+		fontSize: '1.2vw',
 		color: '#181717'
 	},
 	categorieImageStyle = {

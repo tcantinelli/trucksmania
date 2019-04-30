@@ -86,7 +86,7 @@ class Signup extends Component {
 								type="text"
 								label="Nom"
 							/>
-							<div className="col s11 left-align">
+							<div className="col s11 offset-s1">
 								{this.props.categories.map(categorie => {
 									return (
 										<div
