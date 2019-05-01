@@ -1,7 +1,7 @@
 import { GET_USER } from '../actions/action-types';
 
 const initialState = {
-	pseudo: '',
+	email: '',
 	account: 'foodtruck',
 	validation: false,
 	foodtrucks: []

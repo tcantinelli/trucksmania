@@ -42,23 +42,21 @@ const SideBar = ({ user }) => {
 			<ul id="slide-out" className="sidenav sidenav-fixed">
 				<li>
 					<div className="user-view">
-						<div className="background">
+						<div className="deconnexion">
 						</div>
 						{user.foodtrucks[0]
 							? <img className="circle" src={`../img/logos/${user.foodtrucks[0].logo}`} alt={user.foodtrucks[0].logo} />
 							: null}
-						<a href="#name"><span className="name">{user.pseudo}</span></a>
 						<a href="#email"><span className="email">{user.email}</span></a>
 					</div>
 					<ul class="collection">
 						{SideItems.map(item => {
 							return <SideCollection {...item} />;
 						})}
-						
 					</ul>
 				</li>
 			</ul>
-			<a href="#" data-target="slide-out" className="sidenav-trigger"><i className="material-icons">menu</i></a>
+			<a href="#" data-target="slide-out" className="sidenav-trigger"><i className="material-icons">Menu</i></a>
 		</div>
 	);
 };
