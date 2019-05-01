@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import M from 'materialize-css';
 //Components & Containers
-import SideBar from '../components/sidebar';
+import SideBar from './sidebar';
 import Main from '../containers/main';
 //Redux
 import { getUser } from '../actions';
