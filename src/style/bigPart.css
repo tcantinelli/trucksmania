@@ -1,22 +1,3 @@
-/* Header */
-.headerImage {
-  max-height: 10vh;
-}
-
-.buttonCol {
-  margin: 20px;
-  font-size: 1.5vw;
-  font-family: 'Oxygen', sans-serif;
-}
-
-.loginModal {
-  max-width: 500px;
-}
-
-.rowModal {
-  margin-bottom: 0px !important;
-}
-/* Big Part */
 .partsRow {
   justify-content: center;
 }

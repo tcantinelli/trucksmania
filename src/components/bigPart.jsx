@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+require('../style/bigPart.css');
+
 class BigPart extends Component {
 	render() {
 		return (
