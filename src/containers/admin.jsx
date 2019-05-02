@@ -12,6 +12,9 @@ require('../style/admin.css');
 
 class Admin extends Component {
 	componentWillMount() {
+		//Recup datas User
+		this.props.getUser();
+		
 		//Initialisation sideBar
 		document.addEventListener('DOMContentLoaded', function() {
 			var elems = document.querySelectorAll('.sidenav');

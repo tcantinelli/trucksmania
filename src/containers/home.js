@@ -11,27 +11,29 @@ import BigPart from '../components/bigPart';
 class Home extends Component {
 	constructor(props) {
 		super(props);
-		this.state = { credentials: { email: '', password: '', remember: false } };
+		this.state = { 
+			credentials: { email: '', password: '' },
+			instance: null
+		};
 		this.onChange = this.onChange.bind(this);
 		this.onSave = this.onSave.bind(this);
 	}
 
 	componentWillMount() {
-		if (this.props.isLoggedIn) {
-			this.props.history.push('/admin');
-		}
 		document.addEventListener('DOMContentLoaded', function() {
 			var elems = document.querySelectorAll('.modal');
 			M.Modal.init(elems, {});
 		});
+		if (this.props.isLoggedIn) {
+			this.props.history.push('/admin');
+		}
 	}
 
+	//Modal
 	onChange(event) {
 		const field = event.target.id;
 		const credentials = this.state.credentials;
-		field === 'remember' 
-			? credentials[field] = event.target.checked
-			: credentials[field] = event.target.value;
+		credentials[field] = event.target.value;
 		return this.setState({ credentials: credentials });
 	}
 
@@ -60,16 +62,6 @@ class Home extends Component {
 									<i className="material-icons prefix">https</i>
 									<input id="password" type="password" onChange={this.onChange} />
 									<label htmlFor="password">Mot de passe</label>
-								</div>
-							</div>
-							<div className="row rowModal">
-								<div className="input-field col s6 offset-s3">
-									<p className="center-align">
-										<label>
-											<input id="remember" type="checkbox" onChange={this.onChange}/>
-											<span>Se souvenir</span>
-										</label>
-									</p>
 								</div>
 							</div>
 							<div className="row rowModal">
