@@ -7,28 +7,36 @@ import Button from '@material-ui/core/Button';
 
 const SideItems = [
 	{
-		icon: 'supervisor_account',
+		icon: 'local_shipping',
 		link: {
 			title: 'Profil',
 			adress: '#!'
 		},
-		count: 0
+		count: null
 	},
 	{
 		icon: 'shopping_basket',
 		link: {
+			title: 'Commandes',
+			adress: '#!'
+		},
+		count: null
+	},
+	{
+		icon: 'local_offer',
+		link: {
 			title: 'Articles',
 			adress: '#!'
 		},
-		count: 0
+		count: null
 	},
 	{
-		icon: 'gps_fixed',
+		icon: 'place',
 		link: {
 			title: 'Emplacements',
 			adress: '#!'
 		},
-		count: 0
+		count: null
 	},
 	{
 		icon: 'smartphone',
@@ -36,7 +44,7 @@ const SideItems = [
 			title: 'L\'application',
 			adress: '#!'
 		},
-		count: 0
+		count: null
 	}
 ];
 
@@ -57,9 +65,9 @@ class SideBar extends Component {
 								: null}
 							<a href="#email"><span className="email">{this.props.user.email}</span></a>
 						</div>
-						<ul class="collection">
-							{SideItems.map(item => {
-								return <SideCollection {...item} />;
+						<ul className="collection">
+							{SideItems.map((item, key) => {
+								return <SideCollection {...item} key={key} />;
 							})}
 						</ul>
 					</li>

@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { SET_AUTHENTIFICATION, GET_USER, GET_CATEGORIES } from './action-types';
+import { SET_AUTHENTIFICATION, GET_USER, UPDATE_USER, GET_CATEGORIES } from './action-types';
 import Axios from 'axios';
 
 const BASE_URL = 'http://localhost:3060';
@@ -64,6 +64,14 @@ export function getUser() {
 			}).catch((error) => {
 				console.log(error);
 			});
+	};
+}
+
+//UPDATE USER
+export function updateUser(user) {
+	return {
+		type: UPDATE_USER,
+		payload: user
 	};
 }
 

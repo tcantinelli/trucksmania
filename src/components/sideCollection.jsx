@@ -10,19 +10,19 @@ const rowStyle = {
 	margin: '0px' 
 };
 
-const SideCollection = ({icon, link, count}) => {
+const SideCollection = ({icon, link, count}, key) => {
 	return (
-		<li class="collection-item" style={collectioItemStyle}>
+		<li className="collection-item" style={collectioItemStyle} key={key}>
 			<div className="row valign-wrapper" style={rowStyle}>
 				<div className="col s2">
-					<i class="small material-icons">{icon}</i>
+					<i className="small material-icons">{icon}</i>
 				</div>
 				<div className="col s7 valign-wrapper">
 					<Link className="nav-link" to={`/${link.adress}`}>{link.title}</Link>
 				</div>
 				<div className="col s3 valign-wrapper">
 					{count
-						? <span class="new badge blue" data-badge-caption="" style={rowStyle}>{count}</span>
+						? <span className="new badge blue" data-badge-caption="" style={rowStyle}>{count}</span>
 						: null					
 					}
 				</div>

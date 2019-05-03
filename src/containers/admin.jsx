@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import M from 'materialize-css';
 //Components & Containers
 import SideBar from './sidebar';
-import Main from '../containers/main';
+import Profil from '../containers/profil';
 //Redux
 import { getUser } from '../actions';
 
@@ -25,8 +25,8 @@ class Admin extends Component {
 	render() {
 		return (
 			<div className="container-fluid">
-				<SideBar user={this.props.user}/>
-				<Main />
+				<SideBar />
+				<Profil user={this.props.user}/>
 			</div>
 		);
 	}
