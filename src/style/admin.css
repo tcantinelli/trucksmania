@@ -8,3 +8,26 @@
       padding-left: 0;
     }
   }
+
+/* Profil */
+.profilPartContainer {
+  border: 2px solid #252323;
+  border-radius: 5px;
+  box-shadow: 10px 10px 5px #a09d9d;
+  height: auto;
+  position: relative;
+  margin: 4vw 4vw;
+}
+
+.insideRow {
+  padding: 0px;
+  margin: 0px !important;
+}
+
+/* Form */
+.formContainer {
+  max-width: 80%;
+  background-color: white;
+  border-radius: 5px;
+  padding: 10px;
+}

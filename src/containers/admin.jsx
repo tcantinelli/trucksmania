@@ -1,20 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import M from 'materialize-css';
 //Components & Containers
 import SideBar from './sidebar';
 import Profil from '../containers/profil';
-//Redux
-import { getUser } from '../actions';
 
 require('../style/admin.css');
 
 class Admin extends Component {
 	componentWillMount() {
-		//Recup datas User
-		this.props.getUser();
-		
 		//Initialisation sideBar
 		document.addEventListener('DOMContentLoaded', function() {
 			var elems = document.querySelectorAll('.sidenav');
@@ -32,17 +26,12 @@ class Admin extends Component {
 	}
 }
 
-const mapDispatchToProps = dispatch => ({
-		...bindActionCreators(
-			{getUser}, dispatch
-		)
-	}),
-	mapStateToProps = state => {
-		return {
-			user: state.user
-		};
+const mapStateToProps = state => {
+	return {
+		user: state.user
 	};
+};
 export default connect(
 	mapStateToProps,
-	mapDispatchToProps
+	null
 )(Admin);

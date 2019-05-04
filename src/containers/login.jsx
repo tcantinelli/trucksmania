@@ -31,21 +31,21 @@ class Login extends Component  {
 		return (
 			<div className="loginView valign-wrapper">
 				<form className="container formContainer">
-					<div className="row rowModal">
+					<div className="row formRow">
 						<div className="input-field col s12">
 							<i className="material-icons prefix">account_circle</i>
 							<input id="email" type="email" onChange={this.onChange} />
 							<label htmlFor="email">Email</label>
 						</div>
 					</div>
-					<div className="row rowModal">
+					<div className="row formRow">
 						<div className="input-field col s12">
 							<i className="material-icons prefix">https</i>
 							<input id="password" type="password" onChange={this.onChange} />
 							<label htmlFor="password">Mot de passe</label>
 						</div>
 					</div>
-					<div className="row rowModal">
+					<div className="row formRow">
 						<div className="input-field col s6 offset-s3 center-align">
 							<button className="btn waves-effect" type="submit" name="action" onClick={this.onSave} >Connexion
 								<i className="material-icons right">send</i>

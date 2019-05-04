@@ -69,6 +69,7 @@ export function getUser() {
 
 //UPDATE USER
 export function updateUser(user) {
+	console.log(user);
 	return {
 		type: UPDATE_USER,
 		payload: user
