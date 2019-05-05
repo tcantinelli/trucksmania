@@ -16,12 +16,12 @@
   box-shadow: 10px 10px 5px #a09d9d;
   height: auto;
   position: relative;
-  margin: 4vw 4vw;
+  margin: 5vh 4vw;
 }
 
 .insideRow {
-  padding: 0px;
-  margin: 0px !important;
+  padding: 20px;
+  margin: 10px !important;
 }
 
 /* Form */
@@ -30,4 +30,19 @@
   background-color: white;
   border-radius: 5px;
   padding: 10px;
+}
+
+/* Categories */
+.activeCategorieContainerStyle {
+  border: 3px solid green;
+  border-radius: 5px;
+  margin: 5px !important;
+  padding: 5px !important;
+}
+
+.inactiveCategorieContainerStyle {
+  border: 3px solid transparent;
+  border-radius: 5px;
+  margin: 5px !important;
+  padding: 5px !important;
 }

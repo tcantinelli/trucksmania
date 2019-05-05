@@ -6,12 +6,11 @@ class Categorie extends Component {
 		return (
 			<div>
 				<img
-					className="responsive-img"
 					src={`../img/categories/${cat.image}`}
 					alt={cat.image}
 					style={categorieImageStyle}
 				/>
-				<div className="flow-text toolText" style={categorieTextStyle}>{cat.value}</div>
+				<div className="toolText" style={categorieTextStyle}>{cat.value}</div>
 			</div>
 		);
 	}
@@ -21,7 +20,7 @@ class Categorie extends Component {
 /* Style */
 const 
 	categorieTextStyle = {
-		fontSize: '1.3vw',
+		fontSize: '14px',
 		color: '#181717'
 	},
 	categorieImageStyle = {
