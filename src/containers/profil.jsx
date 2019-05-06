@@ -18,17 +18,30 @@ class Profil extends Component  {
 	constructor(props) {
 		super(props);
 		this.state = {
-			activeId: '5ca7fbfa04f3defa2159d601'
+			activeId: null
 		};
 	}
 
 	componentWillUpdate(nextProps) {
 		if (this.props.user !== nextProps.user) {
 			this.props.change(FIELDS.name, nextProps.user.foodtrucks[0].name);
-			console.log(nextProps.user.foodtrucks[0]);
 			this.setState({activeId: nextProps.user.foodtrucks[0].category._id});
 		}
 	}
+
+	renderUploadComponent = field => {
+		return (
+			<div class="file-field input-field">
+				<div class="btn">
+					<span>Charger</span>
+					<input type="file"/>
+				</div>
+				<div class="file-path-wrapper">
+					<input class="file-path validate" type="text"/>
+				</div>
+			</div>
+		);
+	};
 
 	handleClick(id) {
 		this.setState({activeId: id});
@@ -79,6 +92,20 @@ class Profil extends Component  {
 									);
 								})}
 							</Grid>		
+						</div>
+					</div>
+					{/* LOGO */}
+					<div className="profilPartContainer" >
+						<PartTitle title="Logo" />
+						<div className="row insideRow valign-wrapper">
+							<div className="row">
+								<div className="input-field col s12">
+									<Field
+										name={FIELDS.logo}
+										component={this.renderUploadComponent}
+									/>
+								</div>
+							</div>
 						</div>
 					</div>
 				</form>
