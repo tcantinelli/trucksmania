@@ -29,7 +29,7 @@ class Profil extends Component  {
 		}
 	}
 
-	renderUploadComponent = field => {
+	renderUploadComponent = () => {
 		return (
 			<div class="file-field input-field">
 				<div class="btn">
