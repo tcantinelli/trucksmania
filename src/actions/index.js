@@ -1,8 +1,7 @@
 /* eslint-disable no-console */
 import { SET_AUTHENTIFICATION, GET_USER, UPDATE_USER, GET_CATEGORIES } from './action-types';
 import Axios from 'axios';
-
-const BASE_URL = 'http://localhost:3060';
+import { BASE_URL } from '../helpers/url';
 
 export function setAuthentification(isLoggedIn) {
 	return {
