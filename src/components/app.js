@@ -12,9 +12,9 @@ export default class App extends Component {
 			<div className="app">
 				<Switch>
 					<Route exact path="/" component={Home} />
-					<Route exact path="/signin" component={Login} />
-					<Route exact path="/signup" component={Signup} />
-					<Route exact path="/admin" component={RequireAuthentification(Admin)} />
+					<Route path="/signin" component={Login} />
+					<Route path="/signup" component={Signup} />
+					<Route path="/admin" component={RequireAuthentification(Admin)} />
 				</Switch>
 			</div>
 		);

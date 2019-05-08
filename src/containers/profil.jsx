@@ -20,8 +20,11 @@ class Profil extends Component  {
 		super(props);
 		this.state = {
 			activeId: null,
-			preview: null
+			preview: null,
+			localPreview: null
 		};
+
+		this.handleChange = this.handleChange.bind(this);
 	}
 
 	componentWillUpdate(nextProps) {
@@ -36,13 +39,13 @@ class Profil extends Component  {
 
 	renderUploadComponent = () => {
 		return (
-			<div class="file-field input-field">
-				<div class="btn">
+			<div className="file-field input-field">
+				<div className="btn">
 					<span>{this.state.preview ? 'Modifier' : 'Ajouter'}</span>
 					<input type="file"/>
 				</div>
-				<div class="file-path-wrapper">
-					<input class="file-path validate" type="text"/>
+				<div className="file-path-wrapper">
+					<input className="file-path validate" type="text"/>
 				</div>
 			</div>
 		);
@@ -52,14 +55,22 @@ class Profil extends Component  {
 		this.setState({activeId: id});
 	}
 
+	//Prise en charge du chargement de l'image, pour affichage preview
+	handleChange(event) {
+		console.log('handle');
+		
+		this.setState({
+			localPreview: URL.createObjectURL(event.target.files[0])
+		});
+	}
+
 	handleSubmit = formValues => {
 		// formValues.foodtruck.category = this.state.activeId ? this.state.activeId : '5ca7fbfa04f3defa2159d601';
 		// this.props.signupUser(formValues, this.props.history);
 		console.log(formValues);
 	};
-	
-	render() {
 
+	render() {
 		return (
 			<div className="container-fluid adminContainer">
 				<form className="container formContainer">
@@ -104,7 +115,10 @@ class Profil extends Component  {
 						<PartTitle title="Logo" />
 						<div className="row insideRow valign-wrapper">
 							<div className="row valign-wrapper">
-								<div className="input-field col s8">
+								<div className="input-field col s8"
+									onChange={this.handleChange}
+									role="presentation"
+								>
 									<Field
 										name={FIELDS.logo}
 										component={this.renderUploadComponent}
@@ -112,9 +126,11 @@ class Profil extends Component  {
 								</div>
 								<div className="col s3 offset-s1">
 									<div className="previewContainer">
-										{this.state.preview 
-											? <img className="responsive-img" src={`${BASE_URL}/image/${this.state.preview._id}`} alt={this.state.preview.originalname} />
-											: <img className="responsive-img" src="../img/logo_default.png" alt="Default logo" />}
+										{this.state.localPreview
+											? <img className="responsive-img" src={this.state.localPreview} alt="Local" />
+											: this.state.preview 
+												? <img className="responsive-img" src={`${BASE_URL}/image/${this.state.preview._id}`} alt={this.state.preview.originalname} />
+												: <img className="responsive-img" src="../img/logo_default.png" alt="Default logo" />}
 									</div>
 								</div>
 							</div>
