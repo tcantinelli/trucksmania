@@ -46,3 +46,10 @@
   margin: 5px !important;
   padding: 5px !important;
 }
+
+/* preview Logo */
+.previewContainer {
+  margin: 5px;
+  border: 1px solid gray;
+  border-radius: 5px;
+}

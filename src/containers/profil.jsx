@@ -6,6 +6,7 @@ import { reduxForm, Field, change } from 'redux-form';
 import PartTitle from '../components/part_title';
 import Categorie from '../components/categorie';
 import Grid from '@material-ui/core/Grid';
+import { BASE_URL } from '../helpers/url';
 
 const FIELDS = {
 	name: 'name',
@@ -18,14 +19,18 @@ class Profil extends Component  {
 	constructor(props) {
 		super(props);
 		this.state = {
-			activeId: null
+			activeId: null,
+			preview: null
 		};
 	}
 
 	componentWillUpdate(nextProps) {
 		if (this.props.user !== nextProps.user) {
 			this.props.change(FIELDS.name, nextProps.user.foodtrucks[0].name);
-			this.setState({activeId: nextProps.user.foodtrucks[0].category._id});
+			this.setState({
+				activeId: nextProps.user.foodtrucks[0].category._id,
+				preview: nextProps.user.foodtrucks[0].logo
+			});
 		}
 	}
 
@@ -33,7 +38,7 @@ class Profil extends Component  {
 		return (
 			<div class="file-field input-field">
 				<div class="btn">
-					<span>Charger</span>
+					<span>{this.state.preview ? 'Modifier' : 'Ajouter'}</span>
 					<input type="file"/>
 				</div>
 				<div class="file-path-wrapper">
@@ -98,12 +103,19 @@ class Profil extends Component  {
 					<div className="profilPartContainer" >
 						<PartTitle title="Logo" />
 						<div className="row insideRow valign-wrapper">
-							<div className="row">
-								<div className="input-field col s12">
+							<div className="row valign-wrapper">
+								<div className="input-field col s8">
 									<Field
 										name={FIELDS.logo}
 										component={this.renderUploadComponent}
 									/>
+								</div>
+								<div className="col s3 offset-s1">
+									<div className="previewContainer">
+										{this.state.preview 
+											? <img className="responsive-img" src={`${BASE_URL}/image/${this.state.preview._id}`} alt={this.state.preview.originalname} />
+											: <img className="responsive-img" src="../img/logo_default.png" alt="Default logo" />}
+									</div>
 								</div>
 							</div>
 						</div>
