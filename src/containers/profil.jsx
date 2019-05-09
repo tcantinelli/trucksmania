@@ -8,13 +8,6 @@ import Categorie from '../components/categorie';
 import Grid from '@material-ui/core/Grid';
 import { BASE_URL } from '../helpers/url';
 
-const FIELDS = {
-	name: 'name',
-	category: 'category',
-	logo: 'logo',
-	images: 'images'
-};
-
 class Profil extends Component  {
 	constructor(props) {
 		super(props);
@@ -28,9 +21,10 @@ class Profil extends Component  {
 
 	componentWillUpdate(nextProps) {
 		if (this.props.user !== nextProps.user) {
-			this.props.change(FIELDS.name, nextProps.user.foodtrucks[0].name);
+			this.props.change('name', nextProps.user.foodtrucks[0].name);
+			this.props.change('logo', nextProps.user.foodtrucks[0].logo.originalname);
 			this.setState({
-				activeId: nextProps.user.foodtrucks[0].category._id,
+				activeId: nextProps.user.foodtrucks[0].category,
 				preview: nextProps.user.foodtrucks[0].logo
 			});
 		}
@@ -89,7 +83,7 @@ class Profil extends Component  {
 							<div className="row">
 								<div className="input-field col s12">
 									<Field
-										name={FIELDS.name}
+										name="name"
 										component="input"
 										type="text"
 									/>
@@ -128,7 +122,7 @@ class Profil extends Component  {
 									role="presentation"
 								>
 									<Field
-										name={FIELDS.logo}
+										name="logo"
 										component={this.renderUploadComponent}
 									/>
 								</div>
@@ -171,8 +165,7 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const profilForm = reduxForm({
-	form: 'ProfilForm',
-	fields: Object.keys(FIELDS)
+	form: 'ProfilForm'
 })(Profil);
 
 export default connect(mapStateToProps, mapDispatchToProps)(profilForm);

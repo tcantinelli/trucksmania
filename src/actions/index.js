@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { SET_AUTHENTIFICATION, GET_USER, UPDATE_USER, GET_CATEGORIES } from './action-types';
+import { SET_AUTHENTIFICATION, GET_USER, UPDATE_USER, GET_CATEGORIES, UPDATE_PROFIL } from './action-types';
 import Axios from 'axios';
 import FormData from 'form-data';
 import { BASE_URL } from '../helpers/url';
@@ -94,12 +94,10 @@ export function updateProfil(formValues) {
 
 		Axios.post(`${BASE_URL}/upprofil`, datas, config)
 			.then((response) => {
-				console.log(response.data);
-				
-				// dispatch({
-				// 	type: GET_CATEGORIES,
-				// 	payload: response.data
-				// });			
+				dispatch({
+					type: UPDATE_PROFIL,
+					payload: response.data
+				});			
 			}).catch((error) => {
 				console.log(error);
 			});
