@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import { signoutUser } from '../actions';
 import SideCollection from '../components/sideCollection';
 import Button from '@material-ui/core/Button';
+import { BASE_URL } from '../helpers/url';
 
 const SideItems = [
 	{
@@ -61,7 +62,9 @@ class SideBar extends Component {
 					<li>
 						<div className="user-view">
 							{this.props.user.foodtrucks[0]
-								? <img className="circle" src={`../img/logos/${this.props.user.foodtrucks[0].logo}`} alt={this.props.user.foodtrucks[0].logo} />
+								? this.props.user.foodtrucks[0].logo 
+									? <img className="circle" src={`${BASE_URL}/image/${this.props.user.foodtrucks[0].logo._id}`} alt={this.props.user.foodtrucks[0].logo.originalname} />
+									: <img className="circle" src="../img/logo_default.png" alt="Default logo" />
 								: null}
 							<a href="#email"><span className="email">{this.props.user.email}</span></a>
 						</div>

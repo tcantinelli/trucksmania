@@ -1,4 +1,4 @@
-import { GET_USER, UPDATE_USER } from '../actions/action-types';
+import { GET_USER, UPDATE_USER, UPDATE_PROFIL } from '../actions/action-types';
 
 const initialState = {
 	email: '',
@@ -13,6 +13,10 @@ export default function UserReducer(state = initialState, action) {
 		return action.payload;
 	case UPDATE_USER:
 		return action.payload;
+	case UPDATE_PROFIL:
+		const newUser = state;
+		newUser.foodtrucks[0] = action.payload;
+		return newUser;
 	default:
 		return state;
 	}
