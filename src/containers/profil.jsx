@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { updateUser } from '../actions';
+import { updateProfil } from '../actions';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { reduxForm, Field, change } from 'redux-form';
@@ -21,10 +21,9 @@ class Profil extends Component  {
 		this.state = {
 			activeId: null,
 			preview: null,
-			localPreview: null
+			localPreview: null,
+			localFile: null
 		};
-
-		this.handleChange = this.handleChange.bind(this);
 	}
 
 	componentWillUpdate(nextProps) {
@@ -55,25 +54,34 @@ class Profil extends Component  {
 		this.setState({activeId: id});
 	}
 
-	//Prise en charge du chargement de l'image, pour affichage preview
+	//Prise en charge du chargement de l'image, pour affichage preview et upload
 	handleChange(event) {
-		console.log('handle');
-		
-		this.setState({
-			localPreview: URL.createObjectURL(event.target.files[0])
-		});
+		if (event.target.files[0]) {
+			this.setState({
+				localPreview: URL.createObjectURL(event.target.files[0]),
+				localFile: event.target.files[0]
+			});
+		}
 	}
 
-	handleSubmit = formValues => {
-		// formValues.foodtruck.category = this.state.activeId ? this.state.activeId : '5ca7fbfa04f3defa2159d601';
-		// this.props.signupUser(formValues, this.props.history);
-		console.log(formValues);
+	handleSubmit = (formValues) => {
+		//ID du FoddTruck
+		formValues.idFT = this.props.user.foodtrucks[0]._id;
+		//Ajout categorie
+		formValues.category = this.state.activeId !== this.props.user.foodtrucks[0].category._id
+			? this.state.activeId : null;
+
+		//Ajout image
+		formValues.logo = this.state.preview !== this.state.localPreview
+			? this.state.localFile : null;
+
+		this.props.updateProfil(formValues);
 	};
 
 	render() {
 		return (
 			<div className="container-fluid adminContainer">
-				<form className="container formContainer">
+				<form className="container formContainer" onSubmit={this.props.handleSubmit(this.handleSubmit)}>
 					{/* NOM */}
 					<div className="profilPartContainer" >
 						<PartTitle title="Nom" />
@@ -116,7 +124,7 @@ class Profil extends Component  {
 						<div className="row insideRow valign-wrapper">
 							<div className="row valign-wrapper">
 								<div className="input-field col s8"
-									onChange={this.handleChange}
+									onChange={this.handleChange.bind(this)}
 									role="presentation"
 								>
 									<Field
@@ -136,6 +144,14 @@ class Profil extends Component  {
 							</div>
 						</div>
 					</div>
+					{/* VALIDATION */}
+					<div className="row" >
+						<div className="input-field col s6 offset-s3 center-align">
+							<button className="btn waves-effect" type="submit">Valider
+								<i className="material-icons right">check</i>
+							</button>
+						</div>
+					</div>
 				</form>
 			</div>
 		);
@@ -151,7 +167,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => ({
 	...bindActionCreators(
-		{ updateUser, change }, dispatch)
+		{ updateProfil, change }, dispatch)
 });
 
 const profilForm = reduxForm({
