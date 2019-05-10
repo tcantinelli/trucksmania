@@ -3,44 +3,17 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import M from 'materialize-css';
 import { updateProfil } from '../actions';
+import { items } from '../helpers/sidebar_items';
 //import { BASE_URL } from '../helpers/url';
 //Components & Containers
 import SideBar from './sidebar';
+import Profil from './profilV2';
+import Orders from './orders';
+import Articles from './articles';
+import Locations from './locations';
+import Applications from '../components/applications';
 
 require('../style/admin.css');
-
-const items = [
-	{
-		component: 'Profil',
-		title: 'Profil',
-		icon: 'local_shipping',
-		count: null
-	},
-	{
-		component: 'Orders',
-		title: 'Commandes',
-		icon: 'shopping_basket',
-		count: null
-	},
-	{
-		component: 'Articles',
-		title: 'Articles',
-		icon: 'local_offer',
-		count: null
-	},
-	{
-		component: 'Locations',
-		title: 'Emplacements',
-		icon: 'place',
-		count: null
-	},
-	{
-		component: 'Applications',
-		title: 'L\'application',
-		icon: 'smartphone',
-		count: null
-	}
-];
 
 class Admin extends Component {
 	constructor(props) {
@@ -76,38 +49,19 @@ class Admin extends Component {
 	}
 }
 
+//Choix component partie droite
 const getItem = item => {
 	switch (item) {
 	case 'Orders':
-		return (
-			<div className="container-fluid adminContainer">
-			Orders
-			</div>
-		);
+		return <Orders />;
 	case 'Articles':
-		return (
-			<div className="container-fluid adminContainer">
-			Articles
-			</div>
-		);
+		return <Articles />;
 	case 'Locations':
-		return (
-			<div className="container-fluid adminContainer">
-			Locations
-			</div>
-		);
+		return <Locations />;
 	case 'Applications':
-		return (
-			<div className="container-fluid adminContainer">
-			Applications
-			</div>
-		);
+		return <Applications />;
 	default:
-		return (
-			<div className="container-fluid adminContainer">
-				PROFIL
-			</div>
-		);
+		return <Profil />;
 	}
 };
 
