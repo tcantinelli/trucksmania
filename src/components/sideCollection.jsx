@@ -10,7 +10,7 @@ const rowStyle = {
 	margin: '0px' 
 };
 
-const SideCollection = ({icon, link, count}, key) => {
+const SideCollection = ({path, title, icon, count}, key) => {
 	return (
 		<li className="collection-item" style={collectioItemStyle} key={key}>
 			<div className="row valign-wrapper" style={rowStyle}>
@@ -18,7 +18,7 @@ const SideCollection = ({icon, link, count}, key) => {
 					<i className="small material-icons">{icon}</i>
 				</div>
 				<div className="col s7 valign-wrapper">
-					<Link className="nav-link" to={`/${link.adress}`}>{link.title}</Link>
+					<Link className="nav-link" to={path}>{title}</Link>
 				</div>
 				<div className="col s3 valign-wrapper">
 					{count

@@ -14,7 +14,8 @@ export default class App extends Component {
 					<Route exact path="/" component={Home} />
 					<Route path="/signin" component={Login} />
 					<Route path="/signup" component={Signup} />
-					<Route path="/admin" component={RequireAuthentification(Admin)} />
+					<Route path="/admin" component={RequireAuthentification(Admin)}>
+					</Route>
 				</Switch>
 			</div>
 		);

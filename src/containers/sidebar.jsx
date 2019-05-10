@@ -6,49 +6,6 @@ import SideCollection from '../components/sideCollection';
 import Button from '@material-ui/core/Button';
 import { BASE_URL } from '../helpers/url';
 
-const SideItems = [
-	{
-		icon: 'local_shipping',
-		link: {
-			title: 'Profil',
-			adress: '#!'
-		},
-		count: null
-	},
-	{
-		icon: 'shopping_basket',
-		link: {
-			title: 'Commandes',
-			adress: '#!'
-		},
-		count: null
-	},
-	{
-		icon: 'local_offer',
-		link: {
-			title: 'Articles',
-			adress: '#!'
-		},
-		count: null
-	},
-	{
-		icon: 'place',
-		link: {
-			title: 'Emplacements',
-			adress: '#!'
-		},
-		count: null
-	},
-	{
-		icon: 'smartphone',
-		link: {
-			title: 'L\'application',
-			adress: '#!'
-		},
-		count: null
-	}
-];
-
 class SideBar extends Component {
 
 	handleClick() {
@@ -69,7 +26,7 @@ class SideBar extends Component {
 							<a href="#email"><span className="email">{this.props.user.email}</span></a>
 						</div>
 						<ul className="collection">
-							{SideItems.map((item, key) => {
+							{this.props.items.map((item, key) => {
 								return <SideCollection {...item} key={key} />;
 							})}
 						</ul>
