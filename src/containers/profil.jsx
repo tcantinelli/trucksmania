@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { updateProfil } from '../actions';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { reduxForm, Field, change } from 'redux-form';
+import { updateProfil } from '../actions';
 import PartTitle from '../components/part_title';
 import Categorie from '../components/categorie';
 import Grid from '@material-ui/core/Grid';

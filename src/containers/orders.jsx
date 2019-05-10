@@ -5,13 +5,7 @@ import { bindActionCreators } from 'redux';
 // import M from 'materialize-css';
 
 class Orders extends Component {
-	// componentWillMount() {
-	// 	//Initialisation sideBar
-	// 	document.addEventListener('DOMContentLoaded', function() {
-	// 		var elems = document.querySelectorAll('.sidenav');
-	// 		M.Sidenav.init(elems, {});
-	// 	});
-	// }
+
 	render() {
 		return (
 			<div className="container-fluid adminContainer">
