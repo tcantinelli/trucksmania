@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { SET_AUTHENTIFICATION, GET_USER, UPDATE_USER, GET_CATEGORIES, UPDATE_PROFIL } from './action-types';
+import { SET_AUTHENTIFICATION, GET_USER, UPDATE_USER, GET_CATEGORIES, UPDATE_PROFIL, SHOW_POPMESSAGE } from './action-types';
 import Axios from 'axios';
 import FormData from 'form-data';
 import { BASE_URL } from '../helpers/url';
@@ -94,10 +94,14 @@ export function updateProfil(formValues) {
 
 		Axios.post(`${BASE_URL}/upprofil`, datas, config)
 			.then((response) => {
+				dispatch(setPopMessage(true, 'Success', 'Informations mises à jour'));
 				dispatch({
 					type: UPDATE_PROFIL,
 					payload: response.data
-				});			
+				});
+				setTimeout(() => {
+					dispatch(setPopMessage(false, null, null));	
+				}, 2500);
 			}).catch((error) => {
 				console.log(error);
 			});
@@ -116,5 +120,27 @@ export function getCategories() {
 			}).catch((error) => {
 				console.log(error);
 			});
+	};
+}
+
+//POPMESSAGE
+export function setPopMessage(toShow, degree, message) {
+	if (toShow) {
+		return {
+			type: SHOW_POPMESSAGE,
+			payload: {
+				toShow: true,
+				degree,
+				message
+			}
+		};
+	}
+	return {
+		type: SHOW_POPMESSAGE,
+		payload: {
+			toShow: false,
+			degree: '',
+			message: ''
+		}
 	};
 }

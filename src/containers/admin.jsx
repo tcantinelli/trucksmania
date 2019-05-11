@@ -12,6 +12,7 @@ import Orders from './orders';
 import Articles from './articles';
 import Locations from './locations';
 import Applications from '../components/applications';
+import PopMessage from '../components/popMessage';
 
 require('../style/admin.css');
 
@@ -52,6 +53,9 @@ class Admin extends Component {
 		
 		return (
 			<div className="container-fluid">
+				{this.props.popMessage.toShow ?
+					<PopMessage degree={this.props.popMessage.degree} message={this.props.popMessage.message} />
+					: null}
 				{this.state.actualUser ? 
 					this.state.actualUser.email !== ''
 						? <SideBar userInfos={this.state.actualUser} items={items} action={this.actionSideBar.bind(this)}/> : null
@@ -88,7 +92,8 @@ const mapDispatchToProps = dispatch => ({
 
 const mapStateToProps = state => {
 	return {
-		user: state.user
+		user: state.user,
+		popMessage: state.popMessage
 	};
 };
 
