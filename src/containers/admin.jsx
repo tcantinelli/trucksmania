@@ -7,7 +7,7 @@ import { items } from '../helpers/sidebar_items';
 //import { BASE_URL } from '../helpers/url';
 //Components & Containers
 import SideBar from './sidebar';
-import Profil from './profilV3';
+import Profil from './profil';
 import Orders from './orders';
 import Articles from './articles';
 import Locations from './locations';
@@ -28,7 +28,7 @@ class Admin extends Component {
 		if (this.props.user !== nextProps.user) {
 			this.setState({
 				actualUser: nextProps.user
-			}, () => console.log(this.state.actualUser));
+			});
 		}
 	}
 

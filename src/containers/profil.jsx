@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { reduxForm, Field, change } from 'redux-form';
 import { updateProfil } from '../actions';
 import PartTitle from '../components/part_title';
 import Categorie from '../components/categorie';
@@ -12,6 +11,8 @@ class Profil extends Component  {
 	constructor(props) {
 		super(props);
 		this.state = {
+			idFT: null,
+			name: '',
 			activeId: null,
 			preview: null,
 			localPreview: null,
@@ -19,30 +20,33 @@ class Profil extends Component  {
 		};
 	}
 
+	
+	componentWillMount() {
+		this.setState({
+			name: this.props.actualUser.foodtrucks[0].name,
+			logo: this.props.actualUser.foodtrucks[0].logo.originalname,
+			activeId: this.props.actualUser.foodtrucks[0].category,
+			preview: this.props.actualUser.foodtrucks[0].logo
+		});
+	}
+	
+
 	componentWillUpdate(nextProps) {
-		if (this.props.user !== nextProps.user) {
-			this.props.change('name', nextProps.user.foodtrucks[0].name);
-			this.props.change('logo', nextProps.user.foodtrucks[0].logo.originalname);
+		if (this.props.actualUser !== nextProps.actualUser) {
 			this.setState({
-				activeId: nextProps.user.foodtrucks[0].category,
-				preview: nextProps.user.foodtrucks[0].logo
+				name: nextProps.actualUser.foodtrucks[0].name,
+				logo: nextProps.actualUser.foodtrucks[0].logo.originalname,
+				activeId: nextProps.actualUser.foodtrucks[0].category,
+				preview: nextProps.actualUser.foodtrucks[0].logo
 			});
 		}
+		// console.log(nextProps.actualUser);
 	}
 
-	renderUploadComponent = () => {
-		return (
-			<div className="file-field input-field">
-				<div className="btn">
-					<span>{this.state.preview ? 'Modifier' : 'Ajouter'}</span>
-					<input type="file"/>
-				</div>
-				<div className="file-path-wrapper">
-					<input className="file-path validate" type="text"/>
-				</div>
-			</div>
-		);
-	};
+	//Update nom FT
+	onUpdateName = event => {
+		this.setState({name: event.target.value});
+	}
 
 	handleClick(id) {
 		this.setState({activeId: id});
@@ -58,35 +62,30 @@ class Profil extends Component  {
 		}
 	}
 
-	handleSubmit = (formValues) => {
-		//ID du FoddTruck
-		formValues.idFT = this.props.user.foodtrucks[0]._id;
-		//Ajout categorie
-		formValues.category = this.state.activeId !== this.props.user.foodtrucks[0].category._id
-			? this.state.activeId : null;
+	onSubmit = () => {
+		const dataToSend = {
+			idFT: this.props.actualUser.foodtrucks[0]._id,
+			name: this.state.name,
+			category: this.state.activeId !== this.props.actualUser.foodtrucks[0].category._id ? this.state.activeId : null,
+			logo: this.state.preview !== this.state.localPreview ? this.state.localFile : null
+		};
 
-		//Ajout image
-		formValues.logo = this.state.preview !== this.state.localPreview
-			? this.state.localFile : null;
+		this.props.updateProfil(dataToSend);
 
-		this.props.updateProfil(formValues);
+		//console.log(dataToSend);
 	};
 
 	render() {
 		return (
 			<div className="container-fluid adminContainer">
-				<form className="container formContainer" onSubmit={this.props.handleSubmit(this.handleSubmit)}>
+				<div className="container formContainer">
 					{/* NOM */}
 					<div className="profilPartContainer" >
 						<PartTitle title="Nom" />
 						<div className="row insideRow valign-wrapper">
 							<div className="row">
 								<div className="input-field col s12">
-									<Field
-										name="name"
-										component="input"
-										type="text"
-									/>
+									<input id="name" type="text" value={this.state.name} onChange={this.onUpdateName.bind(this)} />
 								</div>
 							</div>
 						</div>
@@ -119,12 +118,16 @@ class Profil extends Component  {
 							<div className="row valign-wrapper">
 								<div className="input-field col s8"
 									onChange={this.handleChange.bind(this)}
-									role="presentation"
-								>
-									<Field
-										name="logo"
-										component={this.renderUploadComponent}
-									/>
+									role="presentation">
+									<div className="file-field input-field">
+										<div className="btn">
+											<span>{this.state.preview ? 'Modifier' : 'Ajouter'}</span>
+											<input type="file"/>
+										</div>
+										<div className="file-path-wrapper">
+											<input className="file-path validate" type="text" defaultValue={this.state.preview ? this.state.preview.originalname : ''} placeholder="Charger une image" />
+										</div>
+									</div>
 								</div>
 								<div className="col s3 offset-s1">
 									<div className="previewContainer">
@@ -141,12 +144,12 @@ class Profil extends Component  {
 					{/* VALIDATION */}
 					<div className="row" >
 						<div className="input-field col s6 offset-s3 center-align">
-							<button className="btn waves-effect" type="submit">Valider
+							<button className="btn waves-effect" onClick={this.onSubmit}>Valider
 								<i className="material-icons right">check</i>
 							</button>
 						</div>
 					</div>
-				</form>
+				</div>
 			</div>
 		);
 	}
@@ -154,18 +157,13 @@ class Profil extends Component  {
 
 const mapStateToProps = state => {
 	return { 
-		user: state.user,
 		categories: state.categories
 	};
 };
 
 const mapDispatchToProps = dispatch => ({
 	...bindActionCreators(
-		{ updateProfil, change }, dispatch)
+		{ updateProfil }, dispatch)
 });
 
-const profilForm = reduxForm({
-	form: 'ProfilForm'
-})(Profil);
-
-export default connect(mapStateToProps, mapDispatchToProps)(profilForm);
+export default connect(mapStateToProps, mapDispatchToProps)(Profil);
