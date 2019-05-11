@@ -102,8 +102,8 @@ export function updateProfil(formValues) {
 				setTimeout(() => {
 					dispatch(setPopMessage(false, null, null));	
 				}, 2500);
-			}).catch((error) => {
-				console.log(error);
+			}).catch(() => {
+				dispatch(setPopMessage(true, 'Error', 'Erreur de mise à jour'));
 			});
 	};
 }
