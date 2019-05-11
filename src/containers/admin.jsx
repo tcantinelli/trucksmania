@@ -7,7 +7,7 @@ import { items } from '../helpers/sidebar_items';
 //import { BASE_URL } from '../helpers/url';
 //Components & Containers
 import SideBar from './sidebar';
-import Profil from './profilV2';
+import Profil from './profilV3';
 import Orders from './orders';
 import Articles from './articles';
 import Locations from './locations';
@@ -19,13 +19,24 @@ class Admin extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			item: 'Profil'
+			item: 'Profil',
+			actualUser: null
 		};
+	}
+
+	componentWillUpdate(nextProps) {
+		if (this.props.user !== nextProps.user) {
+			this.setState({
+				actualUser: nextProps.user
+			}, () => console.log(this.state.actualUser));
+		}
 	}
 
 	//Affichage partie droite
 	actionSideBar = item => {
-		this.setState({item: item});
+		this.setState({
+			item: item
+		});
 	};
 
 	componentWillMount() {
@@ -33,7 +44,7 @@ class Admin extends Component {
 		document.addEventListener('DOMContentLoaded', function() {
 			var elems = document.querySelectorAll('.sidenav');
 			M.Sidenav.init(elems, {});
-		});
+		});	
 	}
 	
 	render() {
@@ -41,27 +52,32 @@ class Admin extends Component {
 		
 		return (
 			<div className="container-fluid">
-				<SideBar items={items} action={this.actionSideBar.bind(this)}/>
-				{getItem(rightView)}
-				}}
+				{this.state.actualUser ? 
+					this.state.actualUser.email !== ''
+						? <SideBar userInfos={this.state.actualUser} items={items} action={this.actionSideBar.bind(this)}/> : null
+					: null}
+				{this.state.actualUser ? 
+					this.state.actualUser.email !== ''
+						? getItem(rightView, this.state.actualUser) : null
+					: null}
 			</div>
 		);
 	}
 }
 
 //Choix component partie droite
-const getItem = item => {
+const getItem = (item, user) => {
 	switch (item) {
 	case 'Orders':
 		return <Orders />;
 	case 'Articles':
-		return <Articles />;
+		return <Articles testVar={user.email} />;
 	case 'Locations':
 		return <Locations />;
 	case 'Applications':
 		return <Applications />;
 	default:
-		return <Profil />;
+		return <Profil actualUser={user}/>;
 	}
 };
 
@@ -72,8 +88,7 @@ const mapDispatchToProps = dispatch => ({
 
 const mapStateToProps = state => {
 	return {
-		user: state.user,
-		categories: state.categories
+		user: state.user
 	};
 };
 

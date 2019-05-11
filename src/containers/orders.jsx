@@ -15,12 +15,6 @@ class Orders extends Component {
 	}
 }
 
-const mapStateToProps = state => {
-	return {
-		user: state.user
-	};
-};
-
 const mapDispatchToProps = dispatch => ({
 	...bindActionCreators(
 		{},
@@ -28,6 +22,6 @@ const mapDispatchToProps = dispatch => ({
 	)
 });
 export default connect(
-	mapStateToProps,
+	null,
 	mapDispatchToProps
 )(Orders);

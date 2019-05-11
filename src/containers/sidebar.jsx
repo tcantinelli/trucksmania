@@ -21,12 +21,12 @@ class SideBar extends Component {
 				<ul id="slide-out" className="sidenav sidenav-fixed">
 					<li>
 						<div className="user-view">
-							{this.props.user.foodtrucks[0]
-								? this.props.user.foodtrucks[0].logo 
-									? <img className="circle" src={`${BASE_URL}/image/${this.props.user.foodtrucks[0].logo._id}`} alt={this.props.user.foodtrucks[0].logo.originalname} />
+							{this.props.userInfos.foodtrucks[0]
+								? this.props.userInfos.foodtrucks[0].logo 
+									? <img className="circle" src={`${BASE_URL}/image/${this.props.userInfos.foodtrucks[0].logo._id}`} alt={this.props.userInfos.foodtrucks[0].logo.originalname} />
 									: <img className="circle" src="../img/logo_default.png" alt="Default logo" />
 								: null}
-							<a href="#email"><span className="email">{this.props.user.email}</span></a>
+							<a href="#email"><span className="email">{this.props.userInfos.email}</span></a>
 						</div>
 						<ul className="collection">
 							{this.props.items.map((item, key) => {
@@ -82,13 +82,13 @@ const mapDispatchToProps = dispatch => ({
 	)
 });
 
-const mapStateToProps = state => {
-	return {
-		user: state.user
-	};
-};
+// const mapStateToProps = state => {
+// 	return {
+// 		user: state.user
+// 	};
+// };
 
 export default connect(
-	mapStateToProps,
+	null,
 	mapDispatchToProps
 )(SideBar);
