@@ -2,30 +2,18 @@ import React, { Component } from 'react';
 import {} from '../actions';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-// import M from 'materialize-css';
+import PopMessage from '../components/popMessage';
 
 class Orders extends Component {
-	// componentWillMount() {
-	// 	//Initialisation sideBar
-	// 	document.addEventListener('DOMContentLoaded', function() {
-	// 		var elems = document.querySelectorAll('.sidenav');
-	// 		M.Sidenav.init(elems, {});
-	// 	});
-	// }
+
 	render() {
 		return (
 			<div className="container-fluid adminContainer">
-				Orders
+				<PopMessage degree="top" message="Ceci est un test" />
 			</div>
 		);
 	}
 }
-
-const mapStateToProps = state => {
-	return {
-		user: state.user
-	};
-};
 
 const mapDispatchToProps = dispatch => ({
 	...bindActionCreators(
@@ -34,6 +22,6 @@ const mapDispatchToProps = dispatch => ({
 	)
 });
 export default connect(
-	mapStateToProps,
+	null,
 	mapDispatchToProps
 )(Orders);

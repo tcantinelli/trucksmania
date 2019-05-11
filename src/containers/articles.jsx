@@ -9,17 +9,11 @@ class Articles extends Component {
 	render() {
 		return (
 			<div className="container-fluid adminContainer">
-				Articles
+				{this.props.testVar}
 			</div>
 		);
 	}
 }
-
-const mapStateToProps = state => {
-	return {
-		user: state.user
-	};
-};
 
 const mapDispatchToProps = dispatch => ({
 	...bindActionCreators(
@@ -28,6 +22,6 @@ const mapDispatchToProps = dispatch => ({
 	)
 });
 export default connect(
-	mapStateToProps,
+	null,
 	mapDispatchToProps
 )(Articles);

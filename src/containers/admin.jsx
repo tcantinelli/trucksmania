@@ -1,90 +1,103 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import M from 'materialize-css';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { updateProfil } from '../actions';
+import { items } from '../helpers/sidebar_items';
+//import { BASE_URL } from '../helpers/url';
 //Components & Containers
 import SideBar from './sidebar';
-import Profil from '../containers/profil';
-import Orders from '../containers/orders';
-import Articles from '../containers/articles';
-import Locations from '../containers/locations';
+import Profil from './profil';
+import Orders from './orders';
+import Articles from './articles';
+import Locations from './locations';
 import Applications from '../components/applications';
+import PopMessage from '../components/popMessage';
 
 require('../style/admin.css');
 
-const items = [
-	{
-		path: '/admin',
-		exact: true,
-		component: Profil,
-		title: 'Profil',
-		icon: 'local_shipping',
-		count: null
-	},
-	{
-		path: '/admin/orders',
-		component: Orders,
-		title: 'Commandes',
-		icon: 'shopping_basket',
-		count: null
-	},
-	{
-		path: '/admin/articles',
-		component: Articles,
-		title: 'Articles',
-		icon: 'local_offer',
-		count: null
-	},
-	{
-		path: '/admin/locations',
-		component: Locations,
-		title: 'Emplacements',
-		icon: 'place',
-		count: null
-	},
-	{
-		path: '/admin/applications',
-		component: Applications,
-		title: 'L\'application',
-		icon: 'smartphone',
-		count: null
-	}
-];
-
 class Admin extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			item: 'Profil',
+			actualUser: null
+		};
+	}
+
+	componentWillUpdate(nextProps) {
+		if (this.props.user !== nextProps.user) {
+			this.setState({
+				actualUser: nextProps.user
+			});
+		}
+	}
+
+	//Affichage partie droite
+	actionSideBar = item => {
+		this.setState({
+			item: item
+		});
+	};
+
 	componentWillMount() {
 		//Initialisation sideBar
 		document.addEventListener('DOMContentLoaded', function() {
 			var elems = document.querySelectorAll('.sidenav');
 			M.Sidenav.init(elems, {});
-		});
+		});	
 	}
 	
 	render() {
+		let rightView = this.state.item;
+		
 		return (
-			<Router>
-				<div className="container-fluid">
-					<SideBar items={items}/>
-					{items.map((item, index) => {
-						return <Route
-							key={index}
-							path={item.path}
-							exact={item.exact}
-							component={item.component}
-						/>;
-					})}
-				</div>
-			</Router>
+			<div className="container-fluid">
+				{this.props.popMessage.toShow ?
+					<PopMessage degree={this.props.popMessage.degree} message={this.props.popMessage.message} />
+					: null}
+				{this.state.actualUser ? 
+					this.state.actualUser.email !== ''
+						? <SideBar userInfos={this.state.actualUser} items={items} action={this.actionSideBar.bind(this)}/> : null
+					: null}
+				{this.state.actualUser ? 
+					this.state.actualUser.email !== ''
+						? getItem(rightView, this.state.actualUser) : null
+					: null}
+			</div>
 		);
 	}
 }
 
+//Choix component partie droite
+const getItem = (item, user) => {
+	switch (item) {
+	case 'Orders':
+		return <Orders />;
+	case 'Articles':
+		return <Articles testVar={user.email} />;
+	case 'Locations':
+		return <Locations />;
+	case 'Applications':
+		return <Applications />;
+	default:
+		return <Profil actualUser={user}/>;
+	}
+};
+
+const mapDispatchToProps = dispatch => ({
+	...bindActionCreators(
+		{ updateProfil }, dispatch)
+});
+
 const mapStateToProps = state => {
 	return {
-		user: state.user
+		user: state.user,
+		popMessage: state.popMessage
 	};
 };
+
 export default connect(
 	mapStateToProps,
-	null
+	mapDispatchToProps
 )(Admin);
