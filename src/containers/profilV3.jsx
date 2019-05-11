@@ -20,17 +20,28 @@ class Profil extends Component  {
 		};
 	}
 
-	// componentWillUpdate(nextProps) {
-	// 	if (this.props.actualUser !== nextProps.actualUser) {
-	// 		this.setState({
-	// 			name: nextProps.actualUser.foodtrucks[0].name,
-	// 			logo: nextProps.actualUser.foodtrucks[0].logo.originalname,
-	// 			activeId: nextProps.actualUser.foodtrucks[0].category,
-	// 			preview: nextProps.actualUser.foodtrucks[0].logo
-	// 		});
-    //     }
-    //     console.log(nextProps.actualUser);
-	// }
+	
+	componentWillMount() {
+		this.setState({
+			name: this.props.actualUser.foodtrucks[0].name,
+			logo: this.props.actualUser.foodtrucks[0].logo.originalname,
+			activeId: this.props.actualUser.foodtrucks[0].category,
+			preview: this.props.actualUser.foodtrucks[0].logo
+		});
+	}
+	
+
+	componentWillUpdate(nextProps) {
+		if (this.props.actualUser !== nextProps.actualUser) {
+			this.setState({
+				name: nextProps.actualUser.foodtrucks[0].name,
+				logo: nextProps.actualUser.foodtrucks[0].logo.originalname,
+				activeId: nextProps.actualUser.foodtrucks[0].category,
+				preview: nextProps.actualUser.foodtrucks[0].logo
+			});
+		}
+		// console.log(nextProps.actualUser);
+	}
 
 	//Update nom FT
 	onUpdateName = event => {
@@ -59,9 +70,9 @@ class Profil extends Component  {
 			logo: this.state.preview !== this.state.localPreview ? this.state.localFile : null
 		};
 
-		//this.props.updateProfil(dataToSend);
+		this.props.updateProfil(dataToSend);
 
-		console.log(dataToSend);
+		//console.log(dataToSend);
 	};
 
 	render() {
