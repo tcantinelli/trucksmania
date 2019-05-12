@@ -53,12 +53,22 @@ class Profil extends Component  {
 	}
 
 	//Prise en charge du chargement de l'image, pour affichage preview et upload
-	handleChange(event) {
+	handleLogoChange(event) {
 		if (event.target.files[0]) {
 			this.setState({
 				localPreview: URL.createObjectURL(event.target.files[0]),
 				localFile: event.target.files[0]
 			});
+		}
+	}
+
+	handleImagesChange(event) {
+		if (event.target.files[0]) {
+			// this.setState({
+			// 	localPreview: URL.createObjectURL(event.target.files[0]),
+			// 	localFile: event.target.files[0]
+			// });
+			console.log(event.target.files);
 		}
 	}
 
@@ -94,7 +104,7 @@ class Profil extends Component  {
 					<div className="profilPartContainer" >
 						<PartTitle title="Catégorie" />
 						<div className="row insideRow center-align">
-							<Grid container justify="space-around" spacing={40}>
+							<Grid container justify="flex-start" spacing={32}>
 								{this.props.categories.map(categorie => {
 									return (
 										<div
@@ -117,7 +127,7 @@ class Profil extends Component  {
 						<div className="row insideRow valign-wrapper">
 							<div className="row valign-wrapper">
 								<div className="input-field col s8"
-									onChange={this.handleChange.bind(this)}
+									onChange={this.handleLogoChange.bind(this)}
 									role="presentation">
 									<div className="file-field input-field">
 										<div className="btn">
@@ -139,6 +149,20 @@ class Profil extends Component  {
 									</div>
 								</div>
 							</div>
+						</div>
+					</div>
+					{/* IMAGES */}
+					<div className="profilPartContainer" >
+						<PartTitle title="Images" />
+						<div className="row insideRow valign-wrapper">
+								<div className="input-field col s12">
+									<div className="file-field input-field">
+										<div className="btn">
+											<span>Ajouter</span>
+											<input type="file" onChange={this.handleImagesChange.bind(this)}/>
+										</div>
+									</div>
+								</div>
 						</div>
 					</div>
 					{/* VALIDATION */}

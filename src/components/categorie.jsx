@@ -10,7 +10,7 @@ class Categorie extends Component {
 					alt={cat.image}
 					style={categorieImageStyle}
 				/>
-				<div className="toolText" style={categorieTextStyle}>{cat.value}</div>
+				<div style={categorieTextStyle}>{cat.value}</div>
 			</div>
 		);
 	}
