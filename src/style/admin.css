@@ -33,6 +33,11 @@
 }
 
 /* Categories */
+
+.catContainer {
+  background-color: blue;
+  margin-left: auto;
+}
 .activeCategorieContainerStyle {
   border: 3px solid green;
   border-radius: 5px;
@@ -49,9 +54,20 @@
   width: 150px
 }
 
-/* preview image */
+/* preview logo */
 .previewContainer {
   margin: 5px;
   border: 2px solid #F5EFED;
   border-radius: 5px;
+}
+
+/* Container Images */
+.profilImagesContainer {
+  border: 2px solid #232524;
+  border-radius: 5px;
+  box-shadow: 10px 10px 5px #a09d9d;
+  height: auto;
+  position: relative;
+  margin: 5vh 4vw;
+  padding: 20px;
 }

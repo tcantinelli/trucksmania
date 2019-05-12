@@ -33,7 +33,7 @@ class PopMessage extends Component  {
 				<Fade top when={this.state.show}>
 					<div style={getBoxStyle(this.props.degree)}>
 						<span style={messageStyle}>
-							<i class="material-icons">{getIcon(this.props.degree)}</i> {this.props.message}
+							<i className="material-icons">{getIcon(this.props.degree)}</i> {this.props.message}
 						</span>
 					</div>
 				</Fade>

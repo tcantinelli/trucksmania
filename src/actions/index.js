@@ -83,8 +83,12 @@ export function updateProfil(formValues) {
 		//Ajout name et category
 		datas.append('name', formValues.name);
 		datas.append('category', formValues.category);
-		//Ajout image
-		datas.append('file', formValues.logo);
+		//Ajout logo
+		datas.append('logo', formValues.logo);
+		//Ajout images
+		// formValues.images.map((image, index) => {
+		// 	datas.append(`file${index}`, image);
+		// });
 
 		const config = {
 			headers: {

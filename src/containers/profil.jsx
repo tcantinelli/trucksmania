@@ -7,6 +7,20 @@ import Categorie from '../components/categorie';
 import Grid from '@material-ui/core/Grid';
 import { BASE_URL } from '../helpers/url';
 
+// Import React FilePond
+import { FilePond, registerPlugin } from 'react-filepond';
+
+// Import FilePond styles
+import 'filepond/dist/filepond.min.css';
+
+// Import the Image EXIF Orientation and Image Preview plugins
+// Note: These need to be installed separately
+import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
+import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
+
+// Register the plugins
+registerPlugin(FilePondPluginImagePreview);
+
 class Profil extends Component  {
 	constructor(props) {
 		super(props);
@@ -16,7 +30,10 @@ class Profil extends Component  {
 			activeId: null,
 			preview: null,
 			localPreview: null,
-			localFile: null
+			localFile: null,
+			images: [
+
+			]
 		};
 	}
 
@@ -24,7 +41,9 @@ class Profil extends Component  {
 	componentWillMount() {
 		this.setState({
 			name: this.props.actualUser.foodtrucks[0].name,
-			logo: this.props.actualUser.foodtrucks[0].logo.originalname,
+			logo: this.props.actualUser.foodtrucks[0].logo
+				? this.props.actualUser.foodtrucks[0].logo.name
+				: null,
 			activeId: this.props.actualUser.foodtrucks[0].category,
 			preview: this.props.actualUser.foodtrucks[0].logo
 		});
@@ -35,7 +54,7 @@ class Profil extends Component  {
 		if (this.props.actualUser !== nextProps.actualUser) {
 			this.setState({
 				name: nextProps.actualUser.foodtrucks[0].name,
-				logo: nextProps.actualUser.foodtrucks[0].logo.originalname,
+				logo: nextProps.actualUser.foodtrucks[0].logo.name,
 				activeId: nextProps.actualUser.foodtrucks[0].category,
 				preview: nextProps.actualUser.foodtrucks[0].logo
 			});
@@ -62,27 +81,18 @@ class Profil extends Component  {
 		}
 	}
 
-	handleImagesChange(event) {
-		if (event.target.files[0]) {
-			// this.setState({
-			// 	localPreview: URL.createObjectURL(event.target.files[0]),
-			// 	localFile: event.target.files[0]
-			// });
-			console.log(event.target.files);
-		}
-	}
-
 	onSubmit = () => {
 		const dataToSend = {
 			idFT: this.props.actualUser.foodtrucks[0]._id,
 			name: this.state.name,
 			category: this.state.activeId !== this.props.actualUser.foodtrucks[0].category._id ? this.state.activeId : null,
-			logo: this.state.preview !== this.state.localPreview ? this.state.localFile : null
+			logo: this.state.preview !== this.state.localPreview ? this.state.localFile : null,
+			images: this.state.images
 		};
 
 		this.props.updateProfil(dataToSend);
 
-		//console.log(dataToSend);
+		// console.log(dataToSend);
 	};
 
 	render() {
@@ -92,19 +102,17 @@ class Profil extends Component  {
 					{/* NOM */}
 					<div className="profilPartContainer" >
 						<PartTitle title="Nom" />
-						<div className="row insideRow valign-wrapper">
-							<div className="row">
-								<div className="input-field col s12">
-									<input id="name" type="text" value={this.state.name} onChange={this.onUpdateName.bind(this)} />
-								</div>
+						<div className="row">
+							<div className="input-field col s12 m6 offset-m3">
+								<input id="name" type="text" value={this.state.name} onChange={this.onUpdateName.bind(this)} />
 							</div>
 						</div>
 					</div>
 					{/* Categorie */}
 					<div className="profilPartContainer" >
 						<PartTitle title="Catégorie" />
-						<div className="row insideRow center-align">
-							<Grid container justify="flex-start" spacing={32}>
+						<div className="col s12 insideRow">
+							<Grid container justify="space-evenly" spacing={32}>
 								{this.props.categories.map(categorie => {
 									return (
 										<div
@@ -118,7 +126,7 @@ class Profil extends Component  {
 										</div>
 									);
 								})}
-							</Grid>		
+							</Grid>			
 						</div>
 					</div>
 					{/* LOGO */}
@@ -152,18 +160,22 @@ class Profil extends Component  {
 						</div>
 					</div>
 					{/* IMAGES */}
-					<div className="profilPartContainer" >
+					<div className="profilImagesContainer" >
 						<PartTitle title="Images" />
-						<div className="row insideRow valign-wrapper">
-								<div className="input-field col s12">
-									<div className="file-field input-field">
-										<div className="btn">
-											<span>Ajouter</span>
-											<input type="file" onChange={this.handleImagesChange.bind(this)}/>
-										</div>
-									</div>
-								</div>
-						</div>
+						<span>3 images maximum Formats: JPG,PNG et BMP</span>						
+						<FilePond
+							ref={ref => this.pond = ref}
+							files={this.state.images}
+							allowMultiple={true}
+							maxFiles={3}
+							// server="/api"
+							onupdatefiles={fileItems => {
+								// Set currently active file objects to this.state
+								this.setState({
+									images: fileItems.map(fileItem => fileItem.file)
+								});
+							}}
+						/>
 					</div>
 					{/* VALIDATION */}
 					<div className="row" >
