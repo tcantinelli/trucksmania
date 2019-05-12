@@ -84,7 +84,7 @@ export function updateProfil(formValues) {
 		datas.append('name', formValues.name);
 		datas.append('category', formValues.category);
 		//Ajout logo
-		datas.append('logo', formValues.logo);
+		datas.append('file', formValues.logo);
 		//Ajout images
 		// formValues.images.map((image, index) => {
 		// 	datas.append(`file${index}`, image);
@@ -98,6 +98,7 @@ export function updateProfil(formValues) {
 
 		Axios.post(`${BASE_URL}/upprofil`, datas, config)
 			.then((response) => {
+				console.log(response.data);
 				dispatch(setPopMessage(true, 'Success', 'Informations mises à jour'));
 				dispatch({
 					type: UPDATE_PROFIL,

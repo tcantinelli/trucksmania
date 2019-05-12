@@ -42,7 +42,7 @@ class Profil extends Component  {
 		this.setState({
 			name: this.props.actualUser.foodtrucks[0].name,
 			logo: this.props.actualUser.foodtrucks[0].logo
-				? this.props.actualUser.foodtrucks[0].logo.name
+				? this.props.actualUser.foodtrucks[0].logo.filename
 				: null,
 			activeId: this.props.actualUser.foodtrucks[0].category,
 			preview: this.props.actualUser.foodtrucks[0].logo
@@ -54,7 +54,7 @@ class Profil extends Component  {
 		if (this.props.actualUser !== nextProps.actualUser) {
 			this.setState({
 				name: nextProps.actualUser.foodtrucks[0].name,
-				logo: nextProps.actualUser.foodtrucks[0].logo.name,
+				logo: nextProps.actualUser.foodtrucks[0].logo.filename,
 				activeId: nextProps.actualUser.foodtrucks[0].category,
 				preview: nextProps.actualUser.foodtrucks[0].logo
 			});
@@ -143,7 +143,7 @@ class Profil extends Component  {
 											<input type="file"/>
 										</div>
 										<div className="file-path-wrapper">
-											<input className="file-path validate" type="text" defaultValue={this.state.preview ? this.state.preview.originalname : ''} placeholder="Charger une image" />
+											<input className="file-path validate" type="text" defaultValue={this.state.preview ? this.state.preview.name : ''} placeholder="Charger une image" />
 										</div>
 									</div>
 								</div>
