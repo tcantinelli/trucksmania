@@ -13,8 +13,7 @@ import { FilePond, registerPlugin } from 'react-filepond';
 // Import FilePond styles
 import 'filepond/dist/filepond.min.css';
 
-// Import the Image EXIF Orientation and Image Preview plugins
-// Note: These need to be installed separately
+// Note: FilePondPluginImagePreview need to be installed separately
 import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
 
@@ -27,7 +26,7 @@ class Profil extends Component  {
 		this.state = {
 			idFT: null,
 			name: '',
-			activeId: null,
+			categoryActiveId: null,
 			preview: null,
 			localPreview: null,
 			localFile: null,
@@ -44,7 +43,7 @@ class Profil extends Component  {
 			logo: this.props.actualUser.foodtrucks[0].logo
 				? this.props.actualUser.foodtrucks[0].logo.filename
 				: null,
-			activeId: this.props.actualUser.foodtrucks[0].category,
+			categoryActiveId: this.props.actualUser.foodtrucks[0].category,
 			preview: this.props.actualUser.foodtrucks[0].logo
 		});
 	}
@@ -55,7 +54,7 @@ class Profil extends Component  {
 			this.setState({
 				name: nextProps.actualUser.foodtrucks[0].name,
 				logo: nextProps.actualUser.foodtrucks[0].logo.filename,
-				activeId: nextProps.actualUser.foodtrucks[0].category,
+				categoryActiveId: nextProps.actualUser.foodtrucks[0].category,
 				preview: nextProps.actualUser.foodtrucks[0].logo
 			});
 		}
@@ -68,7 +67,7 @@ class Profil extends Component  {
 	}
 
 	handleClick(id) {
-		this.setState({activeId: id});
+		this.setState({categoryActiveId: id});
 	}
 
 	//Prise en charge du chargement de l'image, pour affichage preview et upload
@@ -85,7 +84,7 @@ class Profil extends Component  {
 		const dataToSend = {
 			idFT: this.props.actualUser.foodtrucks[0]._id,
 			name: this.state.name,
-			category: this.state.activeId !== this.props.actualUser.foodtrucks[0].category._id ? this.state.activeId : null,
+			category: this.state.categoryActiveId !== this.props.actualUser.foodtrucks[0].category._id ? this.state.categoryActiveId : null,
 			logo: this.state.preview !== this.state.localPreview ? this.state.localFile : null,
 			images: this.state.images
 		};
@@ -116,7 +115,7 @@ class Profil extends Component  {
 								{this.props.categories.map(categorie => {
 									return (
 										<div
-											className={`center-align ${categorie._id === this.state.activeId ? 'activeCategorieContainerStyle' : 'inactiveCategorieContainerStyle'}`}
+											className={`center-align ${categorie._id === this.state.categoryActiveId ? 'activeCategorieContainerStyle' : 'inactiveCategorieContainerStyle'}`}
 											onClick={this.handleClick.bind(this, categorie._id)}
 											role="presentation"
 											key={categorie._id}>
