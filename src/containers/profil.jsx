@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { updateProfil } from '../actions';
+import { updateProfil, deleteImageFoodTruck } from '../actions';
 import PartTitle from '../components/part_title';
 import Categorie from '../components/categorie';
 import Grid from '@material-ui/core/Grid';
@@ -27,38 +27,33 @@ class Profil extends Component  {
 			idFT: null,
 			name: '',
 			categoryActiveId: null,
-			preview: null,
-			localPreview: null,
-			localFile: null,
-			images: [
-
-			]
+			onlineLogo: null,
+			localLogo: null,
+			localImages: [],
+			onlineImages: []
 		};
 	}
 
-	
 	componentWillMount() {
 		this.setState({
 			name: this.props.actualUser.foodtrucks[0].name,
-			logo: this.props.actualUser.foodtrucks[0].logo
-				? this.props.actualUser.foodtrucks[0].logo.filename
-				: null,
+			onlineLogo: this.props.actualUser.foodtrucks[0].logo,
 			categoryActiveId: this.props.actualUser.foodtrucks[0].category,
-			preview: this.props.actualUser.foodtrucks[0].logo
+			onlineImages: this.props.actualUser.foodtrucks[0].images
 		});
 	}
-	
 
+	
+	
 	componentWillUpdate(nextProps) {
 		if (this.props.actualUser !== nextProps.actualUser) {
 			this.setState({
 				name: nextProps.actualUser.foodtrucks[0].name,
-				logo: nextProps.actualUser.foodtrucks[0].logo.filename,
+				onlineLogo: nextProps.actualUser.foodtrucks[0].logo,
 				categoryActiveId: nextProps.actualUser.foodtrucks[0].category,
-				preview: nextProps.actualUser.foodtrucks[0].logo
+				onlineImages: this.props.actualUser.foodtrucks[0].images
 			});
 		}
-		// console.log(nextProps.actualUser);
 	}
 
 	//Update nom FT
@@ -66,6 +61,7 @@ class Profil extends Component  {
 		this.setState({name: event.target.value});
 	}
 
+	//Selection Category
 	handleClick(id) {
 		this.setState({categoryActiveId: id});
 	}
@@ -73,11 +69,19 @@ class Profil extends Component  {
 	//Prise en charge du chargement de l'image, pour affichage preview et upload
 	handleLogoChange(event) {
 		if (event.target.files[0]) {
-			this.setState({
-				localPreview: URL.createObjectURL(event.target.files[0]),
-				localFile: event.target.files[0]
-			});
+			this.setState({localLogo: event.target.files[0]});
 		}
+	}
+
+	//Suppression image
+	deleteImage(id, fileName) {
+		//Datas to send
+		const datas = {
+			idFT: this.props.actualUser.foodtrucks[0]._id,
+			idImage: id,
+			fileNameImage: fileName
+		};
+		this.props.deleteImageFoodTruck(datas);
 	}
 
 	onSubmit = () => {
@@ -85,8 +89,8 @@ class Profil extends Component  {
 			idFT: this.props.actualUser.foodtrucks[0]._id,
 			name: this.state.name,
 			category: this.state.categoryActiveId !== this.props.actualUser.foodtrucks[0].category._id ? this.state.categoryActiveId : null,
-			logo: this.state.preview !== this.state.localPreview ? this.state.localFile : null,
-			images: this.state.images
+			logo: this.state.localLogo ? this.state.localLogo : null,
+			images: this.state.localImages
 		};
 
 		this.props.updateProfil(dataToSend);
@@ -95,6 +99,7 @@ class Profil extends Component  {
 	};
 
 	render() {
+		console.log('Render');
 		return (
 			<div className="container-fluid adminContainer">
 				<div className="container formContainer">
@@ -138,20 +143,20 @@ class Profil extends Component  {
 									role="presentation">
 									<div className="file-field input-field">
 										<div className="btn">
-											<span>{this.state.preview ? 'Modifier' : 'Ajouter'}</span>
+											<span>Modifier</span>
 											<input type="file"/>
 										</div>
 										<div className="file-path-wrapper">
-											<input className="file-path validate" type="text" defaultValue={this.state.preview ? this.state.preview.name : ''} placeholder="Charger une image" />
+											<input className="file-path validate" type="text" defaultValue={this.state.onlineLogo ? this.state.onlineLogo.name : ''} placeholder="Charger une image" />
 										</div>
 									</div>
 								</div>
 								<div className="col s3 offset-s1">
 									<div className="previewContainer">
-										{this.state.localPreview
-											? <img className="responsive-img" src={this.state.localPreview} alt="Local" />
-											: this.state.preview 
-												? <img className="responsive-img" src={`${BASE_URL}/image/${this.state.preview._id}`} alt={this.state.preview.originalname} />
+										{this.state.localLogo
+											? <img className="responsive-img" src={URL.createObjectURL(this.state.localLogo)} alt="Local" />
+											: this.state.onlineLogo 
+												? <img className="responsive-img" src={`${BASE_URL}/image/${this.state.onlineLogo._id}`} alt={this.state.onlineLogo.name} />
 												: <img className="responsive-img" src="../img/logo_default.png" alt="Default logo" />}
 									</div>
 								</div>
@@ -161,17 +166,41 @@ class Profil extends Component  {
 					{/* IMAGES */}
 					<div className="profilImagesContainer" >
 						<PartTitle title="Images" />
-						<span>3 images maximum Formats: JPG,PNG et BMP</span>						
-						<FilePond
+						<span>3 images maximum Formats: JPG,PNG et BMP</span><br/>
+						<br/><span><u>En ligne</u></span>
+						<div className="col s12 insideRow">
+							<Grid container justify="space-evenly" spacing={24}>
+
+								{this.props.actualUser.foodtrucks[0].images ? this.props.actualUser.foodtrucks[0].images.map(image => {
+									return (
+										<div
+											className="center-align previewOnlineImage valign-wrapper"
+											key={image._id}
+											onClick={this.deleteImage.bind(this, image._id, image.filename)}
+											role="presentation"
+										>
+											<div className="boxDeleteContainer valign-wrapper">
+												<i className="material-icons boxDeleteText">delete_forever</i>
+											</div>
+											<Grid item className="valign-wrapper">
+												<img className="responsive-img" src={`${BASE_URL}/image/${image._id}`} alt={image.name} />
+											</Grid>
+										</div>
+									);
+								}) : null}
+							</Grid>			
+						</div>
+						<br/><span><u>Ajouter</u>{` (${3 - this.state.onlineImages.length} / 3 disponible${3 - this.state.onlineImages.length > 1 ? 's' : ''})`}</span><br/>					
+						<br/><FilePond
 							ref={ref => this.pond = ref}
-							files={this.state.images}
+							files={this.state.localImages}
 							allowMultiple={true}
-							maxFiles={3}
+							maxFiles={3 - this.state.onlineImages.length}
 							// server="/api"
 							onupdatefiles={fileItems => {
 								// Set currently active file objects to this.state
 								this.setState({
-									images: fileItems.map(fileItem => fileItem.file)
+									localImages: fileItems.map(fileItem => fileItem.file)
 								});
 							}}
 						/>
@@ -192,13 +221,14 @@ class Profil extends Component  {
 
 const mapStateToProps = state => {
 	return { 
-		categories: state.categories
+		categories: state.categories,
+		actualUser: state.user
 	};
 };
 
 const mapDispatchToProps = dispatch => ({
 	...bindActionCreators(
-		{ updateProfil }, dispatch)
+		{ updateProfil, deleteImageFoodTruck }, dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profil);

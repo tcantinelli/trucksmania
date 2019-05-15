@@ -71,3 +71,25 @@
   margin: 5vh 4vw;
   padding: 20px;
 }
+
+.previewOnlineImage {
+  border: 3px solid #F5EFED;
+  border-radius: 5px;
+  margin: 5px !important;
+  padding: 5px !important;
+  width: 250px;
+  position: relative;
+}
+
+.boxDeleteContainer {
+  border: 2px solid red;
+  border-radius: 5px;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  cursor: pointer;
+}
+
+.boxDeleteText {
+  color: red;
+}

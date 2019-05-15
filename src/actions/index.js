@@ -120,6 +120,26 @@ export function updateProfil(formValues) {
 	};
 }
 
+//DELETE IMAGE FT
+export function deleteImageFoodTruck(datas) {
+	return function(dispatch) {
+		Axios.post(`${BASE_URL}/delimage`, datas)
+			.then((response) => {
+				console.log(response.data);
+				dispatch(setPopMessage(true, 'Success', 'Image supprimée'));
+				setTimeout(() => {
+					dispatch(setPopMessage(false, null, null));	
+				}, 2500);
+				dispatch({
+					type: UPDATE_PROFIL,
+					payload: response.data
+				});
+			}).catch(() => {
+				dispatch(setPopMessage(true, 'Error', 'Erreur suppression image'));
+			});
+	};
+}
+
 //CATEGORIES
 export function getCategories() {
 	return function(dispatch) {
