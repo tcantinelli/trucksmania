@@ -4,7 +4,6 @@ class Applications extends Component  {
 	render() {
 		return (
 			<div className="container-fluid adminContainer">
-Applications
 			</div>
 		);
 	}

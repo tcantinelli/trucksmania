@@ -1,46 +1,40 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { updateProfil } from '../actions';
+import { updateProfil, deleteImageFoodTruck } from '../actions';
 import PartTitle from '../components/part_title';
 import Categorie from '../components/categorie';
 import Grid from '@material-ui/core/Grid';
 import { BASE_URL } from '../helpers/url';
 
+// Import React FilePond
+import { FilePond, registerPlugin } from 'react-filepond';
+
+// Import FilePond styles
+import 'filepond/dist/filepond.min.css';
+
+// Note: FilePondPluginImagePreview need to be installed separately
+import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
+import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
+
+// Register the plugins
+registerPlugin(FilePondPluginImagePreview);
+
 class Profil extends Component  {
 	constructor(props) {
 		super(props);
 		this.state = {
-			idFT: null,
 			name: '',
-			activeId: null,
-			preview: null,
-			localPreview: null,
-			localFile: null
+			categoryActiveId: null,
+			localLogo: null,
+			localImages: []
 		};
 	}
 
-	
 	componentWillMount() {
 		this.setState({
-			name: this.props.actualUser.foodtrucks[0].name,
-			logo: this.props.actualUser.foodtrucks[0].logo.originalname,
-			activeId: this.props.actualUser.foodtrucks[0].category,
-			preview: this.props.actualUser.foodtrucks[0].logo
+			categoryActiveId: this.props.theFT.category
 		});
-	}
-	
-
-	componentWillUpdate(nextProps) {
-		if (this.props.actualUser !== nextProps.actualUser) {
-			this.setState({
-				name: nextProps.actualUser.foodtrucks[0].name,
-				logo: nextProps.actualUser.foodtrucks[0].logo.originalname,
-				activeId: nextProps.actualUser.foodtrucks[0].category,
-				preview: nextProps.actualUser.foodtrucks[0].logo
-			});
-		}
-		// console.log(nextProps.actualUser);
 	}
 
 	//Update nom FT
@@ -48,41 +42,46 @@ class Profil extends Component  {
 		this.setState({name: event.target.value});
 	}
 
+	//Selection Category
 	handleClick(id) {
-		this.setState({activeId: id});
+		this.setState({categoryActiveId: id});
 	}
 
 	//Prise en charge du chargement de l'image, pour affichage preview et upload
 	handleLogoChange(event) {
 		if (event.target.files[0]) {
-			this.setState({
-				localPreview: URL.createObjectURL(event.target.files[0]),
-				localFile: event.target.files[0]
-			});
+			this.setState({localLogo: event.target.files[0]});
 		}
 	}
 
-	handleImagesChange(event) {
-		if (event.target.files[0]) {
-			// this.setState({
-			// 	localPreview: URL.createObjectURL(event.target.files[0]),
-			// 	localFile: event.target.files[0]
-			// });
-			console.log(event.target.files);
-		}
+	//Suppression image
+	deleteImage(id, fileName) {
+		//Datas to send
+		const datas = {
+			idFT: this.props.theFT._id,
+			idImage: id,
+			fileNameImage: fileName
+		};
+		this.props.deleteImageFoodTruck(datas);
 	}
 
 	onSubmit = () => {
+		//Datas de la requête POST
 		const dataToSend = {
-			idFT: this.props.actualUser.foodtrucks[0]._id,
+			idFT: this.props.theFT._id,
 			name: this.state.name,
-			category: this.state.activeId !== this.props.actualUser.foodtrucks[0].category._id ? this.state.activeId : null,
-			logo: this.state.preview !== this.state.localPreview ? this.state.localFile : null
+			category: this.state.categoryActiveId !== this.props.theFT.category ? this.state.categoryActiveId : null,
+			logo: this.state.localLogo ? this.state.localLogo : null,
+			images: this.state.localImages
 		};
 
+		//Action
 		this.props.updateProfil(dataToSend);
 
-		//console.log(dataToSend);
+		//RAZ zone upload images
+		this.setState({
+			localImages: []
+		});
 	};
 
 	render() {
@@ -92,23 +91,25 @@ class Profil extends Component  {
 					{/* NOM */}
 					<div className="profilPartContainer" >
 						<PartTitle title="Nom" />
-						<div className="row insideRow valign-wrapper">
-							<div className="row">
-								<div className="input-field col s12">
-									<input id="name" type="text" value={this.state.name} onChange={this.onUpdateName.bind(this)} />
-								</div>
+						<div className="row">
+							<div className="input-field col s12 m6 offset-m3">
+								<input
+									id="name" 
+									type="text" 
+									defaultValue={this.props.theFT.name}
+									onChange={this.onUpdateName.bind(this)} />
 							</div>
 						</div>
 					</div>
 					{/* Categorie */}
 					<div className="profilPartContainer" >
 						<PartTitle title="Catégorie" />
-						<div className="row insideRow center-align">
-							<Grid container justify="flex-start" spacing={32}>
+						<div className="col s12 insideRow">
+							<Grid container justify="space-evenly" spacing={32}>
 								{this.props.categories.map(categorie => {
 									return (
 										<div
-											className={`center-align ${categorie._id === this.state.activeId ? 'activeCategorieContainerStyle' : 'inactiveCategorieContainerStyle'}`}
+											className={`center-align ${categorie._id === this.state.categoryActiveId ? 'activeCategorieContainerStyle' : 'inactiveCategorieContainerStyle'}`}
 											onClick={this.handleClick.bind(this, categorie._id)}
 											role="presentation"
 											key={categorie._id}>
@@ -118,7 +119,7 @@ class Profil extends Component  {
 										</div>
 									);
 								})}
-							</Grid>		
+							</Grid>			
 						</div>
 					</div>
 					{/* LOGO */}
@@ -131,20 +132,20 @@ class Profil extends Component  {
 									role="presentation">
 									<div className="file-field input-field">
 										<div className="btn">
-											<span>{this.state.preview ? 'Modifier' : 'Ajouter'}</span>
+											<span>Modifier</span>
 											<input type="file"/>
 										</div>
 										<div className="file-path-wrapper">
-											<input className="file-path validate" type="text" defaultValue={this.state.preview ? this.state.preview.originalname : ''} placeholder="Charger une image" />
+											<input className="file-path validate" type="text" defaultValue={this.props.theFT.logo ? this.props.theFT.logo.name : ''} placeholder="Charger une image" />
 										</div>
 									</div>
 								</div>
 								<div className="col s3 offset-s1">
 									<div className="previewContainer">
-										{this.state.localPreview
-											? <img className="responsive-img" src={this.state.localPreview} alt="Local" />
-											: this.state.preview 
-												? <img className="responsive-img" src={`${BASE_URL}/image/${this.state.preview._id}`} alt={this.state.preview.originalname} />
+										{this.state.localLogo
+											? <img className="responsive-img" src={URL.createObjectURL(this.state.localLogo)} alt="Local" />
+											: this.props.theFT.logo
+												? <img className="responsive-img" src={`${BASE_URL}/image/${this.props.theFT.logo._id}`} alt={this.props.theFT.logo.name} />
 												: <img className="responsive-img" src="../img/logo_default.png" alt="Default logo" />}
 									</div>
 								</div>
@@ -152,18 +153,46 @@ class Profil extends Component  {
 						</div>
 					</div>
 					{/* IMAGES */}
-					<div className="profilPartContainer" >
+					<div className="profilImagesContainer" >
 						<PartTitle title="Images" />
-						<div className="row insideRow valign-wrapper">
-								<div className="input-field col s12">
-									<div className="file-field input-field">
-										<div className="btn">
-											<span>Ajouter</span>
-											<input type="file" onChange={this.handleImagesChange.bind(this)}/>
+						<span>3 images maximum Formats: JPG,PNG et BMP</span><br/>
+						<br/><span><u>En ligne</u></span>
+						<div className="col s12 insideRow">
+							<Grid container justify="space-evenly" spacing={24}>
+
+								{this.props.theFT.images ? this.props.theFT.images.map(image => {
+									return (
+										<div
+											className="center-align previewOnlineImage valign-wrapper"
+											key={image._id}
+											onClick={this.deleteImage.bind(this, image._id, image.filename)}
+											role="presentation"
+										>
+											<div className="boxDeleteContainer valign-wrapper">
+												<i className="material-icons boxDeleteText">delete_forever</i>
+											</div>
+											<Grid item className="valign-wrapper">
+												<img className="responsive-img" src={`${BASE_URL}/image/${image._id}`} alt={image.name} />
+											</Grid>
 										</div>
-									</div>
-								</div>
+									);
+								}) : null}
+							</Grid>			
 						</div>
+						<br/><span><u>Ajouter</u>{` (${3 - this.props.theFT.images.length} / 3 disponible${3 - this.props.theFT.images.length > 1 ? 's' : ''})`}</span><br/>					
+						<br/><FilePond
+							ref={ref => this.pond = ref}
+							files={this.state.localImages}
+							allowMultiple={true}
+							maxFiles={3 - this.props.theFT.images.length}
+							// server="/api"
+							onupdatefiles={fileItems => {
+								// Set currently active file objects to this.state
+								this.setState({
+									localImages: fileItems.map(fileItem => fileItem.file)
+								});
+							}}
+						/>
 					</div>
 					{/* VALIDATION */}
 					<div className="row" >
@@ -181,13 +210,14 @@ class Profil extends Component  {
 
 const mapStateToProps = state => {
 	return { 
-		categories: state.categories
+		categories: state.categories,
+		actualUser: state.user
 	};
 };
 
 const mapDispatchToProps = dispatch => ({
 	...bindActionCreators(
-		{ updateProfil }, dispatch)
+		{ updateProfil, deleteImageFoodTruck }, dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profil);

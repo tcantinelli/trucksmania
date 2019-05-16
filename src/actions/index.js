@@ -83,8 +83,15 @@ export function updateProfil(formValues) {
 		//Ajout name et category
 		datas.append('name', formValues.name);
 		datas.append('category', formValues.category);
-		//Ajout image
-		datas.append('file', formValues.logo);
+		//Ajout logo
+		datas.append('logo', formValues.logo);
+
+		//Ajout images
+		const imageDatas = new FormData();
+		imageDatas.append('idFT', formValues.idFT);
+		formValues.images.map(image => {
+			imageDatas.append('image', image);
+		});
 
 		const config = {
 			headers: {
@@ -93,17 +100,42 @@ export function updateProfil(formValues) {
 		};
 
 		Axios.post(`${BASE_URL}/upprofil`, datas, config)
+			.then(() => {
+				Axios.post(`${BASE_URL}/upimages`, imageDatas, config)
+					.then((response) => {
+						dispatch(setPopMessage(true, 'Success', 'Informations mises à jour'));
+						dispatch({
+							type: UPDATE_PROFIL,
+							payload: response.data
+						});
+						setTimeout(() => {
+							dispatch(setPopMessage(false, null, null));	
+						}, 2500);
+					}).catch(() => {
+						dispatch(setPopMessage(true, 'Error', 'Erreur de mise à jour'));
+					});
+			}).catch(() => {
+				dispatch(setPopMessage(true, 'Error', 'Erreur de mise à jour'));
+			});
+	};
+}
+
+//DELETE IMAGE FT
+export function deleteImageFoodTruck(datas) {
+	return function(dispatch) {
+		Axios.post(`${BASE_URL}/delimage`, datas)
 			.then((response) => {
-				dispatch(setPopMessage(true, 'Success', 'Informations mises à jour'));
+				// console.log(response.data);
 				dispatch({
 					type: UPDATE_PROFIL,
 					payload: response.data
 				});
+				dispatch(setPopMessage(true, 'Success', 'Image supprimée'));
 				setTimeout(() => {
 					dispatch(setPopMessage(false, null, null));	
 				}, 2500);
 			}).catch(() => {
-				dispatch(setPopMessage(true, 'Error', 'Erreur de mise à jour'));
+				dispatch(setPopMessage(true, 'Error', 'Erreur suppression image'));
 			});
 	};
 }
