@@ -4,7 +4,6 @@ import { bindActionCreators } from 'redux';
 import M from 'materialize-css';
 import { updateProfil } from '../actions';
 import { items } from '../helpers/sidebar_items';
-//import { BASE_URL } from '../helpers/url';
 //Components & Containers
 import SideBar from './sidebar';
 import Profil from './profil';
@@ -20,18 +19,18 @@ class Admin extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			item: 'Profil',
-			actualUser: null
+			item: 'Profil'
+			// actualUser: null
 		};
 	}
 
-	componentWillUpdate(nextProps) {
-		if (this.props.user !== nextProps.user) {
-			this.setState({
-				actualUser: nextProps.user
-			});
-		}
-	}
+	// componentWillUpdate(nextProps) {
+	// 	if (this.props.user !== nextProps.user) {
+	// 		this.setState({
+	// 			actualUser: nextProps.user
+	// 		});
+	// 	}
+	// }
 
 	//Affichage partie droite
 	actionSideBar = item => {
@@ -56,13 +55,13 @@ class Admin extends Component {
 				{this.props.popMessage.toShow ?
 					<PopMessage degree={this.props.popMessage.degree} message={this.props.popMessage.message} />
 					: null}
-				{this.state.actualUser ? 
-					this.state.actualUser.email !== ''
-						? <SideBar userInfos={this.state.actualUser} items={items} action={this.actionSideBar.bind(this)}/> : null
+				{this.props.user ? 
+					this.props.user.email !== ''
+						? <SideBar userInfos={this.props.user} items={items} action={this.actionSideBar.bind(this)}/> : null
 					: null}
-				{this.state.actualUser ? 
-					this.state.actualUser.email !== ''
-						? getItem(rightView, this.state.actualUser) : null
+				{this.props.user ? 
+					this.props.user.email !== ''
+						? getItem(rightView, this.props.user.foodtrucks[0]) : null
 					: null}
 			</div>
 		);
@@ -70,18 +69,18 @@ class Admin extends Component {
 }
 
 //Choix component partie droite
-const getItem = (item, user) => {
+const getItem = (item, datas) => {
 	switch (item) {
 	case 'Orders':
 		return <Orders />;
 	case 'Articles':
-		return <Articles testVar={user.email} />;
+		return <Articles testVar={datas.name} />;
 	case 'Locations':
 		return <Locations />;
 	case 'Applications':
 		return <Applications />;
 	default:
-		return <Profil actualUser={user}/>;
+		return <Profil theFT={datas}/>;
 	}
 };
 
