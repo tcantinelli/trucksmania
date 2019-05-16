@@ -24,36 +24,17 @@ class Profil extends Component  {
 	constructor(props) {
 		super(props);
 		this.state = {
-			idFT: null,
 			name: '',
 			categoryActiveId: null,
-			onlineLogo: null,
 			localLogo: null,
-			localImages: [],
-			onlineImages: []
+			localImages: []
 		};
 	}
 
 	componentWillMount() {
 		this.setState({
-			name: this.props.actualUser.foodtrucks[0].name,
-			onlineLogo: this.props.actualUser.foodtrucks[0].logo,
-			categoryActiveId: this.props.actualUser.foodtrucks[0].category,
-			onlineImages: this.props.actualUser.foodtrucks[0].images
+			categoryActiveId: this.props.theFT.category
 		});
-	}
-
-	
-	
-	componentWillUpdate(nextProps) {
-		if (this.props.actualUser !== nextProps.actualUser) {
-			this.setState({
-				name: nextProps.actualUser.foodtrucks[0].name,
-				onlineLogo: nextProps.actualUser.foodtrucks[0].logo,
-				categoryActiveId: nextProps.actualUser.foodtrucks[0].category,
-				onlineImages: this.props.actualUser.foodtrucks[0].images
-			});
-		}
 	}
 
 	//Update nom FT
@@ -77,7 +58,7 @@ class Profil extends Component  {
 	deleteImage(id, fileName) {
 		//Datas to send
 		const datas = {
-			idFT: this.props.actualUser.foodtrucks[0]._id,
+			idFT: this.props.theFT._id,
 			idImage: id,
 			fileNameImage: fileName
 		};
@@ -85,21 +66,25 @@ class Profil extends Component  {
 	}
 
 	onSubmit = () => {
+		//Datas de la requête POST
 		const dataToSend = {
-			idFT: this.props.actualUser.foodtrucks[0]._id,
+			idFT: this.props.theFT._id,
 			name: this.state.name,
-			category: this.state.categoryActiveId !== this.props.actualUser.foodtrucks[0].category._id ? this.state.categoryActiveId : null,
+			category: this.state.categoryActiveId !== this.props.theFT.category ? this.state.categoryActiveId : null,
 			logo: this.state.localLogo ? this.state.localLogo : null,
 			images: this.state.localImages
 		};
 
+		//Action
 		this.props.updateProfil(dataToSend);
 
-		// console.log(dataToSend);
+		//RAZ zone upload images
+		this.setState({
+			localImages: []
+		});
 	};
 
 	render() {
-		console.log('Render');
 		return (
 			<div className="container-fluid adminContainer">
 				<div className="container formContainer">
@@ -108,7 +93,11 @@ class Profil extends Component  {
 						<PartTitle title="Nom" />
 						<div className="row">
 							<div className="input-field col s12 m6 offset-m3">
-								<input id="name" type="text" value={this.state.name} onChange={this.onUpdateName.bind(this)} />
+								<input
+									id="name" 
+									type="text" 
+									defaultValue={this.props.theFT.name}
+									onChange={this.onUpdateName.bind(this)} />
 							</div>
 						</div>
 					</div>
@@ -147,7 +136,7 @@ class Profil extends Component  {
 											<input type="file"/>
 										</div>
 										<div className="file-path-wrapper">
-											<input className="file-path validate" type="text" defaultValue={this.state.onlineLogo ? this.state.onlineLogo.name : ''} placeholder="Charger une image" />
+											<input className="file-path validate" type="text" defaultValue={this.props.theFT.logo ? this.props.theFT.logo.name : ''} placeholder="Charger une image" />
 										</div>
 									</div>
 								</div>
@@ -155,8 +144,8 @@ class Profil extends Component  {
 									<div className="previewContainer">
 										{this.state.localLogo
 											? <img className="responsive-img" src={URL.createObjectURL(this.state.localLogo)} alt="Local" />
-											: this.state.onlineLogo 
-												? <img className="responsive-img" src={`${BASE_URL}/image/${this.state.onlineLogo._id}`} alt={this.state.onlineLogo.name} />
+											: this.props.theFT.logo
+												? <img className="responsive-img" src={`${BASE_URL}/image/${this.props.theFT.logo._id}`} alt={this.props.theFT.logo.name} />
 												: <img className="responsive-img" src="../img/logo_default.png" alt="Default logo" />}
 									</div>
 								</div>
@@ -171,7 +160,7 @@ class Profil extends Component  {
 						<div className="col s12 insideRow">
 							<Grid container justify="space-evenly" spacing={24}>
 
-								{this.props.actualUser.foodtrucks[0].images ? this.props.actualUser.foodtrucks[0].images.map(image => {
+								{this.props.theFT.images ? this.props.theFT.images.map(image => {
 									return (
 										<div
 											className="center-align previewOnlineImage valign-wrapper"
@@ -190,12 +179,12 @@ class Profil extends Component  {
 								}) : null}
 							</Grid>			
 						</div>
-						<br/><span><u>Ajouter</u>{` (${3 - this.state.onlineImages.length} / 3 disponible${3 - this.state.onlineImages.length > 1 ? 's' : ''})`}</span><br/>					
+						<br/><span><u>Ajouter</u>{` (${3 - this.props.theFT.images.length} / 3 disponible${3 - this.props.theFT.images.length > 1 ? 's' : ''})`}</span><br/>					
 						<br/><FilePond
 							ref={ref => this.pond = ref}
 							files={this.state.localImages}
 							allowMultiple={true}
-							maxFiles={3 - this.state.onlineImages.length}
+							maxFiles={3 - this.props.theFT.images.length}
 							// server="/api"
 							onupdatefiles={fileItems => {
 								// Set currently active file objects to this.state
