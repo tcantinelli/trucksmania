@@ -51,7 +51,8 @@
   border-radius: 5px;
   margin: 5px !important;
   padding: 5px !important;
-  width: 150px
+  width: 150px;
+  cursor: pointer;
 }
 
 /* preview logo */

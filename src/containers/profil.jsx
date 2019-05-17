@@ -165,10 +165,11 @@ class Profil extends Component  {
 										<div
 											className="center-align previewOnlineImage valign-wrapper"
 											key={image._id}
-											onClick={this.deleteImage.bind(this, image._id, image.filename)}
-											role="presentation"
 										>
-											<div className="boxDeleteContainer valign-wrapper">
+											<div className="boxDeleteContainer valign-wrapper"
+												onClick={this.deleteImage.bind(this, image._id, image.filename)}
+												role="presentation"
+											>
 												<i className="material-icons boxDeleteText">delete_forever</i>
 											</div>
 											<Grid item className="valign-wrapper">

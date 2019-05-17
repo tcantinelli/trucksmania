@@ -33,7 +33,7 @@ class SideBar extends Component {
 								return (
 									<li
 										className="collection-item"
-										style={collectioItemStyle}
+										style={collectionItemStyle}
 										key={key}
 										onClick={this.handleClick.bind(this, item.component)}
 										role="presentation"
@@ -68,8 +68,8 @@ class SideBar extends Component {
 }
 
 //Style
-const collectioItemStyle = {
-	//padding: '0px'
+const collectionItemStyle = {
+	cursor: 'pointer'
 };
 
 const rowStyle = {
