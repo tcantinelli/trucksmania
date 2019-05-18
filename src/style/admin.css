@@ -94,3 +94,33 @@
 .boxDeleteText {
   color: red;
 }
+
+/* ARTICLES */
+.articlePartContainer {
+  border: 2px solid #232524;
+  border-radius: 5px;
+  box-shadow: 10px 10px 5px #a09d9d;
+  height: auto;
+  min-height: 250px;
+  position: relative;
+  margin: 5vh 4vw;
+}
+
+.articleSubPartContainer {
+  padding: 0px 30px !important;
+}
+
+.articlePreviewConatiner {
+  margin: 5px;
+  border: 2px solid #F5EFED;
+  border-radius: 5px;
+  max-height: 150px;
+}
+
+.articleImagePreview {
+  max-height: 150px !important;
+}
+
+.articleRowImage {
+  height: 50px;
+}

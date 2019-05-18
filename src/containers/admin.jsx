@@ -20,17 +20,8 @@ class Admin extends Component {
 		super(props);
 		this.state = {
 			item: 'Profil'
-			// actualUser: null
 		};
 	}
-
-	// componentWillUpdate(nextProps) {
-	// 	if (this.props.user !== nextProps.user) {
-	// 		this.setState({
-	// 			actualUser: nextProps.user
-	// 		});
-	// 	}
-	// }
 
 	//Affichage partie droite
 	actionSideBar = item => {
@@ -74,7 +65,7 @@ const getItem = (item, datas) => {
 	case 'Orders':
 		return <Orders />;
 	case 'Articles':
-		return <Articles testVar={datas.name} />;
+		return <Articles onlineArticles={datas.articles} />;
 	case 'Locations':
 		return <Locations />;
 	case 'Applications':

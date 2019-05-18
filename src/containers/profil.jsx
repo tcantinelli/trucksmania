@@ -211,8 +211,7 @@ class Profil extends Component  {
 
 const mapStateToProps = state => {
 	return { 
-		categories: state.categories,
-		actualUser: state.user
+		categories: state.categories
 	};
 };
 
