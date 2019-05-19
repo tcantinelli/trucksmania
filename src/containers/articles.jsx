@@ -107,30 +107,32 @@ class Articles extends Component {
 				</div>
 				{/* LISTE DES ARTICLES */}
 				<div className="articlePartContainer" >
-					<PartTitle title="Liste des articles" />
-					<br />
-					<Table>
-						<TableHead>
-							<TableRow>
-								<TableCell>image</TableCell>
-								<TableCell align="center">Intitulé</TableCell>
-								<TableCell align="center">Prix</TableCell>
-								<TableCell align="center">Description</TableCell>
-							</TableRow>
-						</TableHead>
-						<TableBody>
-							{this.props.articles ? this.props.articles.map(article => 
-								<TableRow key={article._id}>
-									<TableCell component="th" scope="row" className="articleRowImage">
-										{article.image}
-									</TableCell>
-									<TableCell align="center">{article.value}</TableCell>
-									<TableCell align="center">{article.price}</TableCell>
-									<TableCell align="center">{article.description}</TableCell>
+					<div className="articleSubPartContainer" >
+						<PartTitle title="Liste des articles" />
+						<br />
+						<Table>
+							<TableHead>
+								<TableRow>
+									<TableCell>image</TableCell>
+									<TableCell align="center">Intitulé</TableCell>
+									<TableCell align="center">Prix</TableCell>
+									<TableCell align="center">Description</TableCell>
 								</TableRow>
-							) : null};
-						</TableBody>
-					</Table>
+							</TableHead>
+							<TableBody>
+								{this.props.articles ? this.props.articles.map(article => 
+									<TableRow key={article._id}>
+										<TableCell component="th" scope="row" className="articleRowImage">
+											{article.image}
+										</TableCell>
+										<TableCell align="center">{article.value}</TableCell>
+										<TableCell align="center">{article.price}</TableCell>
+										<TableCell align="center">{article.description}</TableCell>
+									</TableRow>
+								) : null}
+							</TableBody>
+						</Table>
+					</div>
 				</div>
 			</div>
 		);
