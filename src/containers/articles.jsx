@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {} from '../actions';
+import { addArticle } from '../actions';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import PartTitle from '../components/part_title';
@@ -40,8 +40,35 @@ class Articles extends Component {
 		default:
 			break;
 		}
-
 	}
+
+	handleImageChange(event) {
+		if (event.target.files[0]) {
+			this.setState({image: event.target.files[0]});
+		}
+	}
+
+	onSubmit = () => {
+		//Datas de la requête POST
+		const dataToSend = {
+			idFT: this.props.idFT,
+			value: this.state.value,
+			price: this.state.price,
+			description: this.state.description,
+			image: this.state.image
+		};
+
+		//Action
+		// this.props.addArticle(dataToSend);
+
+		// //RAZ zone upload images
+		// this.setState({
+		// 	localImages: []
+		// });
+
+		console.log(dataToSend);
+	};
+
 	render() {
 		return (
 			<div className="container-fluid adminContainer">
@@ -53,10 +80,10 @@ class Articles extends Component {
 						<div className="col s12 m6 articleSubPartContainer">
 							<div className="row input-field">
 								<input
-									id="name" 
+									id="value" 
 									type="text" 
 									onChange={this.onUpdate.bind(this)} />
-								<label for="name">Intitulé</label>
+								<label htmlFor="name">Intitulé</label>
 							</div>
 							{/* PRICE */}
 							<div className="row input-field">
@@ -64,18 +91,18 @@ class Articles extends Component {
 									id="price" 
 									type="number" 
 									onChange={this.onUpdate.bind(this)} />
-								<label for="price">Prix</label>
+								<label htmlFor="price">Prix</label>
 							</div>
 							{/* DESCRIPTION */}
-							<div class="row input-field">
-								<textarea id="description" class="materialize-textarea" onChange={this.onUpdate.bind(this)}></textarea>
-								<label for="description">Description</label>
+							<div className="row input-field">
+								<textarea id="description" className="materialize-textarea" onChange={this.onUpdate.bind(this)}></textarea>
+								<label htmlFor="description">Description</label>
 							</div>
 						</div>
 						{/* IMAGE */}
 						<div className="col s12 m6 articleSubPartContainer">
 							<div className="row input-field"
-								onChange={this.onUpdate.bind(this)}
+								onChange={this.handleImageChange.bind(this)}
 								role="presentation">
 								<div className="file-field input-field">
 									<div className="btn">
@@ -141,8 +168,7 @@ class Articles extends Component {
 
 const mapDispatchToProps = dispatch => ({
 	...bindActionCreators(
-		{},
-		dispatch
+		{addArticle}, dispatch
 	)
 });
 export default connect(

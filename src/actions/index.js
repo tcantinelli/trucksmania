@@ -176,3 +176,49 @@ export function setPopMessage(toShow, degree, message) {
 		}
 	};
 }
+
+//ADD ARTICLE
+export function addArticle(formValues) {
+	return function(dispatch) {
+		const datas = new FormData();
+		//ID FoodTruck
+		datas.append('idFT', formValues.idFT);
+		//Ajout name et category
+		datas.append('name', formValues.name);
+		datas.append('category', formValues.category);
+		//Ajout logo
+		datas.append('logo', formValues.logo);
+
+		//Ajout images
+		const imageDatas = new FormData();
+		imageDatas.append('idFT', formValues.idFT);
+		formValues.images.map(image => {
+			imageDatas.append('image', image);
+		});
+
+		const config = {
+			headers: {
+				'content-type': 'multipart/form-data'
+			}
+		};
+
+		Axios.post(`${BASE_URL}/upprofil`, datas, config)
+			.then(() => {
+				Axios.post(`${BASE_URL}/upimages`, imageDatas, config)
+					.then((response) => {
+						dispatch(setPopMessage(true, 'Success', 'Informations mises à jour'));
+						dispatch({
+							type: UPDATE_PROFIL,
+							payload: response.data
+						});
+						setTimeout(() => {
+							dispatch(setPopMessage(false, null, null));	
+						}, 2500);
+					}).catch(() => {
+						dispatch(setPopMessage(true, 'Error', 'Erreur de mise à jour'));
+					});
+			}).catch(() => {
+				dispatch(setPopMessage(true, 'Error', 'Erreur de mise à jour'));
+			});
+	};
+}
