@@ -183,9 +183,10 @@ export function addArticle(formValues) {
 		const datas = new FormData();
 		//ID FoodTruck
 		datas.append('idFT', formValues.idFT);
-		//Ajout name et category
-		datas.append('name', formValues.name);
-		datas.append('category', formValues.category);
+		//Ajout value, price et description
+		datas.append('value', formValues.value);
+		datas.append('price', formValues.price);
+		datas.append('description', formValues.description);
 		//Ajout logo
 		datas.append('logo', formValues.logo);
 
