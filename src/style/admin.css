@@ -95,6 +95,11 @@
   color: red;
 }
 
+.boxUpdateText {
+  color: #4BA0E7;
+}
+
+
 /* ARTICLES */
 .articlePartContainer {
   border: 2px solid #232524;
@@ -123,4 +128,21 @@
 
 .articleRowImage {
   height: 50px;
+}
+
+.articleDeleteIcon {
+  border: 2px solid red;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 40px;
+  justify-content: center;
+}
+
+.articleLoadIcon {
+  border: 2px solid #4BA0E7;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 40px;
+  justify-content: center;
+  margin-right: 10px;
 }

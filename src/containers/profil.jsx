@@ -55,12 +55,11 @@ class Profil extends Component  {
 	}
 
 	//Suppression image
-	deleteImage(id, fileName) {
+	deleteImage(id) {
 		//Datas to send
 		const datas = {
 			idFT: this.props.theFT._id,
-			idImage: id,
-			fileNameImage: fileName
+			idImage: id
 		};
 		this.props.deleteImageFoodTruck(datas);
 	}
@@ -167,7 +166,7 @@ class Profil extends Component  {
 											key={image._id}
 										>
 											<div className="boxDeleteContainer valign-wrapper"
-												onClick={this.deleteImage.bind(this, image._id, image.filename)}
+												onClick={this.deleteImage.bind(this, image._id)}
 												role="presentation"
 											>
 												<i className="material-icons boxDeleteText">delete_forever</i>

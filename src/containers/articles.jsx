@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { addArticle } from '../actions';
+import { addArticle, deleteArticleFoodTruck } from '../actions';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { BASE_URL } from '../helpers/url';
@@ -59,6 +59,21 @@ class Articles extends Component {
 			image: null
 		});
 		document.getElementById('filename').value = '';
+	}
+
+	//Chargement Article pour update
+	loadArticle(article) {
+
+	}
+
+	//Suppression Article
+	deleteArticle(articleID) {
+		//Datas to send
+		const datas = {
+			idFT: this.props.idFT,
+			idArticle: articleID
+		};
+		this.props.deleteArticleFoodTruck(datas);
 	}
 
 	onSubmit = () => {
@@ -167,6 +182,7 @@ class Articles extends Component {
 									<TableCell align="center">Intitulé</TableCell>
 									<TableCell align="center">Prix</TableCell>
 									<TableCell align="center">Description</TableCell>
+									<TableCell align="center">Actions</TableCell>
 								</TableRow>
 							</TableHead>
 							<TableBody>
@@ -180,6 +196,22 @@ class Articles extends Component {
 										<TableCell align="center">{article.value}</TableCell>
 										<TableCell align="center">{article.price}</TableCell>
 										<TableCell align="center">{article.description}</TableCell>
+										<TableCell align="center">
+											<div className="row">
+												<div className="col articleLoadIcon center-align valign-wrapper"
+													onClick={this.loadArticle.bind(this, article)}
+													role="presentation"
+												>
+													<i className="material-icons boxUpdateText">edit</i>
+												</div>
+												<div className="col articleDeleteIcon center-align valign-wrapper"
+													onClick={this.deleteArticle.bind(this, article._id)}
+													role="presentation"
+												>
+													<i className="material-icons boxDeleteText">delete_forever</i>
+												</div>
+											</div>
+										</TableCell>
 									</TableRow>
 								) : null}
 							</TableBody>
@@ -193,7 +225,7 @@ class Articles extends Component {
 
 const mapDispatchToProps = dispatch => ({
 	...bindActionCreators(
-		{addArticle}, dispatch
+		{addArticle, deleteArticleFoodTruck}, dispatch
 	)
 });
 export default connect(

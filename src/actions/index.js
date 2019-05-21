@@ -212,3 +212,22 @@ export function addArticle(formValues) {
 			});
 	};
 }
+
+//DELETE ARTICLE FT
+export function deleteArticleFoodTruck(datas) {
+	return function(dispatch) {
+		Axios.post(`${BASE_URL}/delarticle`, datas)
+			.then((response) => {
+				dispatch({
+					type: UPDATE_PROFIL,
+					payload: response.data
+				});
+				dispatch(setPopMessage(true, 'Success', 'Article supprimé'));
+				setTimeout(() => {
+					dispatch(setPopMessage(false, null, null));	
+				}, 2500);
+			}).catch(() => {
+				dispatch(setPopMessage(true, 'Error', 'Erreur suppression article'));
+			});
+	};
+}
