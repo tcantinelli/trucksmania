@@ -188,14 +188,7 @@ export function addArticle(formValues) {
 		datas.append('price', formValues.price);
 		datas.append('description', formValues.description);
 		//Ajout logo
-		datas.append('logo', formValues.logo);
-
-		//Ajout images
-		const imageDatas = new FormData();
-		imageDatas.append('idFT', formValues.idFT);
-		formValues.images.map(image => {
-			imageDatas.append('image', image);
-		});
+		datas.append('article', formValues.image);
 
 		const config = {
 			headers: {
@@ -203,21 +196,17 @@ export function addArticle(formValues) {
 			}
 		};
 
-		Axios.post(`${BASE_URL}/upprofil`, datas, config)
-			.then(() => {
-				Axios.post(`${BASE_URL}/upimages`, imageDatas, config)
-					.then((response) => {
-						dispatch(setPopMessage(true, 'Success', 'Informations mises à jour'));
-						dispatch({
-							type: UPDATE_PROFIL,
-							payload: response.data
-						});
-						setTimeout(() => {
-							dispatch(setPopMessage(false, null, null));	
-						}, 2500);
-					}).catch(() => {
-						dispatch(setPopMessage(true, 'Error', 'Erreur de mise à jour'));
-					});
+		Axios.post(`${BASE_URL}/article`, datas, config)
+			.then((response) => {
+				console.log(response.data);
+				dispatch(setPopMessage(true, 'Success', 'Article ajouté'));
+				dispatch({
+					type: UPDATE_PROFIL,
+					payload: response.data
+				});
+				setTimeout(() => {
+					dispatch(setPopMessage(false, null, null));	
+				}, 2500);
 			}).catch(() => {
 				dispatch(setPopMessage(true, 'Error', 'Erreur de mise à jour'));
 			});
