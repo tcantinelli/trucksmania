@@ -16,15 +16,14 @@ class Categorie extends Component {
 	}
 }
 
-
 /* Style */
 const 
 	categorieTextStyle = {
-		fontSize: '14px',
+		fontSize: window.innerWidth > 479 ? '14px' : '10px',
 		color: '#181717'
 	},
 	categorieImageStyle = {
-		width: '40px'
+		width: window.innerWidth > 479 ? '40px' : '30px'
 	};
 
 export default Categorie;

@@ -86,7 +86,7 @@ class Profil extends Component  {
 	render() {
 		return (
 			<div className="container-fluid adminContainer">
-				<div className="container formContainer">
+				<div className="adminSubContainer">
 					{/* NOM */}
 					<div className="profilPartContainer" >
 						<PartTitle title="Nom" />
@@ -104,7 +104,7 @@ class Profil extends Component  {
 					<div className="profilPartContainer" >
 						<PartTitle title="Catégorie" />
 						<div className="col s12 insideRow">
-							<Grid container justify="space-evenly" spacing={32}>
+							<Grid container justify="space-evenly" spacing={window.innerWidth > 479 ? 32 : 8}>
 								{this.props.categories.map(categorie => {
 									return (
 										<div
@@ -125,28 +125,26 @@ class Profil extends Component  {
 					<div className="profilPartContainer" >
 						<PartTitle title="Logo" />
 						<div className="row insideRow valign-wrapper">
-							<div className="row valign-wrapper">
-								<div className="input-field col s8"
-									onChange={this.handleLogoChange.bind(this)}
-									role="presentation">
-									<div className="file-field input-field">
-										<div className="btn">
-											<span>Modifier</span>
-											<input type="file"/>
-										</div>
-										<div className="file-path-wrapper">
-											<input className="file-path validate" type="text" defaultValue={this.props.theFT.logo ? this.props.theFT.logo.name : ''} placeholder="Charger une image" />
-										</div>
+							<div className="input-field col s12 m6"
+								onChange={this.handleLogoChange.bind(this)}
+								role="presentation">
+								<div className="file-field input-field">
+									<div className="btn">
+										<span>Modifier</span>
+										<input type="file"/>
+									</div>
+									<div className="file-path-wrapper">
+										<input className="file-path validate" type="text" defaultValue={this.props.theFT.logo ? this.props.theFT.logo.name : ''} placeholder="Charger une image" />
 									</div>
 								</div>
-								<div className="col s3 offset-s1">
-									<div className="previewContainer">
-										{this.state.localLogo
-											? <img className="responsive-img" src={URL.createObjectURL(this.state.localLogo)} alt="Local" />
-											: this.props.theFT.logo
-												? <img className="responsive-img" src={`${BASE_URL}/image/${this.props.theFT.logo._id}`} alt={this.props.theFT.logo.name} />
-												: <img className="responsive-img" src="../img/logo_default.png" alt="Default logo" />}
-									</div>
+							</div>
+							<div className="col s12 m6">
+								<div className="previewContainer center-align">
+									{this.state.localLogo
+										? <img className="responsive-img" src={URL.createObjectURL(this.state.localLogo)} alt="Local" />
+										: this.props.theFT.logo
+											? <img className="responsive-img" src={`${BASE_URL}/image/${this.props.theFT.logo._id}`} alt={this.props.theFT.logo.name} />
+											: <img className="responsive-img" src="../img/logo_default.png" alt="Default logo" />}
 								</div>
 							</div>
 						</div>
@@ -185,7 +183,6 @@ class Profil extends Component  {
 							files={this.state.localImages}
 							allowMultiple={true}
 							maxFiles={3 - this.props.theFT.images.length}
-							// server="/api"
 							onupdatefiles={fileItems => {
 								// Set currently active file objects to this.state
 								this.setState({

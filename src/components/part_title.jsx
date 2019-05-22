@@ -18,7 +18,7 @@ const titleContainerStyle = {
 		position: 'absolute'
 	},
 	titleStyle = {
-		fontSize: '1.8vw',
+		fontSize: '20px',
 		color: '#181717',
 		fontWeight: '600',
 		padding: '0vh 1vh'
