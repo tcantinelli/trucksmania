@@ -115,15 +115,19 @@
   padding: 0px 30px !important;
 }
 
-.articlePreviewConatiner {
+.articlePreviewContainer {
   margin: 5px;
   border: 2px solid #F5EFED;
   border-radius: 5px;
-  max-height: 150px;
+  height: 150px;
 }
 
 .articleImagePreview {
   height: 140px !important;
+}
+
+.buttonRow {
+  margin-bottom: 10px;
 }
 
 .articleRowImage {
@@ -146,3 +150,4 @@
   justify-content: center;
   margin-right: 10px;
 }
+

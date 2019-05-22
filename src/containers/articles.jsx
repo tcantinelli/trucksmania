@@ -1,14 +1,9 @@
 import React, { Component } from 'react';
-import { addArticle, deleteArticleFoodTruck } from '../actions';
+import { addArticle, deleteArticleFoodTruck, updateArticle } from '../actions';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { BASE_URL } from '../helpers/url';
 import PartTitle from '../components/part_title';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
 
 require('../style/admin.css');
 
@@ -16,10 +11,13 @@ class Articles extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			update: false,
 			value: '',
 			price: '',
 			description: '',
-			image: null
+			image: null,
+			idArticle: null,
+			oldImageID: null
 		};
 	}
 
@@ -53,17 +51,30 @@ class Articles extends Component {
 	//RAZ champs Ajouter article
 	cleanAddArticle = () => {
 		this.setState({
+			update: false,
 			value: '',
 			price: '',
 			description: '',
-			image: null
+			image: null,
+			idArticle: null,
+			oldImageID: null
 		});
 		document.getElementById('filename').value = '';
+		document.getElementById('inputFile').value = null;
 	}
 
 	//Chargement Article pour update
 	loadArticle(article) {
-
+		this.setState({
+			update: true,
+			value: article.value,
+			price: article.price,
+			description: article.description,
+			image: null,
+			idArticle: article._id,
+			oldImageID: article.image ? article.image._id : null
+		});
+		document.getElementById('filename').value = article.image ? article.image.name : '';
 	}
 
 	//Suppression Article
@@ -86,8 +97,16 @@ class Articles extends Component {
 			image: this.state.image
 		};
 
+		//Si update
+		if (this.state.update) {
+			dataToSend.idArticle = this.state.idArticle;
+			dataToSend.oldImageID = this.state.oldImageID;
+		}
+
 		//Action
-		this.props.addArticle(dataToSend);
+		this.state.update 
+			? this.props.updateArticle(dataToSend)
+			: this.props.addArticle(dataToSend);
 
 		//RAZ zone upload images
 		this.cleanAddArticle();
@@ -97,7 +116,7 @@ class Articles extends Component {
 		return (
 			<div className="container-fluid adminContainer">
 				<div className="articlePartContainer" >
-					<PartTitle title="Ajouter" />
+					<PartTitle title={this.state.update ? 'Modifier' : 'Ajouter'} />
 					<br />
 					{/* NOM */}
 					<div className="row">
@@ -107,8 +126,8 @@ class Articles extends Component {
 									id="value" 
 									type="text"
 									value={this.state.value}
+									placeholder="Intitulé de l'article"
 									onChange={this.onUpdate.bind(this)} />
-								<label htmlFor="name">Intitulé</label>
 							</div>
 							{/* PRICE */}
 							<div className="row input-field">
@@ -116,8 +135,8 @@ class Articles extends Component {
 									id="price" 
 									type="number"
 									value={this.state.price}
+									placeholder="Prix de l'article"
 									onChange={this.onUpdate.bind(this)} />
-								<label htmlFor="price">Prix</label>
 							</div>
 							{/* DESCRIPTION */}
 							<div className="row input-field">
@@ -125,8 +144,8 @@ class Articles extends Component {
 									id="description"
 									className="materialize-textarea"
 									value={this.state.description}
+									placeholder="Description de l'article"
 									onChange={this.onUpdate.bind(this)}></textarea>
-								<label htmlFor="description">Description</label>
 							</div>
 						</div>
 						{/* IMAGE */}
@@ -135,9 +154,9 @@ class Articles extends Component {
 								onChange={this.handleImageChange.bind(this)}
 								role="presentation">
 								<div className="file-field input-field">
-									<div className="btn">
+									<div className="btn-small">
 										<span>Charger</span>
-										<input type="file"/>
+										<input type="file" id="inputFile"/>
 									</div>
 									<div className="file-path-wrapper">
 										<input
@@ -149,10 +168,12 @@ class Articles extends Component {
 								</div>
 							</div>
 							<div className="row center-align">
-								<div className="articlePreviewConatiner">
+								<div className="articlePreviewContainer">
 									{this.state.image
 										? <img className="responsive-img articleImagePreview" src={URL.createObjectURL(this.state.image)} alt="Local" />
-										: <img className="responsive-img articleImagePreview" src="../img/logo_default.png" alt="Default logo" />}
+										: this.state.update && this.state.oldImageID
+											? <img className="responsive-img articleImagePreview" src={`${BASE_URL}/image/${this.state.oldImageID}`} alt="Article" />
+											: <img className="responsive-img articleImagePreview" src="../img/logo_default.png" alt="Default logo" />}
 								</div>
 							</div>
 						</div>
@@ -160,13 +181,23 @@ class Articles extends Component {
 					{/* VALIDATION */}
 					<div className="row" >
 						<div className="input-field col s6 offset-s3 center-align">
-							
-							<button 
-								className="btn waves-effect"
-								disabled={this.state.value === '' || this.state.price === '' ? true : null}
-								onClick={this.onSubmit}>Ajouter
-								<i className="material-icons right">check</i>
-							</button>
+							<div className="row">
+								<div className="col s12 m6 buttonRow">
+									<button 
+										className="btn red"
+										onClick={this.cleanAddArticle}>Effacer
+										<i className="material-icons right">clear</i>
+									</button>
+								</div>
+								<div className="col s12 m6 buttonRow">
+									<button 
+										className="btn"
+										disabled={this.state.value === '' || this.state.price === '' ? true : null}
+										onClick={this.onSubmit}>{this.state.update ? 'Modifier' : 'Ajouter'}
+										<i className="material-icons right">check</i>
+									</button>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -175,47 +206,45 @@ class Articles extends Component {
 					<div className="articleSubPartContainer" >
 						<PartTitle title="Liste des articles" />
 						<br />
-						<Table>
-							<TableHead>
-								<TableRow>
-									<TableCell>Image</TableCell>
-									<TableCell align="center">Intitulé</TableCell>
-									<TableCell align="center">Prix</TableCell>
-									<TableCell align="center">Description</TableCell>
-									<TableCell align="center">Actions</TableCell>
-								</TableRow>
-							</TableHead>
-							<TableBody>
+						<table className="responsive-table">
+							<thead>
+								<tr>
+									<th width="10%">Image</th>
+									<th width="20%" className="centered">Intitulé</th>
+									<th width="10%" className="centered">Prix</th>
+									<th width="50%" className="centered">Description</th>
+									<th width="10%" className="centered">Actions</th>
+								</tr>
+							</thead>
+							<tbody>
 								{this.props.onlineArticles ? this.props.onlineArticles.map(article => 
-									<TableRow key={article._id}>
-										<TableCell component="th" scope="row">
+									<tr key={article._id}>
+										<td width="10%">
 											{article.image 
-												? <img className="articleRowImage" src={`${BASE_URL}/image/${article.image}`} alt={article.image} />
+												? <img className="articleRowImage" src={`${BASE_URL}/image/${article.image._id}`} alt={article.image.name} />
 												: <img className="articleRowImage" src="../img/logo_default.png" alt="Default logo" />}
-										</TableCell>
-										<TableCell align="center">{article.value}</TableCell>
-										<TableCell align="center">{article.price}</TableCell>
-										<TableCell align="center">{article.description}</TableCell>
-										<TableCell align="center">
-											<div className="row">
-												<div className="col articleLoadIcon center-align valign-wrapper"
-													onClick={this.loadArticle.bind(this, article)}
-													role="presentation"
-												>
-													<i className="material-icons boxUpdateText">edit</i>
-												</div>
-												<div className="col articleDeleteIcon center-align valign-wrapper"
-													onClick={this.deleteArticle.bind(this, article._id)}
-													role="presentation"
-												>
-													<i className="material-icons boxDeleteText">delete_forever</i>
-												</div>
+										</td>
+										<td width="20%" className="centered">{article.value}</td>
+										<td width="10%" className="centered">{`${article.price} €`}</td>
+										<td width="50%" className="centered">{article.description}</td>
+										<td width="10%" className="row centered">
+											<div className="col articleLoadIcon center-align valign-wrapper"
+												onClick={this.loadArticle.bind(this, article)}
+												role="presentation"
+											>
+												<i className="material-icons boxUpdateText">edit</i>
 											</div>
-										</TableCell>
-									</TableRow>
+											<div className="col articleDeleteIcon center-align valign-wrapper"
+												onClick={this.deleteArticle.bind(this, article._id)}
+												role="presentation"
+											>
+												<i className="material-icons boxDeleteText">delete_forever</i>
+											</div>
+										</td>
+									</tr>
 								) : null}
-							</TableBody>
-						</Table>
+							</tbody>
+						</table>
 					</div>
 				</div>
 			</div>
@@ -225,7 +254,7 @@ class Articles extends Component {
 
 const mapDispatchToProps = dispatch => ({
 	...bindActionCreators(
-		{addArticle, deleteArticleFoodTruck}, dispatch
+		{addArticle, deleteArticleFoodTruck, updateArticle}, dispatch
 	)
 });
 export default connect(

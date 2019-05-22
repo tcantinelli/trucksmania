@@ -208,6 +208,41 @@ export function addArticle(formValues) {
 					dispatch(setPopMessage(false, null, null));	
 				}, 2500);
 			}).catch(() => {
+				dispatch(setPopMessage(true, 'Error', 'Erreur lors de la création'));
+			});
+	};
+}
+
+//UPDATE ARTICLE
+export function updateArticle(formValues) {
+	return function(dispatch) {
+		const datas = new FormData();
+		datas.append('idFT', formValues.idFT);
+		datas.append('idArticle', formValues.idArticle);
+		datas.append('oldImageID', formValues.oldImageID);
+		datas.append('value', formValues.value);
+		datas.append('price', formValues.price);
+		datas.append('description', formValues.description);
+		//Ajout logo
+		datas.append('article', formValues.image);
+
+		const config = {
+			headers: {
+				'content-type': 'multipart/form-data'
+			}
+		};
+
+		Axios.post(`${BASE_URL}/uparticle`, datas, config)
+			.then((response) => {
+				dispatch(setPopMessage(true, 'Success', 'Article modifié'));
+				dispatch({
+					type: UPDATE_PROFIL,
+					payload: response.data
+				});
+				setTimeout(() => {
+					dispatch(setPopMessage(false, null, null));	
+				}, 2500);
+			}).catch(() => {
 				dispatch(setPopMessage(true, 'Error', 'Erreur de mise à jour'));
 			});
 	};
