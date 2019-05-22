@@ -47,6 +47,7 @@ class Admin extends Component {
 	
 	render() {
 		let rightView = this.state.item;
+		const instance = M.Sidenav.getInstance(document.getElementById('slide-out'));
 		return (
 			<div className="container-fluid">
 				{this.props.popMessage.toShow ?
@@ -56,11 +57,50 @@ class Admin extends Component {
 					this.props.user.email !== ''
 						? 
 						<div>
-							<ul id="slide-out" class="sidenav sidenav-fixed">
-								<li><a href="#!">First Sidebar Link</a></li>
-								<li><a href="#!">Second Sidebar Link</a></li>
+							<ul id="slide-out" className="sidenav">
+								<li>
+									<div className="user-view">
+										{this.props.user.foodtrucks[0]
+											? this.props.user.foodtrucks[0].logo 
+												? <img className="circle" src={`${BASE_URL}/image/${this.props.user.foodtrucks[0].logo._id}`} alt={this.props.user.foodtrucks[0].logo.originalname} />
+												: <img className="circle" src="../img/logo_default.png" alt="Default logo" />
+											: null}
+										<a href="#email"><span className="email">{this.props.user.email}</span></a>
+									</div>
+									<ul className="collection">
+										{items.map((item, key) => {
+											return (
+												<li
+													className="collection-item collectionItemStyle"
+													key={key}
+													onClick={this.handleClick.bind(this, item.component)}
+													role="presentation"
+												>
+													<div className="row valign-wrapper rowStyle">
+														<div className="col s2">
+															<i className="small material-icons">{item.icon}</i>
+														</div>
+														<div className="col s7 valign-wrapper">
+															{item.title}
+														</div>
+														<div className="col s3 valign-wrapper">
+															{item.count
+																? <span className="new badge blue rowStyle" data-badge-caption="" >{item.count}</span>
+																: null					
+															}
+														</div>
+													</div>	
+												</li>
+											);
+										})}
+									</ul>
+								</li>
+								<div className="deconnexion center-align">
+									<Button size="small" variant="contained" color="secondary" onClick={this.handleDeconnexion.bind(this)}>Déconnexion</Button>
+								</div>
 							</ul>
-							<a href="#!" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+							<a role="button" data-target="slide-out" className="sidenav-trigger"><i className="material-icons">menu</i></a>
+							<Button size="small" variant="contained" color="secondary" onClick={instance.open()}>Déconnexion</Button>
 						</div>
 						: null
 					: null}

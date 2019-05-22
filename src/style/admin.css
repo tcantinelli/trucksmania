@@ -9,6 +9,15 @@
     }
   }
 
+/* SideBar */
+.collectionItemStyle {
+	cursor: pointer;
+}
+
+.rowStyle {
+	margin: 0px; 
+}
+
 /* Profil */
 .profilPartContainer {
   border: 2px solid #232524;
