@@ -2,11 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import M from 'materialize-css';
-import { updateProfil, signoutUser } from '../actions';
+import { updateProfil } from '../actions';
 import { items } from '../helpers/sidebar_items';
 //Components & Containers
-import Button from '@material-ui/core/Button';
-import { BASE_URL } from '../helpers/url';
+import SideBar from './sidebar';
 import Profil from './profil';
 import Orders from './orders';
 import Articles from './articles';
@@ -25,45 +24,29 @@ class Admin extends Component {
 	}
 
 	//Affichage partie droite
-	handleClick(item) {
+	actionSideBar = item => {
 		this.setState({
 			item: item
 		});
-	}
-
-	handleDeconnexion() {
-		this.props.signoutUser();
-	}
+	};
 
 	componentWillMount() {
 		//Initialisation sideBar
 		document.addEventListener('DOMContentLoaded', function() {
 			var elems = document.querySelectorAll('.sidenav');
 			M.Sidenav.init(elems, {});
-			
-
 		});	
 	}
 	
 	render() {
 		let rightView = this.state.item;
+		
 		return (
 			<div className="container-fluid">
 				{this.props.popMessage.toShow ?
 					<PopMessage degree={this.props.popMessage.degree} message={this.props.popMessage.message} />
 					: null}
-				{this.props.user ? 
-					this.props.user.email !== ''
-						? 
-						<div>
-							<ul id="slide-out" class="sidenav sidenav-fixed">
-								<li><a href="#!">First Sidebar Link</a></li>
-								<li><a href="#!">Second Sidebar Link</a></li>
-							</ul>
-							<a href="#!" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-						</div>
-						: null
-					: null}
+				<SideBar userInfos={this.props.user} items={items} action={this.actionSideBar.bind(this)}/>
 				{this.props.user ? 
 					this.props.user.email !== ''
 						? getItem(rightView, this.props.user.foodtrucks[0]) : null
@@ -91,7 +74,7 @@ const getItem = (item, datas) => {
 
 const mapDispatchToProps = dispatch => ({
 	...bindActionCreators(
-		{ updateProfil, signoutUser }, dispatch)
+		{ updateProfil }, dispatch)
 });
 
 const mapStateToProps = state => {

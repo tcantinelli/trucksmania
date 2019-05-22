@@ -32,7 +32,7 @@ class SideBar extends Component {
 							{this.props.items.map((item, key) => {
 								return (
 									<li
-										className="collection-item"
+										className="collection-item sidenav-close"
 										style={collectionItemStyle}
 										key={key}
 										onClick={this.handleClick.bind(this, item.component)}
@@ -61,7 +61,7 @@ class SideBar extends Component {
 						<Button size="small" variant="contained" color="secondary" onClick={this.handleDeconnexion.bind(this)}>Déconnexion</Button>
 					</div>
 				</ul>
-				<a href="#" data-target="slide-out" className="sidenav-trigger"><i className="material-icons">menu</i></a>
+				<a href="#!" data-target="slide-out" className="sidenav-trigger"><i className="material-icons">menu</i></a>
 			</div>
 		);
 	}
