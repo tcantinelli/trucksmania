@@ -38,7 +38,7 @@ class SideBar extends Component {
 										onClick={this.handleClick.bind(this, item.component)}
 										role="presentation"
 									>
-										<div className="row valign-wrapper rowStyle">
+										<div className="row valign-wrapper" style={rowStyle}>
 											<div className="col s2">
 												<i className="small material-icons">{item.icon}</i>
 											</div>
@@ -73,7 +73,7 @@ const collectionItemStyle = {
 };
 
 const rowStyle = {
-	margin: '0px !important' 
+	margin: '0px' 
 };
 
 const mapDispatchToProps = dispatch => ({
