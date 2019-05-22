@@ -58,7 +58,7 @@ class SideBar extends Component {
 						</ul>
 					</li>
 					<div className="deconnexion center-align">
-						<Button size="small" variant="contained" color="secondary" onClick={this.handleDeconnexion.bind(this)}>Déconnexion</Button>
+						<Button className="sidenav-close" size="small" variant="contained" color="secondary" onClick={this.handleDeconnexion.bind(this)}>Déconnexion</Button>
 					</div>
 				</ul>
 				<a href="#!" data-target="slide-out" className="sidenav-trigger"><i className="material-icons">menu</i></a>
