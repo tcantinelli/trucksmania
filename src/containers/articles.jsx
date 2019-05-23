@@ -115,12 +115,12 @@ class Articles extends Component {
 	render() {
 		return (
 			<div className="container-fluid adminContainer">
-				<div className="articlePartContainer" >
+				<div className="partContainer" >
 					<PartTitle title={this.state.update ? 'Modifier' : 'Ajouter'} />
 					<br />
 					{/* NOM */}
 					<div className="row">
-						<div className="col s12 m6 articleSubPartContainer">
+						<div className="col s12 m6 subPartContainer">
 							<div className="row input-field">
 								<input
 									id="value" 
@@ -149,7 +149,7 @@ class Articles extends Component {
 							</div>
 						</div>
 						{/* IMAGE */}
-						<div className="col s12 m6 articleSubPartContainer">
+						<div className="col s12 m6 subPartContainer">
 							<div className="row input-field"
 								onChange={this.handleImageChange.bind(this)}
 								role="presentation">
@@ -202,8 +202,8 @@ class Articles extends Component {
 					</div>
 				</div>
 				{/* LISTE DES ARTICLES */}
-				<div className="articlePartContainer" >
-					<div className="articleSubPartContainer" >
+				<div className="partContainer" >
+					<div className="subPartContainer" >
 						<PartTitle title="Liste des articles" />
 						<br />
 						<table className="responsive-table">

@@ -19,7 +19,7 @@ class Admin extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			item: 'Profil'
+			item: 'Locations'
 		};
 	}
 
@@ -56,7 +56,7 @@ class Admin extends Component {
 	}
 }
 
-//Choix component partie droite
+//Choix container partie droite
 const getItem = (item, datas) => {
 	switch (item) {
 	case 'Orders':
@@ -64,7 +64,7 @@ const getItem = (item, datas) => {
 	case 'Articles':
 		return <Articles onlineArticles={datas.articles} idFT={datas._id} />;
 	case 'Locations':
-		return <Locations />;
+		return <Locations locations={datas.locations} idFT={datas._id}/>;
 	case 'Applications':
 		return <Applications />;
 	default:
