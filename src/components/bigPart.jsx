@@ -6,7 +6,7 @@ class BigPart extends Component {
 	render() {
 		return (
 			<div className="row">
-				<div className="col s12 l6 partContainer">
+				<div className="col s12 l6 homePartContainer">
 					<div className="partLeft">
 						<div className="row partText">
 							<p>Une petite faim ? Trouver les food-trucks disponibles autour de vous et réservez votre repas sur votre mobile, grâce à l'application Trucks-Mania</p>
@@ -21,7 +21,7 @@ class BigPart extends Component {
 						</div>
 					</div>
 				</div>
-				<div className="col s12 l6 partContainer">
+				<div className="col s12 l6 homePartContainer">
 					<div className="partLRight">
 						<div className="row partText">
 							<p>Propriétaire d'un food-truck ? Inscrivez vous et augmentez votre visibilté, fidélisez vos clients</p>

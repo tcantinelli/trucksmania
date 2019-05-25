@@ -264,3 +264,23 @@ export function deleteArticleFoodTruck(datas) {
 			});
 	};
 }
+
+//ADD PLACE
+export function addPlace(datas) {
+	return function(dispatch) {
+		Axios.post(`${BASE_URL}/place`, datas)
+			.then((response) => {
+				console.log(response.data);
+				dispatch(setPopMessage(true, 'Success', 'Article ajouté'));
+				dispatch({
+					type: UPDATE_PROFIL,
+					payload: response.data
+				});
+				setTimeout(() => {
+					dispatch(setPopMessage(false, null, null));	
+				}, 2500);
+			}).catch(() => {
+				dispatch(setPopMessage(true, 'Error', 'Erreur lors de la création'));
+			});
+	};
+}

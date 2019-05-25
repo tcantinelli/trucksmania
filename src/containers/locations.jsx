@@ -1,6 +1,6 @@
 import 'rc-time-picker/assets/index.css';
 import React, { Component } from 'react';
-import {} from '../actions';
+import { addPlace } from '../actions';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { DAYS } from '../helpers/days';
@@ -22,8 +22,8 @@ class Locations extends Component {
 			title: '',
 			address: '',
 			week: DAYS,
-			timeStart: moment(),
-			timeEnd: moment(),
+			timeStart: moment('07:00', 'HH:mm'),
+			timeEnd: moment('20:00', 'HH:mm'),
 			latitude: null,
 			longitude: null,
 			zoom: 4
@@ -158,8 +158,8 @@ class Locations extends Component {
 			],
 			timeStart: moment('07:00', 'HH:mm'),
 			timeEnd: moment('20:00', 'HH:mm'),
-			latitude: 46.227638,
-			longitude: 2.213749,
+			latitude: null,
+			longitude: null,
 			zoom: 4
 		});
 	}
@@ -169,6 +169,7 @@ class Locations extends Component {
 
 		//Datas de la requête POST
 		const dataToSend = {
+			idFT: this.props.idFT,
 			title, 
 			address,
 			week,
@@ -179,7 +180,7 @@ class Locations extends Component {
 			zoom
 		};
 
-		console.log(dataToSend);
+		this.props.addPlace(dataToSend);
 	}
 
 	render() {
@@ -224,7 +225,7 @@ class Locations extends Component {
 							<TimePicker
 								id={'start'}
 								showSecond={false}
-								defaultValue={moment('07:00', 'HH:mm')}
+								value={this.state.timeStart}
 								className="timeTextField"
 								onChange={this.onTimeChange.bind(this, 'start')}
 								format={'HH[h]mm'}
@@ -234,7 +235,7 @@ class Locations extends Component {
 							<TimePicker
 								id={'end'}
 								showSecond={false}
-								defaultValue={moment('20:00', 'HH:mm')}
+								defaultValue={this.state.timeEnd}
 								className="timeTextField"
 								onChange={this.onTimeChange.bind(this, 'end')}
 								format={'HH[h]mm'}
@@ -298,7 +299,7 @@ class Locations extends Component {
 
 const mapDispatchToProps = dispatch => ({
 	...bindActionCreators(
-		{},
+		{addPlace},
 		dispatch
 	)
 });
