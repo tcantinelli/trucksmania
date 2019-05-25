@@ -89,9 +89,7 @@ export function updateProfil(formValues) {
 		//Ajout images
 		const imageDatas = new FormData();
 		imageDatas.append('idFT', formValues.idFT);
-		formValues.images.map(image => {
-			imageDatas.append('image', image);
-		});
+		formValues.images.map(image => imageDatas.append('image', image));
 
 		const config = {
 			headers: {

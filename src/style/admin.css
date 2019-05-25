@@ -170,8 +170,16 @@
 }
 
 /* LOCATIONS */
+.AddTitleText {
+  font-size: 18px;
+  margin-bottom: 10px !important;
+}
 .chipDay {
   width: 80px;
   margin: 5px;
 }
 
+.timeTextField {
+  width: 80px;
+  margin: 5px 20px;
+}

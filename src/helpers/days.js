@@ -1,7 +1,7 @@
 export const DAYS = [
 	{
 		value: 'Lundi',
-		active: false
+		active: true
 	},
 	{
 		value: 'Mardi',
