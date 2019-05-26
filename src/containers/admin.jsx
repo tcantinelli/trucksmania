@@ -64,7 +64,7 @@ const getItem = (item, datas) => {
 	case 'Articles':
 		return <Articles onlineArticles={datas.articles} idFT={datas._id} />;
 	case 'Locations':
-		return <Locations locations={datas.locations} idFT={datas._id}/>;
+		return <Locations places={datas.places} idFT={datas._id}/>;
 	case 'Applications':
 		return <Applications />;
 	default:

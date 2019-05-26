@@ -89,9 +89,7 @@ export function updateProfil(formValues) {
 		//Ajout images
 		const imageDatas = new FormData();
 		imageDatas.append('idFT', formValues.idFT);
-		formValues.images.map(image => {
-			imageDatas.append('image', image);
-		});
+		formValues.images.map(image => imageDatas.append('image', image));
 
 		const config = {
 			headers: {
@@ -125,7 +123,6 @@ export function deleteImageFoodTruck(datas) {
 	return function(dispatch) {
 		Axios.post(`${BASE_URL}/delimage`, datas)
 			.then((response) => {
-				// console.log(response.data);
 				dispatch({
 					type: UPDATE_PROFIL,
 					payload: response.data
@@ -198,7 +195,6 @@ export function addArticle(formValues) {
 
 		Axios.post(`${BASE_URL}/article`, datas, config)
 			.then((response) => {
-				console.log(response.data);
 				dispatch(setPopMessage(true, 'Success', 'Article ajouté'));
 				dispatch({
 					type: UPDATE_PROFIL,
@@ -243,7 +239,7 @@ export function updateArticle(formValues) {
 					dispatch(setPopMessage(false, null, null));	
 				}, 2500);
 			}).catch(() => {
-				dispatch(setPopMessage(true, 'Error', 'Erreur de mise à jour'));
+				dispatch(setPopMessage(true, 'Error', 'Erreur lors de la mise à jour'));
 			});
 	};
 }
@@ -263,6 +259,63 @@ export function deleteArticleFoodTruck(datas) {
 				}, 2500);
 			}).catch(() => {
 				dispatch(setPopMessage(true, 'Error', 'Erreur suppression article'));
+			});
+	};
+}
+
+//ADD PLACE
+export function addPlace(datas) {
+	return function(dispatch) {
+		Axios.post(`${BASE_URL}/place`, datas)
+			.then((response) => {
+				dispatch(setPopMessage(true, 'Success', 'Emplacement ajouté'));
+				dispatch({
+					type: UPDATE_PROFIL,
+					payload: response.data
+				});
+				setTimeout(() => {
+					dispatch(setPopMessage(false, null, null));	
+				}, 2500);
+			}).catch(() => {
+				dispatch(setPopMessage(true, 'Error', 'Erreur lors de la création'));
+			});
+	};
+}
+
+//UPDATE PLACE
+export function updatePlace(datas) {
+	return function(dispatch) {
+		Axios.post(`${BASE_URL}/upplace`, datas)
+			.then((response) => {
+				dispatch(setPopMessage(true, 'Success', 'Emplacement modifié'));
+				dispatch({
+					type: UPDATE_PROFIL,
+					payload: response.data
+				});
+				setTimeout(() => {
+					dispatch(setPopMessage(false, null, null));	
+				}, 2500);
+			}).catch(() => {
+				dispatch(setPopMessage(true, 'Error', 'Erreur lors de la mise à jour'));
+			});
+	};
+}
+
+//DELETE PLACE
+export function deletePlace(datas) {
+	return function(dispatch) {
+		Axios.post(`${BASE_URL}/delplace`, datas)
+			.then((response) => {
+				dispatch({
+					type: UPDATE_PROFIL,
+					payload: response.data
+				});
+				dispatch(setPopMessage(true, 'Success', 'Emplacement supprimé'));
+				setTimeout(() => {
+					dispatch(setPopMessage(false, null, null));	
+				}, 2500);
+			}).catch(() => {
+				dispatch(setPopMessage(true, 'Error', 'Erreur suppression emplacement'));
 			});
 	};
 }
