@@ -1,11 +1,12 @@
 import 'rc-time-picker/assets/index.css';
 import React, { Component } from 'react';
-import { addPlace } from '../actions';
+import { addPlace, updatePlace, deletePlace } from '../actions';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { DAYS } from '../helpers/days';
 import PartTitle from '../components/part_title';
 import Chip from '@material-ui/core/Chip';
+import Grid from '@material-ui/core/Grid';
 import TimePicker from 'rc-time-picker';
 import moment from 'moment';
 //MapBox
@@ -18,7 +19,8 @@ class Locations extends Component {
 		super(props);
 		this.state = {
 			flag: false, //Pas d'affichage du marker au chargement
-			update: false, //Ajout ou update d'un emplacement
+			update: false, //Ajout ou update d'un emplacement,
+			shouldSubmit: false,
 			title: '',
 			address: '',
 			week: DAYS,
@@ -26,7 +28,8 @@ class Locations extends Component {
 			timeEnd: moment('20:00', 'HH:mm'),
 			latitude: null,
 			longitude: null,
-			zoom: 4
+			zoom: 4,
+			idPlace: null
 		};
 	}
 
@@ -72,6 +75,7 @@ class Locations extends Component {
 	onSearchAction = datas => {
 		this.setState({
 			flag: true, //Affichage marker
+			shouldSubmit: true,
 			title: this.state.title === '' ? datas.text : this.state.title,
 			address: datas.place_name,
 			latitude: datas.center[1],
@@ -83,7 +87,8 @@ class Locations extends Component {
 	//Modification sur map
 	onViewPortChange = datas => {
 		this.setState({
-			flag: true,
+			// flag: true,
+			// shouldSubmit: true,
 			latitude: datas.coordinates.lat,
 			longitude: datas.coordinates.lng,
 			zoom: datas.zoom
@@ -120,10 +125,41 @@ class Locations extends Component {
 		}
 	}
 
+	//Chargement Place pour update
+	loadPlace(place) {
+		const {title, address, week, timeStart, timeEnd, latitude, longitude, zoom} = place;
+		this.setState({
+			flag: true,
+			update: true,
+			shouldSubmit: true,
+			title,
+			address,
+			week,
+			timeStart: moment(timeStart),
+			timeEnd: moment(timeEnd),
+			latitude,
+			longitude,
+			zoom,
+			idPlace: place._id
+		});
+	}
+	
+	//Suppression Place
+	deletePlace(idPlace) {
+		//Datas to send
+		const datas = {
+			idFT: this.props.idFT,
+			idPlace
+		};
+		this.props.deletePlace(datas);
+	}
+
+	//RAZ
 	clearAddPart = () => {
 		this.setState({
 			flag: false,
 			update: false,
+			shouldSubmit: false,
 			title: '',
 			address: '',
 			week: [
@@ -160,7 +196,8 @@ class Locations extends Component {
 			timeEnd: moment('20:00', 'HH:mm'),
 			latitude: null,
 			longitude: null,
-			zoom: 4
+			zoom: 4,
+			idPlace: null
 		});
 	}
 
@@ -180,7 +217,15 @@ class Locations extends Component {
 			zoom
 		};
 
-		this.props.addPlace(dataToSend);
+		//Ajout id place à modifier si update
+		if (this.state.update) {
+			dataToSend.idPlace = this.state.idPlace;
+		}
+		
+		this.state.update ? this.props.updatePlace(dataToSend) : this.props.addPlace(dataToSend);
+
+		//RAZ
+		this.clearAddPart();
 	}
 
 	render() {
@@ -235,17 +280,20 @@ class Locations extends Component {
 							<TimePicker
 								id={'end'}
 								showSecond={false}
-								defaultValue={this.state.timeEnd}
+								value={this.state.timeEnd}
 								className="timeTextField"
 								onChange={this.onTimeChange.bind(this, 'end')}
 								format={'HH[h]mm'}
 								minuteStep={15}
 							/>
 						</div>
-						<div className="col s12 m6 subPartContainer">
-							<div style={{ height: 400, width: 400 }}>
+						{/* Map */}
+						<div className="col s12 m6 subPartContainer center-align">
+							<h3 className="AddTitleText">{this.state.flag ? 'Affinez la position en déplaçant le marqueur' : ''}</h3>
+							<div style={{ height: 400, width: 'auto' }} className="mapContainer center-align">
 								<MapboxMap
 									accessToken={MB_APIKEY}
+									className="map"
 									coordinates={{ lat: this.state.latitude || 46.227638, lng: this.state.longitude || 2.213749 }}
 									zoom={this.state.zoom}
 									withZoom
@@ -276,7 +324,7 @@ class Locations extends Component {
 									<div className="col s12 m6 buttonRow">
 										<button 
 											className="btn"
-											disabled={this.state.latitude ? null : true}
+											disabled={!this.state.shouldSubmit}
 											onClick={this.onSubmit}>{this.state.update ? 'Modifier' : 'Ajouter'}
 											<i className="material-icons right">check</i>
 										</button>
@@ -289,6 +337,87 @@ class Locations extends Component {
 				{/* LIST */}
 				<div className="partContainer" >
 					<PartTitle title="Mes emplacements" />
+					<div className="col s12 insideRow">
+						<Grid 
+							container
+							justify="center"
+							alignItems="center"
+							spacing={32}
+						>
+							{this.props.places.map(place => {
+								return (
+									<Grid item key={place._id}> 
+										<div className="row listPlacesContainer">
+											<div className="col s6">
+												<div className="row listPlacesSubLeftTop">
+													<img
+														className="placeImg"
+														src={`https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/pin-s-marker+285A98(
+															${place.longitude},${place.latitude})/${place.longitude},${place.latitude},${place.zoom}/200x200?access_token=${MB_APIKEY}`}
+														alt={place.title} />
+												</div>
+												<div className="row listPlacesSubLeftBottom center-align valign-wrapper">
+													<Grid
+														container
+														direction="row"
+														justify="space-evenly"
+														alignItems="center"
+													>
+														<Grid item className="loadIcon center-align valign-wrapper"
+															onClick={this.loadPlace.bind(this, place)}
+															role="presentation"
+														>
+															<i className="material-icons boxUpdateText">edit</i>
+														</Grid>
+														<Grid item className="deleteIcon center-align valign-wrapper"
+															onClick={this.deletePlace.bind(this, place._id)}
+															role="presentation"
+														>
+															<i className="material-icons boxDeleteText">delete_forever</i>
+														</Grid>
+													</Grid>
+												</div>
+											</div>
+											<div className="col s6 listPlacesSubRight">
+												<Grid
+													container
+													direction="column"
+													justify="space-between"
+													alignItems="stretch"
+													className="listPlacesSubRight"
+												>
+													{place.title !== ''
+														? <Grid item>
+															{place.title}
+														</Grid>
+														: null}
+													<Grid item>
+														{place.address}
+													</Grid>
+													<Grid item>
+														{place.week.filter(dayTested => dayTested.active).map((day) => {
+															return (
+																<Chip
+																	key={day.value}
+																	label={day.value.slice(0, 2)}
+																	color="primary"
+																	className={'chipDayXS'}
+																	variant="outlined"
+																/>
+															);
+														})}
+													</Grid>
+													<Grid item>
+														{`De ${moment(place.timeStart).format('HH[h]mm').toString()} à ${moment(place.timeEnd).format('HH[h]mm').toString()}`}
+													</Grid>
+												</Grid>
+											</div>
+										</div>
+									</Grid>
+								);
+							})}
+						</Grid>			
+					</div>
 				</div>
 			</div>
 		);
@@ -299,7 +428,7 @@ class Locations extends Component {
 
 const mapDispatchToProps = dispatch => ({
 	...bindActionCreators(
-		{addPlace},
+		{addPlace, updatePlace, deletePlace},
 		dispatch
 	)
 });

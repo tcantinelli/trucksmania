@@ -152,7 +152,7 @@
   height: 50px;
 }
 
-.articleDeleteIcon {
+.deleteIcon {
   border: 2px solid red;
   border-radius: 5px;
   cursor: pointer;
@@ -160,7 +160,7 @@
   justify-content: center;
 }
 
-.articleLoadIcon {
+.loadIcon {
   border: 2px solid #4BA0E7;
   border-radius: 5px;
   cursor: pointer;
@@ -182,4 +182,49 @@
 .timeTextField {
   width: 80px;
   margin: 5px 20px;
+}
+
+.listPlacesContainer {
+  width: 260px;
+  height: 250px;
+  border: 2px solid rgb(190, 186, 184);
+  border-radius: 5px;
+}
+
+.listPlacesSubContainer {
+  margin-bottom: 5px !important;
+}
+
+.listPlacesSubLeftTop{
+  padding: 5px 5px !important;
+  margin-bottom: 0px !important;
+  height: 120px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.listPlacesSubLeftBottom{
+  padding: 5px 5px !important;
+  margin-bottom: 0px !important;
+  height: 60px;
+}
+
+.placeImg {
+  width: auto;
+  height: 100%;
+}
+
+.listPlacesSubRight {
+  padding: 5px 0px !important;
+  height: 100%
+}
+
+.listPlacesSubRight > div {
+  font-size: 13px;
+}
+
+.chipDayXS {
+  width: 28px;
+  height: 23px !important;
+  margin: 1px;
 }
