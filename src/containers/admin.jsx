@@ -10,7 +10,6 @@ import Profil from './profil';
 import Orders from './orders';
 import Articles from './articles';
 import Locations from './locations';
-import Applications from '../components/applications';
 import PopMessage from '../components/popMessage';
 
 require('../style/admin.css');
@@ -46,7 +45,7 @@ class Admin extends Component {
 				{this.props.popMessage.toShow ?
 					<PopMessage degree={this.props.popMessage.degree} message={this.props.popMessage.message} />
 					: null}
-				<SideBar userInfos={this.props.user} items={items} action={this.actionSideBar.bind(this)}/>
+				<SideBar userInfos={this.props.user} items={items} action={this.actionSideBar.bind(this)} target={this.state.item} />
 				{this.props.user ? 
 					this.props.user.email !== ''
 						? getItem(rightView, this.props.user.foodtrucks[0]) : null
@@ -56,19 +55,17 @@ class Admin extends Component {
 	}
 }
 
-//Choix component partie droite
+//Choix container partie droite
 const getItem = (item, datas) => {
 	switch (item) {
 	case 'Orders':
-		return <Orders />;
+		return <Orders orders={datas.orders} />;
 	case 'Articles':
 		return <Articles onlineArticles={datas.articles} idFT={datas._id} />;
 	case 'Locations':
-		return <Locations />;
-	case 'Applications':
-		return <Applications />;
+		return <Locations places={datas.places} idFT={datas._id} />;
 	default:
-		return <Profil theFT={datas}/>;
+		return <Profil theFT={datas} />;
 	}
 };
 

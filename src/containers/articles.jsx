@@ -115,12 +115,12 @@ class Articles extends Component {
 	render() {
 		return (
 			<div className="container-fluid adminContainer">
-				<div className="articlePartContainer" >
+				<div className="partContainer" >
 					<PartTitle title={this.state.update ? 'Modifier' : 'Ajouter'} />
 					<br />
 					{/* NOM */}
 					<div className="row">
-						<div className="col s12 m6 articleSubPartContainer">
+						<div className="col s12 m6 subPartContainer">
 							<div className="row input-field">
 								<input
 									id="value" 
@@ -149,7 +149,7 @@ class Articles extends Component {
 							</div>
 						</div>
 						{/* IMAGE */}
-						<div className="col s12 m6 articleSubPartContainer">
+						<div className="col s12 m6 subPartContainer">
 							<div className="row input-field"
 								onChange={this.handleImageChange.bind(this)}
 								role="presentation">
@@ -173,7 +173,7 @@ class Articles extends Component {
 										? <img className="responsive-img articleImagePreview" src={URL.createObjectURL(this.state.image)} alt="Local" />
 										: this.state.update && this.state.oldImageID
 											? <img className="responsive-img articleImagePreview" src={`${BASE_URL}/image/${this.state.oldImageID}`} alt="Article" />
-											: <img className="responsive-img articleImagePreview" src="../img/logo_default.png" alt="Default logo" />}
+											: <img className="responsive-img articleImagePreview" src="../img/article_default.png" alt="Default logo" />}
 								</div>
 							</div>
 						</div>
@@ -202,8 +202,8 @@ class Articles extends Component {
 					</div>
 				</div>
 				{/* LISTE DES ARTICLES */}
-				<div className="articlePartContainer" >
-					<div className="articleSubPartContainer" >
+				<div className="partContainer" >
+					<div className="subPartContainer" >
 						<PartTitle title="Liste des articles" />
 						<br />
 						<table className="responsive-table">
@@ -222,7 +222,7 @@ class Articles extends Component {
 										<td width="10%">
 											{article.image 
 												? <img className="articleRowImage" src={`${BASE_URL}/image/${article.image._id}`} alt={article.image.name} />
-												: <img className="articleRowImage" src="../img/logo_default.png" alt="Default logo" />}
+												: <img className="articleRowImage" src="../img/article_default.png" alt="Default logo" />}
 										</td>
 										<td width="20%" className="centered">{article.value}</td>
 										<td width="10%" className="centered">{`${article.price} €`}</td>
