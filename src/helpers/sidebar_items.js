@@ -22,11 +22,5 @@ export const items = [
 		title: 'Emplacements',
 		icon: 'place',
 		count: null
-	},
-	{
-		component: 'Applications',
-		title: 'L\'application',
-		icon: 'smartphone',
-		count: null
 	}
 ];
