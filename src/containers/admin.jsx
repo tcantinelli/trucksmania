@@ -47,8 +47,8 @@ class Admin extends Component {
 					: null}
 				<SideBar userInfos={this.props.user} items={items} action={this.actionSideBar.bind(this)} target={this.state.item} />
 				{this.props.user ? 
-					this.props.user.email !== ''
-						? getItem(rightView, this.props.user.foodtrucks[0]) : null
+					this.props.user.email !== '' && this.props.orders
+						? getItem(rightView, this.props.user.foodtrucks[0], this.props.orders) : null
 					: null}
 			</div>
 		);
@@ -56,10 +56,10 @@ class Admin extends Component {
 }
 
 //Choix container partie droite
-const getItem = (item, datas) => {
+const getItem = (item, datas, orders) => {
 	switch (item) {
 	case 'Orders':
-		return <Orders orders={datas.orders} />;
+		return <Orders orders={orders} />;
 	case 'Articles':
 		return <Articles onlineArticles={datas.articles} idFT={datas._id} />;
 	case 'Locations':
@@ -77,7 +77,8 @@ const mapDispatchToProps = dispatch => ({
 const mapStateToProps = state => {
 	return {
 		user: state.user,
-		popMessage: state.popMessage
+		popMessage: state.popMessage,
+		orders: state.orders
 	};
 };
 

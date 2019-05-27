@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { SET_AUTHENTIFICATION, GET_USER, UPDATE_USER, GET_CATEGORIES, UPDATE_PROFIL, SHOW_POPMESSAGE } from './action-types';
+import { SET_AUTHENTIFICATION, GET_ORDERS, GET_USER, UPDATE_USER, GET_CATEGORIES, UPDATE_PROFIL, SHOW_POPMESSAGE } from './action-types';
 import Axios from 'axios';
 import FormData from 'form-data';
 import { BASE_URL } from '../helpers/url';
@@ -49,6 +49,21 @@ export function signupUser(formValues, history) {
 	};
 }
 
+// GET ORDERS
+export function getOrders(idFT) {
+	return function(dispatch) {
+		Axios.get(`${BASE_URL}/ordersft/${idFT}`)
+			.then((response) => {
+				dispatch({
+					type: GET_ORDERS,
+					payload: response.data
+				});
+			}).catch((error) => {
+				console.log(error);
+			});
+	};
+}
+
 //GET USER
 export function getUser() {
 	return function(dispatch) {
@@ -56,6 +71,7 @@ export function getUser() {
 			headers: { authorization: localStorage.getItem('token')}
 		})
 			.then((response) => {
+				dispatch(getOrders(response.data.foodtrucks[0]._id));
 				dispatch({
 					type: GET_USER,
 					payload: response.data
