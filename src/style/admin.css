@@ -228,3 +228,9 @@
   height: 23px !important;
   margin: 1px;
 }
+
+/* ORDERS */
+.titleRow {
+  font-weight: bold;
+  margin: 0px 20px;
+}

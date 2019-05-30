@@ -54,6 +54,7 @@ export function getOrders(idFT) {
 	return function(dispatch) {
 		Axios.get(`${BASE_URL}/ordersft/${idFT}`)
 			.then((response) => {
+				console.log(response.data);
 				dispatch({
 					type: GET_ORDERS,
 					payload: response.data
