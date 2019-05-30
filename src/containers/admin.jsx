@@ -7,7 +7,7 @@ import { items } from '../helpers/sidebar_items';
 //Components & Containers
 import SideBar from './sidebar';
 import Profil from './profil';
-import Orders from './orders';
+import Orders from '../components/orders';
 import Articles from './articles';
 import Locations from './locations';
 import PopMessage from '../components/popMessage';

@@ -228,13 +228,13 @@ class Articles extends Component {
 										<td width="10%" className="centered">{`${article.price} €`}</td>
 										<td width="50%" className="centered">{article.description}</td>
 										<td width="10%" className="row centered">
-											<div className="col articleLoadIcon center-align valign-wrapper"
+											<div className="col loadIcon center-align valign-wrapper"
 												onClick={this.loadArticle.bind(this, article)}
 												role="presentation"
 											>
 												<i className="material-icons boxUpdateText">edit</i>
 											</div>
-											<div className="col articleDeleteIcon center-align valign-wrapper"
+											<div className="col deleteIcon center-align valign-wrapper"
 												onClick={this.deleteArticle.bind(this, article._id)}
 												role="presentation"
 											>
