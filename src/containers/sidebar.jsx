@@ -17,35 +17,35 @@ class SideBar extends Component {
 		this.props.signoutUser();
 	}
 
-	getUserBackground = foodtruck => {
-		const backStyle = {
+	render() {
+		const theFoodTruck = this.props.userInfos.foodtrucks[0];
+		
+		//Backgroud par défaut du top de la sideBar
+		const defaultBackground = {
 			backgroundColor: 'white',
 			backgroundSize: '300px auto',
 			backgroundRepeat: 'no-repeat',
 			margin: '0px !important'
 		};
-	
-		foodtruck && foodtruck.images[0]
-			? backStyle.backgroundImage = `url(${BASE_URL}/image/${foodtruck.images[0]._id})`
-			: null;
 
-		return backStyle;
-	}
-
-	render() {
 		return (
 			<div>
 				<ul id="slide-out" className="sidenav sidenav-fixed">
 					<li>
-						<div className="row topContainer" style={this.getUserBackground(this.props.userInfos.foodtrucks[0])}>
+						<div className="row topContainer"
+							// Background du top personnalisé
+							style={theFoodTruck && theFoodTruck.images[0] 
+								? {...defaultBackground, backgroundImage: `url(${BASE_URL}/image/${theFoodTruck.images[0]._id})`}
+								: defaultBackground}
+						>
 							<div className="col s10 offset-s1 topSubContainer valign-wrapper">
-								{this.props.userInfos.foodtrucks[0]
-									? this.props.userInfos.foodtrucks[0].logo 
-										? <img className="topImage" src={`${BASE_URL}/image/${this.props.userInfos.foodtrucks[0].logo._id}`} alt={this.props.userInfos.foodtrucks[0].logo.originalname} />
+								{theFoodTruck
+									? theFoodTruck.logo 
+										? <img className="topImage" src={`${BASE_URL}/image/${theFoodTruck.logo._id}`} alt={theFoodTruck.logo.originalname} />
 										: <img className="topImage" src="../img/logo_default.png" alt="Default logo" />
 									: null}
-								{this.props.userInfos.foodtrucks[0]
-									? <span className="topSpan">{this.props.userInfos.foodtrucks[0].name }</span>
+								{theFoodTruck
+									? <span className="topSpan">{theFoodTruck.name }</span>
 									: null}
 							</div>
 						</div>
