@@ -46,6 +46,7 @@ export function signupUser(formValues, history) {
 			.then((response) => {
 				localStorage.setItem('token', response.data.token);
 				dispatch(setAuthentification(true));
+				dispatch(getUser());
 				history.push('/admin');
 			}).catch((error) => {
 				console.log(error);
