@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { SET_AUTHENTIFICATION, GET_ORDERS, GET_USER, UPDATE_USER, GET_CATEGORIES, UPDATE_PROFIL, SHOW_POPMESSAGE } from './action-types';
+import { SET_AUTHENTIFICATION, GET_ORDERS, GET_USER, DELETE_USER, UPDATE_USER, GET_CATEGORIES, UPDATE_PROFIL, SHOW_POPMESSAGE } from './action-types';
 import Axios from 'axios';
 import FormData from 'form-data';
 import { BASE_URL } from '../helpers/url';
@@ -33,6 +33,10 @@ export function signoutUser() {
 	return function(dispatch) {
 		dispatch(setAuthentification(false));
 		localStorage.removeItem('token');
+		dispatch({
+			type: DELETE_USER,
+			payload: null
+		});
 	};
 }
   
