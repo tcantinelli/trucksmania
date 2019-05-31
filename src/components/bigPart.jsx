@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import Button from '@material-ui/core/Button';
 
 require('../style/bigPart.css');
 
@@ -26,6 +28,9 @@ class BigPart extends Component {
 						<div className="row partText">
 							<p>Propriétaire d'un food-truck ? Inscrivez vous et augmentez votre visibilté, fidélisez vos clients</p>
 						</div>
+						<Link className="nav-link" to="/signup">
+							<Button size="medium" variant="contained" color="secondary">S'inscrire</Button>
+						</Link>
 					</div>
 				</div>
 			</div>
