@@ -26,7 +26,7 @@ class Orders extends Component {
 		order.elements.forEach(function(element) {
 			price += element.article.price * element.quantity;
 		});
-		return price;
+		return price.toFixed(2);
 	}
 
 	//Hide / Show de l'expansionPanel En Cours
