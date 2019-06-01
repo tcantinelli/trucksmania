@@ -1,7 +1,14 @@
 {
     "extends": "fbjs/strict",
     "rules": {
-        "max-len": [1, 120, 4],
-        "indent": ["error", "tab"]
+        "max-len": [1, 200, 4],
+        "indent": ["error", "tab"],
+        "one-var": 0,
+        "quotes": ["error", "single"],
+        "space-before-function-paren": ["error", {
+            "anonymous": "never",
+            "named": "never",
+            "asyncArrow": "never"
+        }]
     }
 }

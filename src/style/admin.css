@@ -1,0 +1,236 @@
+/* Common */
+.adminContainer {
+    padding-left: 300px;
+}
+
+@media only screen and (max-width : 992px) {
+    .adminContainer {
+      padding-left: 0;
+    }
+  }
+
+/* SideBar */
+.collectionItemStyle {
+	cursor: pointer;
+}
+
+.rowStyle {
+	margin: 0px; 
+}
+
+/* Profil */
+.profilPartContainer {
+  border: 2px solid #232524;
+  border-radius: 5px;
+  box-shadow: 10px 10px 5px #a09d9d;
+  height: auto;
+  position: relative;
+  margin: 5vh 4vw;
+}
+
+.insideRow {
+  padding: 20px;
+  margin: 10px !important;
+}
+
+/* Form */
+.adminSubContainer {
+  width: 100% !important;
+  background-color: white;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+@media only screen and (min-width : 1280px) {
+  .adminSubContainer {
+    width: 80%!important;
+    margin: 0px auto;
+  }
+}
+
+/* Categories */
+.activeCategorieContainerStyle {
+  border: 3px solid green;
+  border-radius: 5px;
+  margin: 5px !important;
+  padding: 5px !important;
+  width: 150px
+}
+
+.inactiveCategorieContainerStyle {
+  border: 3px solid #F5EFED;
+  border-radius: 5px;
+  margin: 5px !important;
+  padding: 5px !important;
+  width: 150px;
+  cursor: pointer;
+}
+
+@media only screen and (max-width : 479px) {
+  .activeCategorieContainerStyle, .inactiveCategorieContainerStyle {
+    width: 80px;
+  }
+}
+
+/* preview logo */
+.previewContainer {
+  margin: 5px auto;
+  border: 2px solid #F5EFED;
+  border-radius: 5px;
+  max-width: 300px;
+}
+
+/* Container Images */
+.profilImagesContainer {
+  border: 2px solid #232524;
+  border-radius: 5px;
+  box-shadow: 10px 10px 5px #a09d9d;
+  height: auto;
+  position: relative;
+  margin: 5vh 4vw;
+  padding: 20px;
+}
+
+.previewOnlineImage {
+  border: 3px solid #F5EFED;
+  border-radius: 5px;
+  margin: 5px !important;
+  padding: 5px !important;
+  width: 250px;
+  position: relative;
+}
+
+.boxDeleteContainer {
+  border: 2px solid red;
+  border-radius: 5px;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  cursor: pointer;
+}
+
+.boxDeleteText {
+  color: red;
+}
+
+.boxUpdateText {
+  color: #4BA0E7;
+}
+
+
+/* ARTICLES */
+.partContainer {
+  border: 2px solid #232524;
+  border-radius: 5px;
+  box-shadow: 10px 10px 5px #a09d9d;
+  height: auto;
+  min-height: 250px;
+  position: relative;
+  margin: 5vh 4vw;
+}
+
+.subPartContainer {
+  padding: 10px 30px !important;
+}
+
+.articlePreviewContainer {
+  margin: 5px;
+  border: 2px solid #F5EFED;
+  border-radius: 5px;
+  height: 150px;
+}
+
+.articleImagePreview {
+  height: 140px !important;
+}
+
+.buttonRow {
+  margin-bottom: 10px;
+}
+
+.articleRowImage {
+  height: 50px;
+}
+
+.deleteIcon {
+  border: 2px solid red;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 40px;
+  justify-content: center;
+}
+
+.loadIcon {
+  border: 2px solid #4BA0E7;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 40px;
+  justify-content: center;
+  margin-right: 10px;
+}
+
+/* LOCATIONS */
+.AddTitleText {
+  font-size: 18px;
+  margin-bottom: 10px !important;
+}
+.chipDay {
+  width: 80px;
+  margin: 5px;
+}
+
+.timeTextField {
+  width: 80px;
+  margin: 5px 20px;
+}
+
+.listPlacesContainer {
+  width: 260px;
+  height: 250px;
+  border: 2px solid rgb(190, 186, 184);
+  border-radius: 5px;
+}
+
+.listPlacesSubContainer {
+  margin-bottom: 5px !important;
+}
+
+.listPlacesSubLeftTop{
+  padding: 5px 5px !important;
+  margin-bottom: 0px !important;
+  height: 120px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.listPlacesSubLeftBottom{
+  padding: 5px 5px !important;
+  margin-bottom: 0px !important;
+  height: 60px;
+}
+
+.placeImg {
+  width: auto;
+  height: 100%;
+}
+
+.listPlacesSubRight {
+  padding: 5px 0px !important;
+  height: 100%
+}
+
+.listPlacesSubRight > div {
+  font-size: 13px;
+}
+
+.chipDayXS {
+  width: 28px;
+  height: 23px !important;
+  margin: 1px;
+}
+
+/* ORDERS */
+.titleRow {
+  font-weight: bold;
+  margin: 0px 20px;
+}
