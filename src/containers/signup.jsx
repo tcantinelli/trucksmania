@@ -45,7 +45,7 @@ class Signup extends Component {
 
 	render() {
 		return (
-			<form onSubmit={this.props.handleSubmit(this.handleSubmit)}>
+			<form>
 				<div>
 					<h4 className="center-align">Inscription</h4>
 				</div>
@@ -106,7 +106,7 @@ class Signup extends Component {
 				</div>
 				<div className="row inscriptionRow">
 					<div className="col s12 center-align">
-						<button type="submit" className="btn btn-primary btn-raised">
+						<button className="btn btn-primary btn-raised"  onClick={this.props.handleSubmit(this.handleSubmit)}>
 							Valider
 						</button>
 					</div>
