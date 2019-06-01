@@ -1,1 +1,1 @@
-export const BASE_URL = 'http://localhost:3060';
+export const BASE_URL = 'https://trucksmania.soapandsoft.dev';
