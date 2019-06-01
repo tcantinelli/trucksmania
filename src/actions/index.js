@@ -1,9 +1,12 @@
 /* eslint-disable no-console */
+/* FormData -> https://github.com/form-data/form-data#readme */
+
 import { SET_AUTHENTIFICATION, GET_ORDERS, GET_USER, DELETE_USER, UPDATE_USER, GET_CATEGORIES, UPDATE_PROFIL, SHOW_POPMESSAGE } from './action-types';
 import Axios from 'axios';
 import FormData from 'form-data';
 import { BASE_URL } from '../helpers/url';
 
+//Flag Logged / unlogged
 export function setAuthentification(isLoggedIn) {
 	return {
 		type: SET_AUTHENTIFICATION,
@@ -11,6 +14,7 @@ export function setAuthentification(isLoggedIn) {
 	};
 }
 
+//SIGNIN
 export function signinUser({email, password}, history) {
 	return function(dispatch) {
 		Axios.post(`${BASE_URL}/signin`, {
@@ -28,26 +32,29 @@ export function signinUser({email, password}, history) {
 			});
 	};
 }
-  
+
+//SIGNOUT
 export function signoutUser() {
 	return function(dispatch) {
-		dispatch(setAuthentification(false));
-		localStorage.removeItem('token');
+		dispatch(setAuthentification(false)); //Flag
+		localStorage.removeItem('token'); //Suppression données locales
+		//RAZ state User
 		dispatch({
 			type: DELETE_USER,
 			payload: null
 		});
 	};
 }
-  
+
+//SIGNUP
 export function signupUser(formValues, history) {
 	return function(dispatch) {
 		Axios.post(`${BASE_URL}/signup`, formValues)
 			.then((response) => {
 				localStorage.setItem('token', response.data.token);
-				dispatch(setAuthentification(true));
-				dispatch(getUser());
-				history.push('/admin');
+				dispatch(setAuthentification(true)); //Flag
+				dispatch(getUser()); //State User
+				history.push('/admin'); //Redirection
 			}).catch((error) => {
 				console.log(error);
 			});
@@ -59,6 +66,7 @@ export function getOrders(idFT) {
 	return function(dispatch) {
 		Axios.get(`${BASE_URL}/ordersft/${idFT}`)
 			.then((response) => {
+				//State Orders
 				dispatch({
 					type: GET_ORDERS,
 					payload: response.data
@@ -69,7 +77,7 @@ export function getOrders(idFT) {
 	};
 }
 
-//GET USER
+// GET USER => infos serveur
 export function getUser() {
 	return function(dispatch) {
 		Axios.get(`${BASE_URL}/user`, {
