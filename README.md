@@ -1,24 +1,9 @@
-# ESlint FaceBook
+# TrucksMania
+Site de démonstration
+Back office pour propriétaire de food-trucks et utilisateur de l'application mobile TrucksMania
 
-##install si besoin
-npm install --save-dev \
-  eslint-config-fbjs \
-  eslint-plugin-babel \
-  eslint-plugin-flowtype \
-  eslint-plugin-jsx-a11y \
-  eslint-plugin-react \
-  eslint \
-  babel-eslint
+#Installation
+npm install
 
-## Fichier .eslintrc
-  touch .eslintrc 
-
-puis y ajouter:
-
-{
-    "extends": "fbjs/strict",
-    "rules": {
-        "max-len": [1, 120, 4],
-        "indent": ["error", "tab"]
-    }
-}
+Ajouter un fichier mapbox.js dans le dossier /src contenant votre clé MapBox
+export const MB_APIKEY = 'VOTRE_API_KEY';
