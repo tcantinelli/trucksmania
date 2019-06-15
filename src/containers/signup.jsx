@@ -58,7 +58,7 @@ class Signup extends Component {
 							name={FIELDS.email}
 							component={this.renderInputComponent} //Au lieu de "input"
 							type="text"
-							label="email"
+							label="email même un faux, c'est pas grave! :)"
 						/>
 						<Field
 							name={FIELDS.password}
